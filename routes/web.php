@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PracticaController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,17 @@ use App\Http\Controllers\PracticaController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+/*
+|--------------------------------------------------------------------------
+| VALIDACIONES EN TIEMPO REAL (REGISTRO)
+|--------------------------------------------------------------------------
+*/
+Route::post('/validar-cedula', [RegisteredUserController::class, 'validarCedula'])
+    ->name('validar.cedula');
+
+Route::post('/validar-email', [RegisteredUserController::class, 'validarEmail'])
+    ->name('validar.email');
 
 /*
 |--------------------------------------------------------------------------
@@ -41,29 +53,26 @@ Route::middleware('auth')->group(function () {
 */
 Route::middleware(['auth', 'role:admin'])->group(function () {
 
-    // Dashboard Admin
     Route::get('/dashboard-admin', [AdminController::class, 'dashboard'])
         ->name('admin.dashboard');
 
-    // Asignar práctica
-    Route::get('/admin/practica/asignar/{id}',
+    Route::get('/admin/practica/asignar/{id}', 
         [AdminController::class, 'asignarPracticaForm']
     )->name('admin.practica.create');
 
-    Route::post('/admin/practica/guardar',
+    Route::post('/admin/practica/guardar', 
         [AdminController::class, 'guardarPractica']
     )->name('admin.practica.store');
 
-    // Revisar prácticas
-    Route::get('/admin/practica/{practica}/revisar',
+    Route::get('/admin/practica/{practica}/revisar', 
         [PracticaController::class, 'revisar']
     )->name('admin.practica.revisar');
 
-    Route::post('/admin/practica/{practica}/aprobar',
+    Route::post('/admin/practica/{practica}/aprobar', 
         [PracticaController::class, 'aprobar']
     )->name('admin.practica.aprobar');
 
-    Route::post('/admin/practica/{practica}/rechazar',
+    Route::post('/admin/practica/{practica}/rechazar', 
         [PracticaController::class, 'rechazar']
     )->name('admin.practica.rechazar');
 });
@@ -75,15 +84,13 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 */
 Route::middleware(['auth', 'role:estudiante'])->group(function () {
 
-    // Dashboard Estudiante
-    Route::get('/dashboard-estudiante',
+    Route::get('/dashboard-estudiante', 
         [PracticaController::class, 'dashboardEstudiante']
     )->name('dashboard.estudiante');
 
-    // Subir documento de práctica
     Route::post('/estudiante/practica/{id}/subir', 
-            [PracticaController::class, 'subirDocumento']
-        )->name('estudiante.practica.subir');
+        [PracticaController::class, 'subirDocumento']
+    )->name('estudiante.practica.subir');
 });
 
 /*
