@@ -5,6 +5,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PracticaController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\InstitucionController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +27,17 @@ Route::post('/validar-cedula', [RegisteredUserController::class, 'validarCedula'
 
 Route::post('/validar-email', [RegisteredUserController::class, 'validarEmail'])
     ->name('validar.email');
+
+/*
+|--------------------------------------------------------------------------
+| COMBO DEPENDIENTE (Institución → Carreras)
+|--------------------------------------------------------------------------
+*/
+Route::get(
+    '/instituciones/{institucion}/carreras',
+    [RegisteredUserController::class, 'carrerasPorInstitucion']
+)->name('instituciones.carreras');
+
 
 /*
 |--------------------------------------------------------------------------
@@ -92,6 +105,11 @@ Route::middleware(['auth', 'role:estudiante'])->group(function () {
         [PracticaController::class, 'subirDocumento']
     )->name('estudiante.practica.subir');
 });
+
+Route::get(
+    '/instituciones/{institucion}/carreras',
+    [InstitucionController::class, 'carreras']
+);
 
 /*
 |--------------------------------------------------------------------------

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Institucion;
+use App\Models\Carrera;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -11,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Illuminate\Validation\Rule;
 
 class RegisteredUserController extends Controller
 {
@@ -19,11 +22,14 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        // 👉 ENVIAMOS LAS INSTITUCIONES AL BLADE
+        $instituciones = Institucion::orderBy('nombre')->get();
+
+        return view('auth.register', compact('instituciones'));
     }
 
     /**
-     * Registro final (al presionar "Registrarse")
+     * Registro final
      */
     public function store(Request $request): RedirectResponse
     {
@@ -54,22 +60,39 @@ class RegisteredUserController extends Controller
                 'max:255',
                 'unique:users,email'
             ],
-            'institucion' => ['required', 'string', 'max:255'],
-            'carrera' => ['required', 'string', 'max:255'],
+            'institucion_id' => [
+                'required',
+                'exists:instituciones,id'
+            ],
+
+            'carrera_id' => [
+                'required',
+                Rule::exists('carreras', 'id')->where(function ($query) use ($request) {
+                    $query->where('institucion_id', $request->institucion_id);
+                }),
+            ],
+
             'password' => [
                 'required',
                 'confirmed',
                 Rules\Password::defaults()
             ],
-        ]);
+        ],
+            [
+                'institucion_id.required' => 'Debe seleccionar una institución.',
+                'institucion_id.exists' => 'La institución seleccionada no es válida.',
+                'carrera_id.required' => 'Debe seleccionar una carrera.',
+                'carrera_id.exists' => 'La carrera no pertenece a la institución seleccionada.',
+        ]
+        );
 
         $user = User::create([
             'nombres' => strtoupper($request->nombres),
             'apellidos' => strtoupper($request->apellidos),
             'cedula' => $request->cedula,
             'email' => strtolower($request->email),
-            'institucion' => $request->institucion,
-            'carrera' => $request->carrera,
+            'institucion_id' => $request->institucion_id,
+            'carrera_id' => $request->carrera_id,
             'password' => Hash::make($request->password),
             'rol' => 'estudiante',
         ]);
@@ -80,9 +103,10 @@ class RegisteredUserController extends Controller
         return redirect('/dashboard-estudiante');
     }
 
+
     /*
     |--------------------------------------------------------------------------
-    | VALIDACIONES EN TIEMPO REAL (AJAX)
+    | VALIDACIONES AJAX
     |--------------------------------------------------------------------------
     */
 
@@ -141,18 +165,23 @@ class RegisteredUserController extends Controller
         ]);
     }
 
+    /**
+     * Validación de cédula ecuatoriana
+     */
     private function validarCedulaEcuatoriana(string $cedula): bool
     {
-        $cedula = trim($cedula);
-
-        if (!ctype_digit($cedula)) return false;
-        if (strlen($cedula) !== 10) return false;
+        if (!ctype_digit($cedula) || strlen($cedula) !== 10) {
+            return false;
+        }
 
         $provincia = intval(substr($cedula, 0, 2));
-        if ($provincia < 1 || $provincia > 24) return false;
+        if ($provincia < 1 || $provincia > 24) {
+            return false;
+        }
 
-        $tercerDigito = intval($cedula[2]);
-        if ($tercerDigito >= 6) return false;
+        if (intval($cedula[2]) >= 6) {
+            return false;
+        }
 
         $digitos = array_map('intval', str_split($cedula));
         $verificador = array_pop($digitos);
@@ -161,7 +190,9 @@ class RegisteredUserController extends Controller
         foreach ($digitos as $i => $digito) {
             if ($i % 2 === 0) {
                 $digito *= 2;
-                if ($digito > 9) $digito -= 9;
+                if ($digito > 9) {
+                    $digito -= 9;
+                }
             }
             $suma += $digito;
         }
@@ -170,6 +201,4 @@ class RegisteredUserController extends Controller
 
         return $resultado === $verificador;
     }
-
-
 }
