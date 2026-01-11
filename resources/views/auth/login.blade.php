@@ -92,9 +92,10 @@ input[type="checkbox"] {
 
     <div class="login-card">
         <!-- Volver -->
-        <a href="{{ url()->previous() }}" class="back-link">
-            ← Volver
-        </a>
+        <a href="{{ url('/') }}" class="back-link">
+    ← Volver al inicio
+</a>
+
 
         <!-- Logo ULEAM -->
         <img

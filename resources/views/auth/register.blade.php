@@ -1,4 +1,204 @@
+<style>
+/* =====================================
+   IDENTIDAD ULEAM – REGISTRO (LIMPIO)
+===================================== */
+
+* {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* -------- HEADER -------- */
+.uleam-header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.uleam-logo-register {
+    max-height: 95px;
+    margin: 0 auto 10px;
+    display: block;
+}
+
+.uleam-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+/* -------- FORM -------- */
+#formRegistro {
+    position: relative;
+    background: #ffffff;
+    padding: 32px;
+    border-radius: 8px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* 👉 UNA SOLA RAYA ROJA */
+#formRegistro::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 4px;
+    width: 100%;
+    background-color: #b91c1c;
+    border-radius: 8px 8px 0 0;
+}
+
+/* -------- LABELS -------- */
+label {
+    font-weight: 600;
+    color: #374151;
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+}
+
+/* -------- INPUTS -------- */
+input,
+select {
+    width: 100%;
+    background-color: #f9fafb;
+    border: 2px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 11px 14px;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+/* Hover */
+input:hover:not(:focus),
+select:hover:not(:focus) {
+    border-color: #d1d5db;
+}
+
+/* Focus ROJO */
+input:focus,
+select:focus {
+    border-color: #b91c1c !important;
+    box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.15);
+    outline: none;
+    background-color: #ffffff;
+}
+
+/* Select */
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23b91c1c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 40px;
+}
+
+/* Disabled */
+select:disabled {
+    background-color: #f3f4f6;
+    color: #9ca3af;
+}
+
+/* -------- MENSAJES -------- */
+#cedula-msg,
+#email-msg,
+#password-msg,
+#confirm-password-msg {
+    font-size: 0.85rem;
+    margin-top: 6px;
+}
+
+/* -------- BOTÓN -------- */
+#btnRegistrar {
+    background-color: #b91c1c !important;
+    color: #ffffff !important;
+    border: none !important;
+    font-weight: 600;
+    padding: 12px 28px;
+    border-radius: 6px;
+    box-shadow: 0 4px 14px rgba(185, 28, 28, 0.35);
+    transition: all 0.2s ease;
+}
+
+#btnRegistrar:hover:not(:disabled) {
+    background-color: #991b1b !important;
+    transform: translateY(-1px);
+}
+
+#btnRegistrar:disabled {
+    background-color: #e5e7eb !important;
+    color: #9ca3af !important;
+    box-shadow: none;
+}
+
+/* -------- LINK -------- */
+form a {
+    color: #4b5563;
+    font-weight: 500;
+}
+
+form a:hover {
+    color: #b91c1c;
+}
+
+/* -------- RESPONSIVE -------- */
+@media (max-width: 640px) {
+    #formRegistro {
+        padding: 24px 20px;
+    }
+
+    #btnRegistrar {
+        width: 100%;
+    }
+}
+/* 🔥 ELIMINAR FOCUS AZUL DE TAILWIND */
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* 🔴 SOLO BORDE ROJO ULEAM */
+input:focus,
+select:focus {
+    border-color: #b91c1c !important;
+    box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.15) !important;
+}
+.back-link {
+    display: inline-block;
+    margin-bottom: 16px;
+    margin-top: 16px;
+    font-size: 0.9rem;
+    color: #b91c1c;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+    color: #991b1b;
+}
+
+</style>
+
+
+
+
 <x-guest-layout>
+<a href="{{ url('/') }}" class="back-link">
+    ← Volver al inicio
+</a>
+
+<div class="uleam-header">
+    <img 
+        src="https://aulavirtualmoodle.uleam.edu.ec/pluginfile.php/1/core_admin/logo/0x200/1767816587/logo_ULEAM_2017_vertical.png"
+        alt="ULEAM"
+        class="uleam-logo-register"
+    >
+    <h1 class="uleam-title">Registro de Estudiante</h1>
+</div>
+
+
+
+
     <form method="POST" action="{{ route('register') }}" id="formRegistro">
         @csrf
 
@@ -139,6 +339,11 @@
             </x-primary-button>
         </div>
     </form>
+
+
+
+
+    
 
     <!-- CARGA DINÁMICA DE CARRERAS -->
     <script>
