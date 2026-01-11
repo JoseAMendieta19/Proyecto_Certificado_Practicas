@@ -367,7 +367,11 @@
 
         <div style="display:flex;gap:14px;align-items:center;">
             @auth
-                <a href="{{ url('/dashboard') }}" class="btn btn-login">Panel</a>
+                @if(auth()->user()->rol === 'admin')
+                    <a href="{{ route('admin.dashboard') }}" class="btn btn-login">Mi Cuenta</a>
+                @elseif(auth()->user()->rol === 'estudiante')
+                    <a href="{{ route('dashboard.estudiante') }}" class="btn btn-login">Mi Cuenta</a>
+                @endif
             @else
                 <a href="{{ route('login') }}" class="btn btn-login">
                     Iniciar sesión
