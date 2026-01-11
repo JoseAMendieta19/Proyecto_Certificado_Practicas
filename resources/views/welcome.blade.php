@@ -459,6 +459,7 @@
             <ul class="cta-list">
                 <li><a class="cta-github" href="https://github.com/Gregorio1723" target="_blank">Gregorio1723</a></li>
                 <li><a class="cta-github" href="https://github.com/JoseAMendieta19" target="_blank">JoseAMendieta19</a></li>
+                <li><a class="cta-github" href="https://github.com/JonySenges" target="_blank">JonySenges</a></li>
             </ul>
         </div>
 
@@ -476,14 +477,10 @@
     </div>
 </section>
 
-
-
-
-
 <!-- FOOTER -->
 <footer>
     <p style="font-size:0.85rem;">
-        © {{ date('Y') }} {{ config('app.name', 'Universidad Laica Eloy Alfaro de Manabí') }}
+        © todos los derechos reservados - Universidad Laica Eloy Alfaro de Manabí
     </p>
 
     
