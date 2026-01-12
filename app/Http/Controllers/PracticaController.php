@@ -3,139 +3,181 @@
 namespace App\Http\Controllers;
 
 use App\Models\Practica;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
 
 class PracticaController extends Controller
 {
-    // ===============================
-    // ADMIN ASIGNA PRÁCTICA
-    // ===============================
-    public function store(Request $request)
-    {
-        // 1. Verificar si el estudiante ya tiene una práctica activa
-        $practicaActiva = Practica::where('user_id', $request->user_id)
-            ->whereIn('estado', ['asignada', 'pendiente_revision'])
-            ->first();
-
-        if ($practicaActiva) {
-            return back()->withErrors(
-                'El estudiante ya tiene una práctica activa.'
-            );
-        }
-
-        // 📘 Regla: no se puede asignar Práctica II sin aprobar Práctica I
-        if ($request->tipo === 'II') {
-            $practicaI = Practica::where('user_id', $request->user_id)
-                ->where('tipo', 'I')
-                ->where('estado', 'aprobada')
-                ->first();
-
-            if (!$practicaI) {
-                return back()->withErrors(
-                    'No se puede asignar Práctica II sin aprobar Práctica I.'
-                );
-            }
-        }
-
-        // 2. Crear práctica
-        Practica::create([
-            'user_id' => $request->user_id,
-            'tipo' => $request->tipo, // I o II
-            'lugar_practica' => $request->lugar_practica,
-            'horas_requeridas' => $request->horas_requeridas,
-            'estado' => 'asignada',
-        ]);
-
-        return back()->with('success', 'Práctica asignada correctamente.');
-    }
-
-    // ===============================
-    // ESTUDIANTE SUBE DOCUMENTO
-    // ===============================
-    public function subirDocumento(Request $request, $id)
-    {
-        $practica = Practica::findOrFail($id);
-
-        // 🔐 Validar que la práctica sea del estudiante
-        if ($practica->user_id !== auth()->id()) {
-            abort(403);
-        }
-
-        // 🚦 Validar estado permitido
-        if (!in_array($practica->estado, ['asignada', 'rechazada'])) {
-            return back()->with('error', 'No puedes subir documentos en este estado.');
-        }
-
-        // 📄 Validar archivo
-        $request->validate([
-            'documento' => 'required|file|mimes:pdf,doc,docx|max:2048'
-        ]);
-
-        // 💾 Guardar archivo
-        $ruta = $request->file('documento')->store('practicas', 'public');
-
-        // 🔄 Actualizar práctica
-        $practica->update([
-            'archivo_url' => $ruta,
-            'estado' => 'pendiente_revision'
-        ]);
-
-        return back()->with('success', 'Documento enviado para revisión.');
-    }
-
-
-    // ===============================
-    // ADMIN APRUEBA PRÁCTICA
-    // ===============================
-    public function aprobar(Practica $practica)
-    {
-        $practica->update([
-            'estado' => 'aprobada'
-        ]);
-
-        return redirect()
-            ->route('admin.dashboard')
-            ->with('success', 'Práctica aprobada correctamente.');
-    }
-
-    // ===============================
-    // ADMIN RECHAZA PRÁCTICA
-    // ===============================
-    public function rechazar(Practica $practica)
-    {
-        if ($practica->archivo_url &&
-            Storage::disk('public')->exists($practica->archivo_url)) {
-
-            Storage::disk('public')->delete($practica->archivo_url);
-        }
-
-        $practica->update([
-            'estado' => 'rechazada',
-            'archivo_url' => null
-        ]);
-
-        return redirect()
-            ->route('admin.dashboard')
-            ->with('error', 'Práctica rechazada.');
-    }
-
-
-    public function revisar(Practica $practica)
-    {
-        return view('admin.revisar_practica', compact('practica'));
-    }
-
+    /**
+     * Dashboard del estudiante
+     */
     public function dashboardEstudiante()
     {
-        $user = auth()->user();
-
-        $practicas = \App\Models\Practica::where('user_id', $user->id)
-            ->orderBy('created_at', 'desc')
-            ->get();
-
+        $estudiante = auth()->user();
+        $practicas = $estudiante->practicas()->with('lugarPractica')->get();
+        
         return view('dashboard_estudiante', compact('practicas'));
     }
 
+    /**
+     * Subir documento de validación
+     */
+    public function subirDocumento(Request $request, $id)
+    {
+        $request->validate([
+            'archivo' => 'required|file|mimes:pdf|max:5120', // Max 5MB
+            'fecha_finalizacion' => 'required|date|before_or_equal:today'
+        ], [
+            'archivo.required' => 'Debes seleccionar un archivo PDF',
+            'archivo.mimes' => 'El archivo debe ser formato PDF',
+            'archivo.max' => 'El archivo no puede pesar más de 5MB',
+            'fecha_finalizacion.required' => 'La fecha de finalización es obligatoria',
+            'fecha_finalizacion.before_or_equal' => 'La fecha no puede ser futura'
+        ]);
 
+        $practica = Practica::findOrFail($id);
+
+        // Verificar que la práctica pertenece al estudiante
+        if ($practica->user_id !== auth()->id()) {
+            return redirect()->route('dashboard.estudiante')
+                ->with('error', 'No tienes permiso para modificar esta práctica.');
+        }
+
+        // Verificar que está en estado "asignada"
+        if ($practica->estado !== 'asignada') {
+            return redirect()->route('dashboard.estudiante')
+                ->with('error', 'Esta práctica ya no puede ser modificada.');
+        }
+
+        // Eliminar archivo anterior si existe
+        if ($practica->archivo_url) {
+            Storage::delete($practica->archivo_url);
+        }
+
+        // Guardar el nuevo archivo
+        $archivo = $request->file('archivo');
+        $nombreArchivo = 'practica_' . $practica->id . '_' . time() . '.pdf';
+        $path = $archivo->storeAs('practicas', $nombreArchivo, 'public');
+
+        // Actualizar la práctica
+        $practica->update([
+            'archivo_url' => $path,
+            'fecha_finalizacion' => $request->fecha_finalizacion,
+            'estado' => 'pendiente_revision'
+        ]);
+
+        // Enviar notificación al administrador
+        $this->notificarAdministrador($practica);
+
+        return redirect()->route('dashboard.estudiante')
+            ->with('success', '¡Documento subido exitosamente! El administrador revisará tu práctica pronto.');
+    }
+
+    /**
+     * Revisar práctica (Admin)
+     */
+    public function revisar(Practica $practica)
+    {
+        $practica->load(['estudiante', 'lugarPractica']);
+        return view('admin.validaciones.revisar', compact('practica'));
+    }
+
+    /**
+     * Aprobar práctica (Admin)
+     */
+    public function aprobar(Request $request, Practica $practica)
+    {
+        $request->validate([
+            'observaciones' => 'nullable|string|max:500'
+        ]);
+
+        $practica->update([
+            'estado' => 'aprobada',
+            'observaciones' => $request->observaciones ?? 'Práctica aprobada correctamente.'
+        ]);
+
+        // Enviar email al estudiante
+        $this->enviarNotificacionAprobacion($practica);
+
+        return redirect()->route('admin.validaciones.index')
+            ->with('success', '¡Práctica aprobada! El estudiante ha sido notificado por email.');
+    }
+
+    /**
+     * Rechazar práctica (Admin)
+     */
+    public function rechazar(Request $request, Practica $practica)
+    {
+        $request->validate([
+            'observaciones' => 'required|string|max:500'
+        ]);
+
+        $practica->update([
+            'estado' => 'rechazada',
+            'observaciones' => $request->observaciones,
+            'archivo_url' => null // Eliminar el archivo rechazado
+        ]);
+
+        // Eliminar archivo físico
+        if ($practica->archivo_url) {
+            Storage::delete($practica->archivo_url);
+        }
+
+        // Enviar email al estudiante
+        $this->enviarNotificacionRechazo($practica);
+
+        return redirect()->route('admin.validaciones.index')
+            ->with('success', 'Práctica rechazada. El estudiante ha sido notificado por email.');
+    }
+
+    /**
+     * Notificar al administrador sobre nuevo documento
+     */
+    private function notificarAdministrador(Practica $practica)
+    {
+        try {
+            $admin = User::where('rol', 'admin')->first();
+            
+            if ($admin && $admin->email) {
+                Mail::send('emails.nueva-revision', ['practica' => $practica], function ($message) use ($admin) {
+                    $message->to($admin->email)
+                        ->subject('📋 Nuevo documento para revisar - Sistema de Prácticas');
+                });
+            }
+        } catch (\Exception $e) {
+            \Log::error('Error enviando email al admin: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Enviar email de aprobación
+     */
+    private function enviarNotificacionAprobacion(Practica $practica)
+    {
+        try {
+            Mail::send('emails.practica-aprobada', ['practica' => $practica], function ($message) use ($practica) {
+                $message->to($practica->estudiante->email)
+                    ->subject('✅ Práctica Aprobada - Sistema de Certificados');
+            });
+        } catch (\Exception $e) {
+            \Log::error('Error enviando email de aprobación: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Enviar email de rechazo
+     */
+    private function enviarNotificacionRechazo(Practica $practica)
+    {
+        try {
+            Mail::send('emails.practica-rechazada', ['practica' => $practica], function ($message) use ($practica) {
+                $message->to($practica->estudiante->email)
+                    ->subject('❌ Práctica Rechazada - Sistema de Certificados');
+            });
+        } catch (\Exception $e) {
+            \Log::error('Error enviando email de rechazo: ' . $e->getMessage());
+        }
+    }
 }

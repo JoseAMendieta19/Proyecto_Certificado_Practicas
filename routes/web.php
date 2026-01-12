@@ -7,6 +7,12 @@ use App\Http\Controllers\PracticaController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\InstitucionController;
 
+// 🆕 Nuevos controladores
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\LugarPracticaController;
+use App\Http\Controllers\Admin\ValidacionController;
+use App\Http\Controllers\Admin\ReporteController;
+use App\Http\Controllers\Admin\CertificadoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,7 +44,6 @@ Route::get(
     [RegisteredUserController::class, 'carrerasPorInstitucion']
 )->name('instituciones.carreras');
 
-
 /*
 |--------------------------------------------------------------------------
 | Perfil de usuario
@@ -55,31 +60,54 @@ Route::middleware('auth')->group(function () {
 | RUTAS ADMINISTRADOR
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware(['auth', 'role:admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
 
-    Route::get('/dashboard-admin', [AdminController::class, 'dashboard'])
-        ->name('admin.dashboard');
+        // 📊 Dashboard principal
+        Route::get('/dashboard', [DashboardController::class, 'index'])
+            ->name('dashboard');
 
-    Route::get('/admin/practica/asignar/{id}', 
-        [AdminController::class, 'asignarPracticaForm']
-    )->name('admin.practica.create');
+        // 👥 Gestión de Estudiantes
+        Route::get('/estudiantes', [AdminController::class, 'dashboard'])
+            ->name('estudiantes.index');
 
-    Route::post('/admin/practica/guardar', 
-        [AdminController::class, 'guardarPractica']
-    )->name('admin.practica.store');
+        Route::get('/estudiantes/{id}/asignar', [AdminController::class, 'asignarPracticaForm'])
+            ->name('estudiantes.asignar');
 
-    Route::get('/admin/practica/{practica}/revisar', 
-        [PracticaController::class, 'revisar']
-    )->name('admin.practica.revisar');
+        Route::post('/estudiantes/practica/guardar', [AdminController::class, 'guardarPractica'])
+            ->name('practica.store');
 
-    Route::post('/admin/practica/{practica}/aprobar', 
-        [PracticaController::class, 'aprobar']
-    )->name('admin.practica.aprobar');
+        // 📍 Gestión de Lugares de Práctica (CRUD completo)
+        // 🔧 CORRECCIÓN CLAVE DEL PROBLEMA "lugare"
+        Route::resource('lugares', LugarPracticaController::class)
+            ->parameters(['lugares' => 'lugar']);
 
-    Route::post('/admin/practica/{practica}/rechazar', 
-        [PracticaController::class, 'rechazar']
-    )->name('admin.practica.rechazar');
-});
+        // ✅ Validación de Documentos
+        Route::get('/validaciones', [ValidacionController::class, 'index'])
+            ->name('validaciones.index');
+
+        Route::get('/validaciones/{practica}/revisar', [ValidacionController::class, 'revisar'])
+            ->name('validaciones.revisar');
+
+        Route::post('/validaciones/{practica}/aprobar', [ValidacionController::class, 'aprobar'])
+            ->name('validaciones.aprobar');
+
+        Route::post('/validaciones/{practica}/rechazar', [ValidacionController::class, 'rechazar'])
+            ->name('validaciones.rechazar');
+
+        // 📄 Reportes
+        Route::get('/reportes', [ReporteController::class, 'index'])
+            ->name('reportes.index');
+
+        Route::get('/reportes/descargar', [ReporteController::class, 'descargar'])
+            ->name('reportes.descargar');
+
+        // ⚙️ Perfil Admin
+        Route::get('/perfil', [ProfileController::class, 'edit'])
+            ->name('perfil');
+    });
 
 /*
 |--------------------------------------------------------------------------
@@ -88,19 +116,30 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 */
 Route::middleware(['auth', 'role:estudiante'])->group(function () {
 
-    Route::get('/dashboard-estudiante', 
-        [PracticaController::class, 'dashboardEstudiante']
-    )->name('dashboard.estudiante');
+    Route::get('/dashboard-estudiante', [PracticaController::class, 'dashboardEstudiante'])
+        ->name('dashboard.estudiante');
 
-    Route::post('/estudiante/practica/{id}/subir', 
-        [PracticaController::class, 'subirDocumento']
-    )->name('estudiante.practica.subir');
+    Route::post('/estudiante/practica/{id}/subir', [PracticaController::class, 'subirDocumento'])
+        ->name('estudiante.practica.subir');
+
+    // 🆕 Rutas para certificados
+    Route::get('/certificado/{practica}/descargar', [\App\Http\Controllers\CertificadoController::class, 'descargar'])
+        ->name('certificado.descargar');
+    Route::get('/certificado/{practica}/vista', [\App\Http\Controllers\CertificadoController::class, 'vista'])
+        ->name('certificado.vista');
+    
 });
 
-Route::get(
-    '/instituciones/{institucion}/carreras',
-    [InstitucionController::class, 'carreras']
-);
+
+Route::middleware(['auth', 'role:admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+
+        Route::get('/certificados', [CertificadoController::class, 'index'])
+            ->name('certificados.index');
+
+    });
 
 /*
 |--------------------------------------------------------------------------

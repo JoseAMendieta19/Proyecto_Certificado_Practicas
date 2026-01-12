@@ -6,43 +6,29 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Practica;
+use App\Models\Institucion;
+use App\Models\Carrera;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'nombres',
         'apellidos',
         'cedula',
         'email',
         'password',
-        'institucion',
-        'carrera',
+        'institucion_id',
+        'carrera_id',
         'rol',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
@@ -51,8 +37,21 @@ class User extends Authenticatable
         ];
     }
 
+    // 🔹 Un estudiante tiene muchas prácticas
     public function practicas()
     {
         return $this->hasMany(Practica::class);
+    }
+
+    // 🔹 Un usuario pertenece a una institución
+    public function institucion()
+    {
+        return $this->belongsTo(Institucion::class, 'institucion_id');
+    }
+
+    // 🔹 Un usuario pertenece a una carrera
+    public function carrera()
+    {
+        return $this->belongsTo(Carrera::class, 'carrera_id');
     }
 }
