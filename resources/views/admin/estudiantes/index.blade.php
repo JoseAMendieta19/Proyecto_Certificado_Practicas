@@ -258,8 +258,9 @@
                             <td class="font-medium">
                                 {{ $estudiante->nombres }} {{ $estudiante->apellidos }}
                             </td>
-                            <td>{{ $estudiante->institucion->nombre}}</td>
-                            <td>{{ $estudiante->carrera->nombre}}</td>
+                            <td>{{ $estudiante->institucion?->nombre ?? 'Sin institución' }}</td>
+<td>{{ $estudiante->carrera?->nombre ?? 'Sin carrera' }}</td>
+
 
                             {{-- ACCIONES --}}
                             <td class="text-center">
