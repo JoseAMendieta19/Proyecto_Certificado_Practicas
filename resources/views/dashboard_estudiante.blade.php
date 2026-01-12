@@ -1,181 +1,932 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800">
-            Dashboard del Estudiante
-        </h2>
-    </x-slot>
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ config('app.name', 'Laravel') }} - Estudiante</title>
 
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            
-            <!-- Mensaje de bienvenida -->
-            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6 rounded">
-                <div class="flex">
-                    <svg class="w-6 h-6 text-blue-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f8;
+            color: #1f2937;
+        }
+
+        /* NAVBAR SUPERIOR */
+        .student-navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: #ffffff;
+            border-bottom: 2px solid #d1d5db;
+            z-index: 100;
+            height: 70px;
+        }
+
+        .navbar-content {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .navbar-brand span {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #b91c1c;
+        }
+
+        .navbar-user {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(185, 28, 28, 0.2);
+        }
+
+        .user-details h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .user-details p {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+
+        .btn-logout {
+            padding: 8px 18px;
+            background: transparent;
+            color: #b91c1c;
+            border: 1px solid #b91c1c;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-logout:hover {
+            background: #b91c1c;
+            color: #ffffff;
+        }
+
+        /* SIDEBAR LATERAL */
+        .sidebar {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 260px;
+            height: calc(100vh - 70px);
+            background: #ffffff;
+            border-right: 1px solid #e5e7eb;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-nav {
+            padding: 24px 16px;
+        }
+
+        .nav-section {
+            margin-bottom: 28px;
+        }
+
+        .nav-section-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #9ca3af;
+            padding: 0 12px;
+            margin-bottom: 8px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 14px;
+            margin-bottom: 4px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #4b5563;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .nav-link:hover {
+            background: #fef2f2;
+            color: #b91c1c;
+        }
+
+        .nav-link.active {
+            background: #b91c1c;
+            color: #ffffff;
+        }
+
+        .nav-link svg {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+        }
+
+        .nav-divider {
+            height: 1px;
+            background: #e5e7eb;
+            margin: 20px 0;
+        }
+
+        /* CONTENIDO PRINCIPAL */
+        .main-content {
+            margin-left: 260px;
+            margin-top: 70px;
+            min-height: calc(100vh - 70px);
+            padding: 32px;
+        }
+
+        .content-header {
+            margin-bottom: 32px;
+        }
+
+        .content-header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        .content-header p {
+            color: #6b7280;
+            font-size: 0.95rem;
+        }
+
+        /* ALERTAS */
+        .alert {
+            padding: 14px 18px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.9rem;
+        }
+
+        .alert-success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #6ee7b7;
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+
+        /* MOBILE */
+        .mobile-menu-btn {
+            display: none;
+            padding: 8px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: #4b5563;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+                z-index: 90;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .user-details {
+                display: none;
+            }
+        }
+
+        /* TÍTULO SECCIÓN */
+        .section-title {
+            color: #111827;
+            margin-bottom: 24px;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        /* ACORDEÓN DE PRÁCTICAS */
+        .practicas-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .practica-accordion {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .practica-accordion:hover {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        .practica-header {
+            background: #fafafa;
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            border-bottom: 2px solid #f3f4f6;
+            transition: all 0.2s ease;
+        }
+
+        .practica-header:hover {
+            background: #fef2f2;
+        }
+
+        .practica-title {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex: 1;
+        }
+
+        .practica-title h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #111827;
+            margin: 0;
+        }
+
+        .practica-lugar {
+            font-size: 0.85rem;
+            color: #6b7280;
+        }
+
+        .practica-lugar strong {
+            color: #374151;
+            font-weight: 600;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .status-badge.aprobada {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-badge.pendiente {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-badge.rechazada {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-badge.asignada {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .toggle-icon {
+            color: #b91c1c;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+            font-weight: bold;
+        }
+
+        .toggle-icon.open {
+            transform: rotate(180deg);
+        }
+
+        /* CONTENIDO DE PRÁCTICA */
+        .practica-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+
+        .practica-content.open {
+            padding: 28px;
+            max-height: 2000px;
+        }
+
+        /* INFO GRID */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 28px;
+            padding: 24px;
+            background: linear-gradient(135deg, #fef2f2 0%, #fef8f8 100%);
+            border-radius: 10px;
+            border: 1px solid #fee2e2;
+        }
+
+        .info-box {
+            text-align: center;
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #f3f4f6;
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .info-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #b91c1c;
+        }
+
+        /* OBSERVACIONES */
+        .observaciones-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 28px;
+        }
+
+        .observaciones-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .observaciones-text {
+            font-size: 0.9rem;
+            color: #78350f;
+            line-height: 1.6;
+        }
+
+        /* ACCIONES */
+        .acciones-container {
+            background: #f9fafb;
+            border-radius: 10px;
+            padding: 28px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .status-message {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .status-message svg {
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+        }
+
+        .status-message.warning {
+            background: #fffbeb;
+            color: #92400e;
+            border: 1px solid #fde68a;
+        }
+
+        .status-message.success {
+            background: #f0fdf4;
+            color: #065f46;
+            border: 1px solid #86efac;
+        }
+
+        .status-message.error {
+            background: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .actions-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        /* BOTONES */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 11px 22px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background: #b91c1c;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #991b1b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(185, 28, 28, 0.25);
+        }
+
+        .btn-secondary {
+            background: #374151;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #1f2937;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(55, 65, 81, 0.25);
+        }
+
+        .btn-success {
+            background: #059669;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #047857;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* FORMULARIO DE SUBIDA */
+        .upload-form {
+            background: white;
+            border: 2px dashed #d1d5db;
+            border-radius: 10px;
+            padding: 28px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 16px;
+            align-items: end;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .form-input {
+            padding: 12px 16px;
+            border: 1.5px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            background: white;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #b91c1c;
+            box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.1);
+        }
+
+        /* ESTADO VACÍO */
+        .empty-state {
+            text-align: center;
+            padding: 80px 32px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .empty-state-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .empty-state-icon svg {
+            width: 40px;
+            height: 40px;
+            color: #b91c1c;
+        }
+
+        .empty-state h4 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            font-size: 0.95rem;
+            color: #6b7280;
+        }
+
+        @media (max-width: 768px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .actions-row {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .practica-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .status-indicator {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .practica-title {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body x-data="{ 
+    sidebarOpen: false,
+    openPracticas: [],
+    togglePractica(id) {
+        if (this.openPracticas.includes(id)) {
+            this.openPracticas = this.openPracticas.filter(p => p !== id);
+        } else {
+            this.openPracticas.push(id);
+        }
+    },
+    isPracticaOpen(id) {
+        return this.openPracticas.includes(id);
+    }
+}">
+
+    <!-- NAVBAR SUPERIOR -->
+    <nav class="student-navbar">
+        <div class="navbar-content">
+            <div class="navbar-brand">
+                <button @click="sidebarOpen = !sidebarOpen" class="mobile-menu-btn">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                     </svg>
-                    <div>
-                        <p class="font-medium text-blue-800">Bienvenido, {{ Auth::user()->nombres }}!</p>
-                        <p class="text-sm text-blue-700 mt-1">Aquí puedes gestionar tus prácticas profesionales</p>
+                </button>
+                <img src="https://aulavirtualmoodle.uleam.edu.ec/pluginfile.php/1/core_admin/logo/0x200/1767816587/logo_ULEAM_2017_vertical.png" alt="ULEAM" style="height: 45px; width: auto;">
+                <span>Portal del Estudiante</span>
+            </div>
+
+            <div class="navbar-user">
+                <div class="user-info">
+                    <div class="user-details">
+                        <h4>{{ Auth::user()->nombres }} {{ Auth::user()->apellidos }}</h4>
+                        <p>Estudiante</p>
+                    </div>
+                    <div class="user-avatar">
+                        {{ substr(Auth::user()->nombres, 0, 1) }}{{ substr(Auth::user()->apellidos, 0, 1) }}
                     </div>
                 </div>
+
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="btn-logout">
+                        Cerrar sesión
+                    </button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" :class="sidebarOpen ? 'open' : ''" @click.away="sidebarOpen = false">
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Principal</div>
+                
+                <a href="{{ url('/dashboard-estudiante') }}" class="nav-link active">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                    </svg>
+                    Mis Prácticas
+                </a>
             </div>
 
-            <!-- Mis Prácticas -->
-            <div class="bg-white shadow rounded-lg overflow-hidden">
-                <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
-                    <h3 class="text-lg font-semibold text-gray-900">Mis Prácticas</h3>
-                </div>
+            <div class="nav-divider"></div>
 
-                <div class="p-6">
-                    @php
-                        $practicas = Auth::user()->practicas;
-                    @endphp
+            <div class="nav-section">
+                <div class="nav-section-title">Cuenta</div>
 
-                    @forelse($practicas as $practica)
-                        <div class="mb-6 last:mb-0 border-2 rounded-lg p-6 
-                            {{ $practica->estado === 'aprobada' ? 'border-green-500 bg-green-50' : 
-                               ($practica->estado === 'rechazada' ? 'border-red-500 bg-red-50' : 
-                               ($practica->estado === 'pendiente_revision' ? 'border-yellow-500 bg-yellow-50' : 'border-blue-500 bg-blue-50')) }}">
-                            
-                            <div class="flex items-start justify-between mb-4">
-                                <div>
-                                    <h4 class="text-xl font-bold text-gray-900">Práctica {{ $practica->tipo }}</h4>
-                                    <p class="text-sm text-gray-600 mt-1">
-                                        <strong>Lugar:</strong> {{ $practica->lugarPractica->nombre ?? 'N/A' }}
-                                    </p>
-                                </div>
-                                <span class="inline-flex px-3 py-1 text-sm font-semibold rounded-full
-                                    {{ $practica->estado === 'asignada' ? 'bg-blue-100 text-blue-800' : '' }}
-                                    {{ $practica->estado === 'pendiente_revision' ? 'bg-yellow-100 text-yellow-800' : '' }}
-                                    {{ $practica->estado === 'aprobada' ? 'bg-green-100 text-green-800' : '' }}
-                                    {{ $practica->estado === 'rechazada' ? 'bg-red-100 text-red-800' : '' }}">
-                                    {{ ucfirst(str_replace('_', ' ', $practica->estado)) }}
-                                </span>
+                <a href="#" class="nav-link">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                    </svg>
+                    Mi Perfil
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+        <!-- Alertas -->
+        @if(session('success'))
+            <div class="alert alert-success">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-error">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                </svg>
+                {{ session('error') }}
+            </div>
+        @endif
+
+        <!-- Header -->
+        <div class="content-header">
+            <h1>Bienvenido, {{ Auth::user()->nombres }} {{ Auth::user()->apellidos }}</h1>
+            <p>Gestiona tus prácticas profesionales desde este panel</p>
+        </div>
+
+        <!-- Contenedor de Prácticas -->
+        <div class="practicas-container">
+            <h2 class="section-title">Mis Prácticas Profesionales</h2>
+
+            @php
+                $practicas = Auth::user()->practicas;
+            @endphp
+
+            @forelse($practicas as $practica)
+                <div class="practica-accordion">
+                    <!-- HEADER -->
+                    <div class="practica-header" @click="togglePractica({{ $practica->id }})">
+                        <div class="practica-title">
+                            <h3>Práctica {{ $practica->tipo }}</h3>
+                            <p class="practica-lugar">
+                                <strong>Lugar:</strong> {{ $practica->lugarPractica->nombre ?? 'N/A' }}
+                            </p>
+                        </div>
+                        <div class="status-indicator">
+                            <span class="status-badge 
+                                @if($practica->estado === 'aprobada') aprobada
+                                @elseif($practica->estado === 'pendiente_revision') pendiente
+                                @elseif($practica->estado === 'rechazada') rechazada
+                                @else asignada @endif">
+                                @if($practica->estado === 'aprobada') Aprobada
+                                @elseif($practica->estado === 'pendiente_revision') En Revisión
+                                @elseif($practica->estado === 'rechazada') Rechazada
+                                @else {{ ucfirst($practica->estado) }}
+                                @endif
+                            </span>
+                            <span class="toggle-icon" :class="isPracticaOpen({{ $practica->id }}) ? 'open' : ''">
+                                ▼
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- CONTENIDO -->
+                    <div class="practica-content" :class="isPracticaOpen({{ $practica->id }}) ? 'open' : ''">
+                        <div class="info-grid">
+                            <div class="info-box">
+                                <span class="info-label">Horas Requeridas</span>
+                                <span class="info-value">{{ $practica->horas_requeridas }} hrs</span>
                             </div>
-
-                            <div class="grid grid-cols-2 gap-4 mb-4">
-                                <div>
-                                    <p class="text-sm text-gray-600"><strong>Horas requeridas:</strong></p>
-                                    <p class="text-lg font-semibold">{{ $practica->horas_requeridas }} horas</p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-600"><strong>Fecha de inicio:</strong></p>
-                                    <p class="text-lg font-semibold">{{ $practica->fecha_inicio ? $practica->fecha_inicio->format('d/m/Y') : 'No asignada' }}</p>
-                                </div>
+                            <div class="info-box">
+                                <span class="info-label">Fecha de Inicio</span>
+                                <span class="info-value">{{ $practica->fecha_inicio ? $practica->fecha_inicio->format('d/m/Y') : 'No asignada' }}</span>
                             </div>
+                        </div>
 
-                            @if($practica->observaciones)
-                                <div class="bg-white border-l-4 border-gray-400 p-3 rounded mt-4">
-                                    <p class="text-sm font-medium text-gray-700">Observaciones:</p>
-                                    <p class="text-sm text-gray-600 mt-1">{{ $practica->observaciones }}</p>
+                        @if($practica->observaciones)
+                            <div class="observaciones-box">
+                                <div class="observaciones-label">Observaciones del Administrador:</div>
+                                <div class="observaciones-text">{{ $practica->observaciones }}</div>
+                            </div>
+                        @endif
+
+                        <div class="acciones-container">
+                            @if($practica->estado === 'asignada')
+                                <form action="{{ route('estudiante.practica.subir', $practica->id) }}" 
+                                    method="POST" 
+                                    enctype="multipart/form-data"
+                                    class="upload-form">
+                                    @csrf
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Fecha de Finalización</label>
+                                            <input type="date" 
+                                                name="fecha_finalizacion" 
+                                                required
+                                                max="{{ date('Y-m-d') }}"
+                                                class="form-input">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Subir Certificado (PDF)</label>
+                                            <input type="file" 
+                                                name="archivo" 
+                                                accept=".pdf"
+                                                required
+                                                class="form-input">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                                            </svg>
+                                            Enviar
+                                        </button>
+                                    </div>
+                                </form>
+
+                            @elseif($practica->estado === 'pendiente_revision')
+                                <div class="status-message warning">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <span>Documento en revisión por el administrador</span>
+                                </div>
+
+                            @elseif($practica->estado === 'aprobada')
+                                <div class="status-message success">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
+                                    <span>¡Práctica aprobada exitosamente!</span>
+                                </div>
+                                
+                                <div class="actions-row">
+                                    <a href="{{ route('certificado.vista', $practica) }}" 
+                                       target="_blank"
+                                       class="btn btn-secondary">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                        </svg>
+                                        Ver Certificado
+                                    </a>
+                                    
+                                    <a href="{{ route('certificado.descargar', $practica) }}" 
+                                       class="btn btn-success">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                        </svg>
+                                        Descargar PDF
+                                    </a>
+                                </div>
+
+                            @elseif($practica->estado === 'rechazada')
+                                <div class="status-message error">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <span>Práctica rechazada - Revisa las observaciones y vuelve a subir el documento</span>
                                 </div>
                             @endif
-
-                            <!-- Acciones según el estado -->
-                            <div class="mt-4 flex items-center space-x-3">
-                                
-                                @if($practica->estado === 'asignada')
-                                    <!-- Formulario para subir documento -->
-                                    <form action="{{ route('estudiante.practica.subir', $practica->id) }}" 
-                                          method="POST" 
-                                          enctype="multipart/form-data"
-                                          class="flex items-center space-x-3 w-full">
-                                        @csrf
-                                        <div class="flex-1">
-                                            <label class="block text-sm font-medium text-gray-700 mb-2">Fecha de finalización</label>
-                                            <input type="date" 
-                                                   name="fecha_finalizacion" 
-                                                   required
-                                                   max="{{ date('Y-m-d') }}"
-                                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                                        </div>
-                                        <div class="flex-1">
-                                            <label class="block text-sm font-medium text-gray-700 mb-2">Subir certificado (PDF)</label>
-                                            <input type="file" 
-                                                   name="archivo" 
-                                                   accept=".pdf"
-                                                   required
-                                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                                        </div>
-                                        <div class="pt-6">
-                                            <button type="submit" 
-                                                    class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                                                Enviar para revisión
-                                            </button>
-                                        </div>
-                                    </form>
-
-                                @elseif($practica->estado === 'pendiente_revision')
-                                    <div class="flex items-center text-yellow-700">
-                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                        </svg>
-                                        <span class="font-medium">Documento en revisión por el administrador</span>
-                                    </div>
-
-                                @elseif($practica->estado === 'aprobada')
-                                    <div class="flex items-center space-x-4">
-                                        <div class="flex items-center text-green-700">
-                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                            </svg>
-                                            <span class="font-medium">¡Práctica aprobada!</span>
-                                        </div>
-                                        
-                                        <!-- Botones de descarga -->
-                                        <a href="{{ route('certificado.vista', $practica) }}" 
-                                           target="_blank"
-                                           class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                            </svg>
-                                            Ver Certificado
-                                        </a>
-                                        
-                                        <a href="{{ route('certificado.descargar', $practica) }}" 
-                                           class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
-                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                      d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                            </svg>
-                                            Descargar PDF
-                                        </a>
-                                    </div>
-
-                                @elseif($practica->estado === 'rechazada')
-                                    <div class="flex items-center text-red-700">
-                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                  d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                        </svg>
-                                        <span class="font-medium">Práctica rechazada - Revisa las observaciones y vuelve a subir el documento</span>
-                                    </div>
-                                @endif
-
-                            </div>
-
                         </div>
-                    @empty
-                        <div class="text-center py-12">
-                            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                      d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                            </svg>
-                            <p class="mt-2 text-gray-500 font-medium">No tienes prácticas asignadas aún</p>
-                            <p class="text-sm text-gray-400">El administrador te asignará una práctica pronto</p>
-                        </div>
-                    @endforelse
-
+                    </div>
                 </div>
-            </div>
-
+            @empty
+                <div class="empty-state">
+                    <div class="empty-state-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                        </svg>
+                    </div>
+                    <h4>No tienes prácticas asignadas</h4>
+                    <p>El administrador te asignará una práctica pronto</p>
+                </div>
+            @endforelse
         </div>
-    </div>
-</x-app-layout>
+
+    </main>
+
+</body>
+</html>

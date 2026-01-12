@@ -3,183 +3,452 @@
         Asignar Práctica - {{ $estudiante->nombres }} {{ $estudiante->apellidos }}
     </x-slot>
 
-    <div class="max-w-4xl">
+    <style>
+        /* CONTENEDOR PRINCIPAL */
+        .asignar-container {
+            max-width: 900px;
+        }
+
+        /* TARJETA DE INFORMACIÓN */
+        .info-card {
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            padding: 28px;
+            margin-bottom: 28px;
+        }
+
+        .info-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .info-card h3 svg {
+            width: 22px;
+            height: 22px;
+            margin-right: 10px;
+            color: #b91c1c;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .info-item {
+            border-left: 3px solid #f3f4f6;
+            padding-left: 14px;
+        }
+
+        .info-label {
+            font-size: 0.8rem;
+            color: #6b7280;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            font-size: 0.95rem;
+            color: #1f2937;
+            font-weight: 600;
+        }
+
+        /* FORMULARIO */
+        .form-card {
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+        }
+
+        .form-header {
+            padding: 20px 28px;
+            background: #fafafa;
+            border-bottom: 2px solid #f3f4f6;
+        }
+
+        .form-header h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #111827;
+            margin: 0;
+        }
+
+        .form-body {
+            padding: 32px 28px;
+        }
+
+        /* CAMPOS DE FORMULARIO */
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .form-label .required {
+            color: #b91c1c;
+            margin-left: 3px;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 0.9rem;
+            color: #1f2937;
+            background: #ffffff;
+            border: 1.5px solid #d1d5db;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #b91c1c;
+            box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.1);
+        }
+
+        .form-input.error,
+        .form-select.error,
+        .form-textarea.error {
+            border-color: #dc2626;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .form-hint {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.8rem;
+            color: #6b7280;
+        }
+
+        .form-error {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.8rem;
+            color: #dc2626;
+            font-weight: 500;
+        }
+
+        /* ALERTA INFO */
+        .alert-info {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            border-radius: 8px;
+            padding: 18px 20px;
+            margin-bottom: 24px;
+        }
+
+        .alert-info-content {
+            display: flex;
+            gap: 14px;
+        }
+
+        .alert-info svg {
+            width: 22px;
+            height: 22px;
+            color: #3b82f6;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .alert-info-text {
+            font-size: 0.85rem;
+            color: #1e40af;
+        }
+
+        .alert-info-text p {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .alert-info-text ul {
+            list-style: disc;
+            margin-left: 18px;
+        }
+
+        .alert-info-text li {
+            margin-bottom: 6px;
+        }
+
+        /* ALERTA WARNING */
+        .alert-warning {
+            background: #fffbeb;
+            border: 1.5px solid #fbbf24;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: #92400e;
+        }
+
+        .alert-warning a {
+            color: #b91c1c;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        /* BOTONES */
+        .form-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+            padding-top: 24px;
+            border-top: 1.5px solid #f3f4f6;
+        }
+
+        .btn {
+            padding: 11px 24px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #4b5563;
+            border: 1.5px solid #d1d5db;
+        }
+
+        .btn-secondary:hover {
+            background: #f9fafb;
+            border-color: #9ca3af;
+        }
+
+        .btn-primary {
+            background: #b91c1c;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background: #991b1b;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(185, 28, 28, 0.25);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .form-body {
+                padding: 24px 20px;
+            }
+
+            .form-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+
+    <div class="asignar-container">
         
         <!-- Información del Estudiante -->
-        <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
-            <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="info-card">
+            <h3>
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                           d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                 </svg>
                 Información del Estudiante
             </h3>
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <p class="text-sm text-gray-500">Nombre Completo</p>
-                    <p class="font-medium text-gray-900">{{ $estudiante->nombres }} {{ $estudiante->apellidos }}</p>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">Nombre Completo</div>
+                    <div class="info-value">{{ $estudiante->nombres }} {{ $estudiante->apellidos }}</div>
                 </div>
-                <div>
-                    <p class="text-sm text-gray-500">Email</p>
-                    <p class="font-medium text-gray-900">{{ $estudiante->email }}</p>
+                <div class="info-item">
+                    <div class="info-label">Email</div>
+                    <div class="info-value">{{ $estudiante->email }}</div>
                 </div>
-                <div>
-                    <p class="text-sm text-gray-500">Institución</p>
-                    <p class="font-medium text-gray-900">{{ $estudiante->institucion->nombre ?? 'N/A' }}</p>
+                <div class="info-item">
+                    <div class="info-label">Institución</div>
+                    <div class="info-value">{{ $estudiante->institucion->nombre ?? 'N/A' }}</div>
                 </div>
-                <div>
-                    <p class="text-sm text-gray-500">Carrera</p>
-                    <p class="font-medium text-gray-900">{{ $estudiante->carrera->nombre ?? 'N/A' }}</p>
+                <div class="info-item">
+                    <div class="info-label">Carrera</div>
+                    <div class="info-value">{{ $estudiante->carrera->nombre ?? 'N/A' }}</div>
                 </div>
             </div>
         </div>
 
         <!-- Formulario de Asignación -->
-        <div class="bg-white rounded-lg shadow-sm">
-            <div class="px-6 py-4 border-b border-gray-200">
-                <h3 class="text-lg font-semibold text-gray-900">Asignar Nueva Práctica</h3>
+        <div class="form-card">
+            <div class="form-header">
+                <h3>Asignar Nueva Práctica</h3>
             </div>
 
-            <form action="{{ route('admin.practica.store') }}" method="POST" class="p-6 space-y-6">
+            <form action="{{ route('admin.practica.store') }}" method="POST">
                 @csrf
                 <input type="hidden" name="user_id" value="{{ $estudiante->id }}">
 
-                <!-- Tipo de Práctica -->
-                <div>
-                    <label for="tipo" class="block text-sm font-medium text-gray-700 mb-2">
-                        Tipo de Práctica <span class="text-red-500">*</span>
-                    </label>
-                    <select name="tipo" 
-                            id="tipo" 
-                            required
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('tipo') border-red-500 @enderror">
-                        <option value="">Seleccione el tipo de práctica</option>
-                        @if(!$practicaI)
-                            <option value="I" {{ old('tipo') == 'I' ? 'selected' : '' }}>Práctica I</option>
+                <div class="form-body">
+                    <!-- Tipo de Práctica -->
+                    <div class="form-group">
+                        <label for="tipo" class="form-label">
+                            Tipo de Práctica<span class="required">*</span>
+                        </label>
+                        <select name="tipo" 
+                                id="tipo" 
+                                required
+                                class="form-select @error('tipo') error @enderror">
+                            <option value="">Seleccione el tipo de práctica</option>
+                            @if(!$practicaI)
+                                <option value="I" {{ old('tipo') == 'I' ? 'selected' : '' }}>Práctica I</option>
+                            @endif
+                            @if($practicaI && $practicaI->estado === 'aprobada' && !$practicaII)
+                                <option value="II" {{ old('tipo') == 'II' ? 'selected' : '' }}>Práctica II</option>
+                            @endif
+                        </select>
+                        @error('tipo')
+                            <span class="form-error">{{ $message }}</span>
+                        @enderror
+                        <span class="form-hint">
+                            @if(!$practicaI)
+                                El estudiante debe completar primero la Práctica I
+                            @elseif($practicaI && $practicaI->estado !== 'aprobada')
+                                Debe aprobar la Práctica I antes de asignar la Práctica II
+                            @endif
+                        </span>
+                    </div>
+
+                    <!-- Lugar de Práctica -->
+                    <div class="form-group">
+                        <label for="lugar_practica_id" class="form-label">
+                            Lugar de Práctica<span class="required">*</span>
+                        </label>
+                        <select name="lugar_practica_id" 
+                                id="lugar_practica_id" 
+                                required
+                                class="form-select @error('lugar_practica_id') error @enderror">
+                            <option value="">Seleccione un lugar</option>
+                            @foreach($lugaresPractica as $lugar)
+                                <option value="{{ $lugar->id }}" {{ old('lugar_practica_id') == $lugar->id ? 'selected' : '' }}>
+                                    {{ $lugar->nombre }} - {{ $lugar->direccion }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('lugar_practica_id')
+                            <span class="form-error">{{ $message }}</span>
+                        @enderror
+                        @if($lugaresPractica->isEmpty())
+                            <div class="alert-warning">
+                                ⚠️ No hay lugares de práctica disponibles. 
+                                <a href="{{ route('admin.lugares.create') }}">Crear uno aquí</a>
+                            </div>
                         @endif
-                        @if($practicaI && $practicaI->estado === 'aprobada' && !$practicaII)
-                            <option value="II" {{ old('tipo') == 'II' ? 'selected' : '' }}>Práctica II</option>
-                        @endif
-                    </select>
-                    @error('tipo')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                    <p class="mt-1 text-xs text-gray-500">
-                        @if(!$practicaI)
-                            El estudiante debe completar primero la Práctica I
-                        @elseif($practicaI && $practicaI->estado !== 'aprobada')
-                            Debe aprobar la Práctica I antes de asignar la Práctica II
-                        @endif
-                    </p>
-                </div>
+                    </div>
 
-                <!-- Lugar de Práctica -->
-                <div>
-                    <label for="lugar_practica_id" class="block text-sm font-medium text-gray-700 mb-2">
-                        Lugar de Práctica <span class="text-red-500">*</span>
-                    </label>
-                    <select name="lugar_practica_id" 
-                            id="lugar_practica_id" 
-                            required
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('lugar_practica_id') border-red-500 @enderror">
-                        <option value="">Seleccione un lugar</option>
-                        @foreach($lugaresPractica as $lugar)
-                            <option value="{{ $lugar->id }}" {{ old('lugar_practica_id') == $lugar->id ? 'selected' : '' }}>
-                                {{ $lugar->nombre }} - {{ $lugar->direccion }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('lugar_practica_id')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                    @if($lugaresPractica->isEmpty())
-                        <p class="mt-2 text-sm text-yellow-600">
-                            ⚠️ No hay lugares de práctica disponibles. 
-                            <a href="{{ route('admin.lugares.create') }}" class="text-blue-600 underline">Crear uno aquí</a>
-                        </p>
-                    @endif
-                </div>
+                    <!-- Horas Requeridas -->
+                    <div class="form-group">
+                        <label for="horas_requeridas" class="form-label">
+                            Horas Requeridas<span class="required">*</span>
+                        </label>
+                        <input type="number" 
+                               name="horas_requeridas" 
+                               id="horas_requeridas" 
+                               min="1"
+                               max="500"
+                               value="{{ old('horas_requeridas', 120) }}"
+                               required
+                               placeholder="Ej: 120"
+                               class="form-input @error('horas_requeridas') error @enderror">
+                        @error('horas_requeridas')
+                            <span class="form-error">{{ $message }}</span>
+                        @enderror
+                        <span class="form-hint">Número de horas que debe completar el estudiante</span>
+                    </div>
 
-                <!-- Horas Requeridas -->
-                <div>
-                    <label for="horas_requeridas" class="block text-sm font-medium text-gray-700 mb-2">
-                        Horas Requeridas <span class="text-red-500">*</span>
-                    </label>
-                    <input type="number" 
-                           name="horas_requeridas" 
-                           id="horas_requeridas" 
-                           min="1"
-                           max="500"
-                           value="{{ old('horas_requeridas', 120) }}"
-                           required
-                           placeholder="Ej: 120"
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('horas_requeridas') border-red-500 @enderror">
-                    @error('horas_requeridas')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                    <p class="mt-1 text-xs text-gray-500">Número de horas que debe completar el estudiante</p>
-                </div>
+                    <!-- Fecha de Inicio -->
+                    <div class="form-group">
+                        <label for="fecha_inicio" class="form-label">
+                            Fecha de Inicio<span class="required">*</span>
+                        </label>
+                        <input type="date" 
+                               name="fecha_inicio" 
+                               id="fecha_inicio" 
+                               value="{{ old('fecha_inicio', date('Y-m-d')) }}"
+                               required
+                               class="form-input @error('fecha_inicio') error @enderror">
+                        @error('fecha_inicio')
+                            <span class="form-error">{{ $message }}</span>
+                        @enderror
+                        <span class="form-hint">Fecha en la que el estudiante debe comenzar la práctica</span>
+                    </div>
 
-                <!-- Fecha de Inicio -->
-                <div>
-                    <label for="fecha_inicio" class="block text-sm font-medium text-gray-700 mb-2">
-                        Fecha de Inicio <span class="text-red-500">*</span>
-                    </label>
-                    <input type="date" 
-                           name="fecha_inicio" 
-                           id="fecha_inicio" 
-                           value="{{ old('fecha_inicio', date('Y-m-d')) }}"
-                           required
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('fecha_inicio') border-red-500 @enderror">
-                    @error('fecha_inicio')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                    <p class="mt-1 text-xs text-gray-500">Fecha en la que el estudiante debe comenzar la práctica</p>
-                </div>
+                    <!-- Observaciones Iniciales -->
+                    <div class="form-group">
+                        <label for="observaciones" class="form-label">
+                            Observaciones Iniciales (opcional)
+                        </label>
+                        <textarea name="observaciones" 
+                                  id="observaciones" 
+                                  placeholder="Instrucciones especiales o información adicional para el estudiante..."
+                                  class="form-textarea @error('observaciones') error @enderror">{{ old('observaciones') }}</textarea>
+                        @error('observaciones')
+                            <span class="form-error">{{ $message }}</span>
+                        @enderror
+                    </div>
 
-                <!-- Observaciones Iniciales (opcional) -->
-                <div>
-                    <label for="observaciones" class="block text-sm font-medium text-gray-700 mb-2">
-                        Observaciones Iniciales (opcional)
-                    </label>
-                    <textarea name="observaciones" 
-                              id="observaciones" 
-                              rows="3"
-                              placeholder="Instrucciones especiales o información adicional para el estudiante..."
-                              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('observaciones') border-red-500 @enderror">{{ old('observaciones') }}</textarea>
-                    @error('observaciones')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror>
-                </div>
-
-                <!-- Información adicional -->
-                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
-                    <div class="flex">
-                        <svg class="w-5 h-5 text-blue-500 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                        <div class="text-sm text-blue-700">
-                            <p class="font-medium">Información importante:</p>
-                            <ul class="list-disc list-inside mt-2 space-y-1">
-                                <li>El estudiante recibirá un email con los detalles de la práctica asignada</li>
-                                <li>Una vez asignada, el estudiante deberá completar las horas y subir su certificado</li>
-                                <li>Podrás revisar y aprobar/rechazar el documento cuando lo suba</li>
-                            </ul>
+                    <!-- Información adicional -->
+                    <div class="alert-info">
+                        <div class="alert-info-content">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <div class="alert-info-text">
+                                <p>Información importante:</p>
+                                <ul>
+                                    <li>El estudiante recibirá un email con los detalles de la práctica asignada</li>
+                                    <li>Una vez asignada, el estudiante deberá completar las horas y subir su certificado</li>
+                                    <li>Podrás revisar y aprobar/rechazar el documento cuando lo suba</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Botones -->
-                <div class="flex items-center justify-end space-x-3 pt-4 border-t">
-                    <a href="{{ route('admin.estudiantes.index') }}" 
-                        class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
-                        Cancelar
-                    </a>
-                    <button type="submit" 
-                            class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
-                        Asignar Práctica
-                    </button>
+                    <!-- Botones -->
+                    <div class="form-actions">
+                        <a href="{{ route('admin.estudiantes.index') }}" class="btn btn-secondary">
+                            Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            Asignar Práctica
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>

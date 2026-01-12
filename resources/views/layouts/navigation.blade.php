@@ -11,17 +11,61 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ $dashboardRoute }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
-                    </a>
+                    <a href="{{ url('/admin/dashboard') }}" class="flex items-center">
+    <img
+        src="https://aulavirtualmoodle.uleam.edu.ec/pluginfile.php/1/core_admin/logo/0x200/1767816587/logo_ULEAM_2017_vertical.png"
+        alt="ULEAM"
+        class="h-10 w-auto"
+    >
+</a>
+
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="$dashboardRoute">
-                        {{ __('Mi Cuenta') }}
-                    </x-nav-link>
-                </div>
+    <x-nav-link :href="$dashboardRoute" class="uleam-link">
+        Mi Cuenta
+    </x-nav-link>
+</div>
+
+
+
+                <style>
+                    /* LINK ESTILO ULEAM / MOODLE */
+.uleam-link {
+    color: #b91c1c !important;
+    font-weight: 600;
+    font-size: 0.8rem;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: none !important;
+    border: none !important;
+    text-decoration: none !important;
+    position: relative;
+}
+
+/* Subrayado fino */
+.uleam-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 2px;
+    background-color: #b91c1c;
+    transition: width 0.2s ease;
+}
+
+/* Hover */
+.uleam-link:hover {
+    color: #991b1b !important;
+}
+
+.uleam-link:hover::after {
+    background-color: #991b1b;
+}
+
+                </style>
             </div>
 
             <!-- Settings Dropdown -->
@@ -40,17 +84,18 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
+                        
 
                         <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <x-dropdown-link :href="route('logout')"
-                                onclick="event.preventDefault(); this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
+    @csrf
+    <x-dropdown-link
+        :href="route('logout')"
+        class="uleam-link"
+        onclick="event.preventDefault(); this.closest('form').submit();">
+        Cerrar Sesión
+    </x-dropdown-link>
+</form>
+
                     </x-slot>
                 </x-dropdown>
             </div>
@@ -87,7 +132,7 @@
 
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
+                    {{ __('Perfil') }}
                 </x-responsive-nav-link>
 
                 <form method="POST" action="{{ route('logout') }}">
