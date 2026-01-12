@@ -39,12 +39,6 @@
 
             <p>Ahora puedes descargar tu certificado oficial desde el sistema.</p>
 
-            <center>
-                <a href="{{ url('/dashboard-estudiante') }}" class="button">
-                    Ir al Dashboard
-                </a>
-            </center>
-
             <p>¡Felicitaciones por tu esfuerzo y dedicación!</p>
         </div>
         <div class="footer">

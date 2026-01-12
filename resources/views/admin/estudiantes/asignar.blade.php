@@ -286,12 +286,12 @@
             </h3>
             <div class="info-grid">
                 <div class="info-item">
-                    <div class="info-label">Nombre Completo</div>
+                    <div class="info-label">Nombres Completos</div>
                     <div class="info-value">{{ $estudiante->nombres }} {{ $estudiante->apellidos }}</div>
                 </div>
                 <div class="info-item">
-                    <div class="info-label">Email</div>
-                    <div class="info-value">{{ $estudiante->email }}</div>
+                    <div class="info-label">Cédula</div>
+                    <div class="info-value">{{ $estudiante->cedula }}</div>
                 </div>
                 <div class="info-item">
                     <div class="info-label">Institución</div>
@@ -300,6 +300,10 @@
                 <div class="info-item">
                     <div class="info-label">Carrera</div>
                     <div class="info-value">{{ $estudiante->carrera->nombre ?? 'N/A' }}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Email</div>
+                    <div class="info-value">{{ $estudiante->email }}</div>
                 </div>
             </div>
         </div>

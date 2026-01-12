@@ -201,4 +201,20 @@ class RegisteredUserController extends Controller
 
         return $resultado === $verificador;
     }
+
+/*
+|--------------------------------------------------------------------------
+| CARRERAS POR INSTITUCIÓN (AJAX)
+|--------------------------------------------------------------------------
+*/
+    public function carrerasPorInstitucion($institucionId)
+    {
+        $carreras = Carrera::where('institucion_id', $institucionId)
+            ->orderBy('nombre')
+            ->get(['id', 'nombre']);
+
+        return response()->json($carreras);
+    }
+
+
 }

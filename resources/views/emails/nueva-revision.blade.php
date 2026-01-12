@@ -39,11 +39,6 @@
 
             <p>Por favor, revisa el documento y aprueba o rechaza la práctica.</p>
 
-            <center>
-                <a href="{{ url('/admin/validaciones') }}" class="button">
-                    Ir a Validaciones
-                </a>
-            </center>
         </div>
         <div class="footer">
             <p>Sistema de Gestión y Canje de Certificados de Prácticas</p>

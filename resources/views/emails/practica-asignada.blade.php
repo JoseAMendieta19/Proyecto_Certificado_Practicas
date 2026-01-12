@@ -95,12 +95,7 @@
             <li>Una vez finalices, sube tu certificado desde el sistema</li>
         </ol>
 
-        <div style="text-align: center;">
-            <a href="{{ url('/dashboard-estudiante') }}" class="button">
-                Ir a Mi Dashboard
-            </a>
-        </div>
-
+        <p>Para más información Ingresa al Sistema...</p>
         <p>¡Éxitos en tu práctica!</p>
     </div>
 

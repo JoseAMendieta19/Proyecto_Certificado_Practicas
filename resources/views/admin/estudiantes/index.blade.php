@@ -236,11 +236,10 @@
             <table class="estudiantes-table">
                 <thead>
                     <tr>
-                        <th>Nombre</th>
-                        <th>Email</th>
+                        <th>Cédula</th>
+                        <th>Nombres</th>
                         <th>Institución</th>
                         <th>Carrera</th>
-                        <th>Nivel</th>
                         <th class="text-center">Acciones</th>
                         <th class="text-center">Estado</th>
                     </tr>
@@ -255,13 +254,12 @@
                         @endphp
 
                         <tr>
+                            <td>{{ $estudiante->cedula }}</td>
                             <td class="font-medium">
                                 {{ $estudiante->nombres }} {{ $estudiante->apellidos }}
                             </td>
-                            <td>{{ $estudiante->email }}</td>
-                            <td>{{ $estudiante->institucion->nombre ?? 'N/A' }}</td>
-                            <td>{{ $estudiante->carrera->nombre ?? 'N/A' }}</td>
-                            <td>{{ $estudiante->nivel ?? 'N/A' }}</td>
+                            <td>{{ $estudiante->institucion->nombre}}</td>
+                            <td>{{ $estudiante->carrera->nombre}}</td>
 
                             {{-- ACCIONES --}}
                             <td class="text-center">

@@ -40,7 +40,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Guardar nueva práctica
+     * Guardar asignación de práctica
      */
     public function guardarPractica(Request $request)
     {
@@ -62,6 +62,10 @@ class AdminController extends Controller
             'fecha_inicio.required' => 'La fecha de inicio es obligatoria',
             'fecha_inicio.date' => 'La fecha de inicio debe ser válida'
         ]);
+
+        // 🆕 Log inicial
+        \Log::info('=== INICIO ASIGNACIÓN DE PRÁCTICA ===');
+        \Log::info('Datos validados:', $validated);
 
         // Verificar que no exista ya una práctica del mismo tipo
         $practicaExistente = Practica::where('user_id', $request->user_id)
@@ -99,8 +103,20 @@ class AdminController extends Controller
             'estado' => 'asignada'
         ]);
 
+        // 🆕 Log después de crear
+        \Log::info('Práctica creada con ID: ' . $practica->id);
+
+        // Cargar relaciones
+        $practica->load(['estudiante', 'lugarPractica']);
+
+        // 🆕 Log del email del estudiante
+        \Log::info('Email del estudiante: ' . ($practica->estudiante->email ?? 'NO TIENE EMAIL'));
+        \Log::info('Nombre del estudiante: ' . $practica->estudiante->nombres . ' ' . $practica->estudiante->apellidos);
+
         // Enviar email al estudiante
+        \Log::info('Intentando enviar email...');
         $this->notificarAsignacion($practica);
+        \Log::info('Método notificarAsignacion ejecutado');
 
         return redirect()->route('admin.estudiantes.index')
             ->with('success', '¡Práctica asignada exitosamente! El estudiante ha sido notificado por email.');
@@ -111,15 +127,25 @@ class AdminController extends Controller
      */
     private function notificarAsignacion(Practica $practica)
     {
+        \Log::info('=== DENTRO DE notificarAsignacion ===');
+        
         try {
-            $practica->load(['estudiante', 'lugarPractica']);
+            // Ya debería tener las relaciones cargadas desde guardarPractica
+            
+            \Log::info('Preparando email para: ' . $practica->estudiante->email);
+            \Log::info('Lugar de práctica: ' . $practica->lugarPractica->nombre);
             
             Mail::send('emails.practica-asignada', ['practica' => $practica], function ($message) use ($practica) {
                 $message->to($practica->estudiante->email)
                     ->subject('📋 Nueva Práctica Asignada - Sistema de Certificados');
             });
+            
+            \Log::info('✅ Email enviado correctamente');
+            
         } catch (\Exception $e) {
-            \Log::error('Error enviando email de asignación: ' . $e->getMessage());
+            \Log::error('❌ ERROR enviando email: ' . $e->getMessage());
+            \Log::error('Stack trace: ' . $e->getTraceAsString());
         }
     }
+
 }

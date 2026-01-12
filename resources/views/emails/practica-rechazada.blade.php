@@ -100,12 +100,6 @@
             <li>Vuelve a ingresar al sistema y sube nuevamente el archivo corregido.</li>
         </ol>
 
-        <center>
-            <a href="{{ url('/dashboard-estudiante') }}" class="button">
-                Ir al Dashboard del Estudiante
-            </a>
-        </center>
-
         <p>
             Si tienes dudas adicionales, puedes comunicarte con el administrador del sistema.
         </p>
