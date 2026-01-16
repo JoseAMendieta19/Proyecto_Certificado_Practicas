@@ -127,8 +127,26 @@ Route::middleware(['auth', 'role:estudiante'])->group(function () {
         ->name('certificado.descargar');
     Route::get('/certificado/{practica}/vista', [\App\Http\Controllers\CertificadoController::class, 'vista'])
         ->name('certificado.vista');
+
+    // Perfil del estudiante
+Route::get('/estudiante/perfil', [PracticaController::class, 'editarPerfil'])
+    ->name('estudiante.perfil');
+
+    Route::middleware(['auth', 'role:estudiante'])->group(function () {
+
+    // Dashboard Home (página principal al iniciar sesión)
+    Route::get('/estudiante/home', [PracticaController::class, 'home'])
+        ->name('estudiante.home');
+    
+    
+
+    // Mis Prácticas
+    Route::get('/estudiante/practicas', [PracticaController::class, 'dashboardEstudiante'])
+        ->name('dashboard.estudiante');
+});
     
 });
+
 
 
 Route::middleware(['auth', 'role:admin'])

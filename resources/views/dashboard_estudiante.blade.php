@@ -266,7 +266,7 @@
             font-weight: 700;
         }
 
-        /* ACORDEÓN DE PRÁCTICAS */
+        /* ACORDEÓN DE PRÁCTICAS - REDISEÑADO */
         .practicas-container {
             display: flex;
             flex-direction: column;
@@ -275,15 +275,15 @@
 
         .practica-accordion {
             background: white;
-            border-radius: 12px;
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
             border: 1px solid #e5e7eb;
             transition: all 0.3s ease;
         }
 
         .practica-accordion:hover {
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
         }
 
         .practica-header {
@@ -293,12 +293,12 @@
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            border-bottom: 2px solid #f3f4f6;
+            border-bottom: 1px solid #e5e7eb;
             transition: all 0.2s ease;
         }
 
         .practica-header:hover {
-            background: #fef2f2;
+            background: #f9fafb;
         }
 
         .practica-title {
@@ -309,8 +309,8 @@
         }
 
         .practica-title h3 {
-            font-size: 1.2rem;
-            font-weight: 700;
+            font-size: 1.1rem;
+            font-weight: 600;
             color: #111827;
             margin: 0;
         }
@@ -346,8 +346,8 @@
         }
 
         .status-badge.pendiente {
-            background: #fef3c7;
-            color: #92400e;
+            background: #dbeafe;
+            color: #1e40af;
         }
 
         .status-badge.rechazada {
@@ -356,12 +356,12 @@
         }
 
         .status-badge.asignada {
-            background: #dbeafe;
-            color: #1e40af;
+            background: #e0e7ff;
+            color: #4338ca;
         }
 
         .toggle-icon {
-            color: #b91c1c;
+            color: #6b7280;
             font-size: 1.2rem;
             transition: transform 0.3s ease;
             font-weight: bold;
@@ -384,24 +384,48 @@
             max-height: 2000px;
         }
 
-        /* INFO GRID */
+        /* INFO GRID - REDISEÑADO */
         .info-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            margin-bottom: 28px;
-            padding: 24px;
-            background: linear-gradient(135deg, #fef2f2 0%, #fef8f8 100%);
-            border-radius: 10px;
-            border: 1px solid #fee2e2;
+            gap: 16px;
+            margin-bottom: 24px;
         }
 
         .info-box {
             text-align: center;
-            padding: 12px;
-            background: white;
+            padding: 20px;
+            background: #f9fafb;
             border-radius: 8px;
-            border: 1px solid #f3f4f6;
+            border: 1px solid #e5e7eb;
+        }
+
+        /* NUEVA ESTRUCTURA DE 2 COLUMNAS */
+        .practica-body {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 24px;
+            align-items: start;
+        }
+
+        .practica-info-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .info-grid-compact {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .info-box-compact {
+            text-align: center;
+            padding: 16px;
+            background: #f9fafb;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
         }
 
         .info-label {
@@ -420,47 +444,53 @@
             color: #b91c1c;
         }
 
-        /* OBSERVACIONES */
+        /* OBSERVACIONES - REDISEÑADO */
         .observaciones-box {
-            background: #fffbeb;
-            border-left: 4px solid #f59e0b;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 28px;
+            background: #fef2f2;
+            border-left: 4px solid #b91c1c;
+            padding: 18px 20px;
+            border-radius: 6px;
+            margin-bottom: 24px;
+            border: 1px solid #fecaca;
         }
 
         .observaciones-label {
             font-size: 0.875rem;
             font-weight: 600;
-            color: #92400e;
-            margin-bottom: 12px;
+            color: #991b1b;
+            margin-bottom: 10px;
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
 
         .observaciones-text {
             font-size: 0.9rem;
-            color: #78350f;
+            color: #7f1d1d;
             line-height: 1.6;
         }
 
         /* ACCIONES */
         .acciones-container {
-            background: #f9fafb;
-            border-radius: 10px;
-            padding: 28px;
-            border: 1px solid #e5e7eb;
+            background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%);
+            border-radius: 12px;
+            padding: 24px;
+            border: 2px solid #e5e7eb;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
         }
 
         .status-message {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 16px 20px;
-            border-radius: 8px;
+            padding: 14px 18px;
+            border-radius: 10px;
             font-size: 0.9rem;
-            font-weight: 500;
-            margin-bottom: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
         }
 
         .status-message svg {
@@ -470,27 +500,27 @@
         }
 
         .status-message.warning {
-            background: #fffbeb;
-            color: #92400e;
-            border: 1px solid #fde68a;
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            color: #1e3a8a;
+            border: 2px solid #3b82f6;
         }
 
         .status-message.success {
-            background: #f0fdf4;
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
             color: #065f46;
-            border: 1px solid #86efac;
+            border: 2px solid #10b981;
         }
 
         .status-message.error {
-            background: #fef2f2;
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
             color: #991b1b;
-            border: 1px solid #fecaca;
+            border: 2px solid #ef4444;
         }
 
         .actions-row {
             display: flex;
+            flex-direction: column;
             gap: 12px;
-            flex-wrap: wrap;
         }
 
         /* BOTONES */
@@ -500,7 +530,7 @@
             justify-content: center;
             gap: 8px;
             padding: 11px 22px;
-            border-radius: 8px;
+            border-radius: 6px;
             font-size: 0.9rem;
             font-weight: 600;
             text-decoration: none;
@@ -516,8 +546,6 @@
 
         .btn-primary:hover {
             background: #991b1b;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(185, 28, 28, 0.25);
         }
 
         .btn-secondary {
@@ -527,8 +555,6 @@
 
         .btn-secondary:hover {
             background: #1f2937;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(55, 65, 81, 0.25);
         }
 
         .btn-success {
@@ -538,8 +564,6 @@
 
         .btn-success:hover {
             background: #047857;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
         }
 
         .btn svg {
@@ -547,19 +571,18 @@
             height: 18px;
         }
 
-        /* FORMULARIO DE SUBIDA */
+        /* FORMULARIO DE SUBIDA - REDISEÑADO */
         .upload-form {
             background: white;
-            border: 2px dashed #d1d5db;
-            border-radius: 10px;
-            padding: 28px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
         }
 
         .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr auto;
+            display: flex;
+            flex-direction: column;
             gap: 16px;
-            align-items: end;
         }
 
         .form-group {
@@ -577,7 +600,7 @@
         .form-input {
             padding: 12px 16px;
             border: 1.5px solid #d1d5db;
-            border-radius: 8px;
+            border-radius: 6px;
             font-size: 0.9rem;
             background: white;
             transition: all 0.2s ease;
@@ -594,8 +617,8 @@
             text-align: center;
             padding: 80px 32px;
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
 
         .empty-state-icon {
@@ -629,6 +652,18 @@
 
         @media (max-width: 768px) {
             .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .practica-body {
+                grid-template-columns: 1fr;
+            }
+
+            .acciones-container {
+                position: static;
+            }
+
+            .info-grid-compact {
                 grid-template-columns: 1fr;
             }
 
@@ -688,7 +723,9 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                     </svg>
                 </button>
-                <img src="https://aulavirtualmoodle.uleam.edu.ec/pluginfile.php/1/core_admin/logo/0x200/1767816587/logo_ULEAM_2017_vertical.png" alt="ULEAM" style="height: 45px; width: auto;">
+                <a href="{{ route('estudiante.home') }}" style="display: flex; align-items: center; text-decoration: none;">
+                    <img src="https://aulavirtualmoodle.uleam.edu.ec/pluginfile.php/1/core_admin/logo/0x200/1767816587/logo_ULEAM_2017_vertical.png" alt="ULEAM" style="height: 45px; width: auto;">
+                </a>
                 <span>Portal del Estudiante</span>
             </div>
 
@@ -719,12 +756,21 @@
             <div class="nav-section">
                 <div class="nav-section-title">Principal</div>
                 
-                <a href="{{ url('/dashboard-estudiante') }}" class="nav-link active">
+                <a href="{{ route('estudiante.home') }}" 
+                   class="nav-link {{ request()->routeIs('estudiante.home') ? 'active' : '' }}">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                     </svg>
-                    Mis Prácticas
+                    Dashboard
                 </a>
+
+                <a href="{{ route('dashboard.estudiante') }}" 
+   class="nav-link {{ request()->routeIs('dashboard.estudiante') ? 'active' : '' }}">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+    </svg>
+    Mis Prácticas
+</a>
             </div>
 
             <div class="nav-divider"></div>
@@ -732,7 +778,8 @@
             <div class="nav-section">
                 <div class="nav-section-title">Cuenta</div>
 
-                <a href="#" class="nav-link">
+                <a href="{{ route('estudiante.perfil') }}" 
+                   class="nav-link {{ request()->routeIs('estudiante.perfil') ? 'active' : '' }}">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                     </svg>
@@ -807,25 +854,35 @@
 
                     <!-- CONTENIDO -->
                     <div class="practica-content" :class="isPracticaOpen({{ $practica->id }}) ? 'open' : ''">
-                        <div class="info-grid">
-                            <div class="info-box">
-                                <span class="info-label">Horas Requeridas</span>
-                                <span class="info-value">{{ $practica->horas_requeridas }} hrs</span>
-                            </div>
-                            <div class="info-box">
-                                <span class="info-label">Fecha de Inicio</span>
-                                <span class="info-value">{{ $practica->fecha_inicio ? $practica->fecha_inicio->format('d/m/Y') : 'No asignada' }}</span>
-                            </div>
-                        </div>
+                        <!-- Grid de 2 columnas: info + acciones -->
+                        <div class="practica-body">
+                            <!-- COLUMNA IZQUIERDA: Información -->
+                            <div class="practica-info-section">
+                                <div class="info-grid-compact">
+                                    <div class="info-box-compact">
+                                        <span class="info-label">Horas Requeridas</span>
+                                        <span class="info-value">{{ $practica->horas_requeridas }} hrs</span>
+                                    </div>
+                                    <div class="info-box-compact">
+                                        <span class="info-label">Fecha de Inicio</span>
+                                        <span class="info-value">{{ $practica->fecha_inicio ? $practica->fecha_inicio->format('d/m/Y') : 'No asignada' }}</span>
+                                    </div>
+                                    <div class="info-box-compact">
+                                        <span class="info-label">Fecha de Fin</span>
+                                        <span class="info-value">{{ $practica->fecha_finalizacion ? \Carbon\Carbon::parse($practica->fecha_finalizacion)->format('d/m/Y') : 'Pendiente' }}</span>
+                                    </div>
+                                </div>
 
-                        @if($practica->observaciones)
-                            <div class="observaciones-box">
-                                <div class="observaciones-label">Observaciones del Administrador:</div>
-                                <div class="observaciones-text">{{ $practica->observaciones }}</div>
+                                @if($practica->observaciones)
+                                    <div class="observaciones-box">
+                                        <div class="observaciones-label">Observaciones del Administrador:</div>
+                                        <div class="observaciones-text">{{ $practica->observaciones }}</div>
+                                    </div>
+                                @endif
                             </div>
-                        @endif
 
-                        <div class="acciones-container">
+                            <!-- COLUMNA DERECHA: Acciones -->
+                            <div class="acciones-container">
                             @if($practica->estado === 'asignada')
                                 <form action="{{ route('estudiante.practica.subir', $practica->id) }}" 
                                     method="POST" 
@@ -909,6 +966,7 @@
                                     <span>Práctica rechazada - Revisa las observaciones y vuelve a subir el documento</span>
                                 </div>
                             @endif
+                        </div>
                         </div>
                     </div>
                 </div>

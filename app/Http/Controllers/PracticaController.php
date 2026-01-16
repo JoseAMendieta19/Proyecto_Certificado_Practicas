@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 
 class PracticaController extends Controller
 {
@@ -14,12 +15,13 @@ class PracticaController extends Controller
      * Dashboard del estudiante
      */
     public function dashboardEstudiante()
-    {
-        $estudiante = auth()->user();
-        $practicas = $estudiante->practicas()->with('lugarPractica')->get();
-        
-        return view('dashboard_estudiante', compact('practicas'));
-    }
+{
+    $estudiante = auth()->user();
+    $practicas = $estudiante->practicas()->with('lugarPractica')->get();
+    
+    // ESTA ES TU VISTA CORRECTA
+    return view('dashboard_estudiante', compact('practicas'));
+}
 
     /**
      * Subir documento de validación
@@ -180,4 +182,41 @@ class PracticaController extends Controller
             \Log::error('Error enviando email de rechazo: ' . $e->getMessage());
         }
     }
+
+
+
+    public function editarPerfil()
+{
+    return view('profile.edit', [
+        'user' => Auth::user()
+    ]);
+}
+
+
+public function home()
+{
+    $estudiante = Auth::user();
+    
+    // Estadísticas
+    $totalPracticas = $estudiante->practicas->count();
+    $practicasAprobadas = $estudiante->practicas->where('estado', 'aprobada')->count();
+    $practicasPendientes = $estudiante->practicas->where('estado', 'pendiente_revision')->count();
+    $practicasAsignadas = $estudiante->practicas->where('estado', 'asignada')->count();
+    
+    // Actividad reciente (últimas 5 prácticas)
+    $actividadReciente = $estudiante->practicas()
+        ->orderBy('updated_at', 'desc')
+        ->take(5)
+        ->get();
+    
+    // MANTENER TU RUTA ORIGINAL
+    return view('admin.estudiantes.home', compact(
+        'totalPracticas',
+        'practicasAprobadas',
+        'practicasPendientes',
+        'practicasAsignadas',
+        'actividadReciente'
+    ));
+}
+
 }
