@@ -7,8 +7,10 @@ use App\Models\User;
 use App\Models\Practica;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\EstudiantesExport;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+
 
 class ReporteController extends Controller
 {
@@ -37,13 +39,20 @@ class ReporteController extends Controller
         $estado = $request->get('estado'); // filtro opcional
 
         $estudiantes = User::where('rol', 'estudiante')
-            ->with(['practicas' => function($query) use ($estado) {
+            ->when($estado, function ($query) use ($estado) {
+                $query->whereHas('practicas', function ($q) use ($estado) {
+                    $q->where('estado', $estado);
+                });
+            })
+            ->with(['practicas' => function ($query) use ($estado) {
                 if ($estado) {
                     $query->where('estado', $estado);
                 }
             }, 'institucion', 'carrera'])
             ->get();
 
+
+        
         if ($formato === 'pdf') {
             return $this->generarPDF($estudiantes, $estado);
         }
@@ -51,55 +60,93 @@ class ReporteController extends Controller
         return $this->generarExcel($estudiantes, $estado);
     }
 
+
     /**
      * Generar reporte en Excel
      */
     private function generarExcel($estudiantes, $estado)
     {
-        $data = [];
-        
+        $rows = [];
+
         foreach ($estudiantes as $estudiante) {
+
+            // 👉 CASO 1: NO tiene prácticas
+            if ($estudiante->practicas->isEmpty()) {
+
+                // Solo mostrar si el filtro es "Todos"
+                if (!$estado) {
+                    $rows[] = [
+                        $estudiante->cedula ?? 'N/A',
+                        $estudiante->nombres,
+                        $estudiante->apellidos,
+                        $estudiante->email,
+                        $estudiante->institucion->nombre ?? 'N/A',
+                        $estudiante->carrera->nombre ?? 'N/A',
+                        'Sin prácticas',
+                        'N/A',
+                        '0',
+                        'N/A',
+                        'N/A',
+                        'Sin prácticas asignadas',
+                        '',
+                    ];
+                }
+
+                continue;
+            }
+
+            // 👉 CASO 2: TIENE prácticas
             foreach ($estudiante->practicas as $practica) {
-                $data[] = [
-                    'Cédula' => $estudiante->cedula ?? 'N/A',
-                    'Nombres' => $estudiante->nombres,
-                    'Apellidos' => $estudiante->apellidos,
-                    'Email' => $estudiante->email,
-                    'Institución' => $estudiante->institucion->nombre ?? 'N/A',
-                    'Carrera' => $estudiante->carrera->nombre ?? 'N/A',
-                    'Tipo Práctica' => 'Práctica ' . $practica->tipo,
-                    'Lugar' => $practica->lugarPractica->nombre ?? 'N/A',
-                    'Horas' => $practica->horas_requeridas,
-                    'Fecha Inicio' => $practica->fecha_inicio ? $practica->fecha_inicio->format('d/m/Y') : 'N/A',
-                    'Fecha Fin' => $practica->fecha_finalizacion ? $practica->fecha_finalizacion->format('d/m/Y') : 'N/A',
-                    'Estado' => ucfirst(str_replace('_', ' ', $practica->estado)),
-                    'Observaciones' => $practica->observaciones ?? '',
+                $rows[] = [
+                    $estudiante->cedula ?? 'N/A',
+                    $estudiante->nombres,
+                    $estudiante->apellidos,
+                    $estudiante->email,
+                    $estudiante->institucion->nombre ?? 'N/A',
+                    $estudiante->carrera->nombre ?? 'N/A',
+                    'Práctica ' . $practica->tipo,
+                    $practica->lugarPractica->nombre ?? 'N/A',
+                    $practica->horas_requeridas,
+                    $practica->fecha_inicio?->format('d/m/Y') ?? 'N/A',
+                    $practica->fecha_finalizacion?->format('d/m/Y') ?? 'N/A',
+                    ucfirst(str_replace('_', ' ', $practica->estado)),
+                    $practica->observaciones ?? '',
                 ];
             }
         }
 
-        // Crear archivo Excel
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Encabezados
+        $sheet->fromArray([
+            [
+                'Cédula', 'Nombres', 'Apellidos', 'Email', 'Institución', 'Carrera',
+                'Tipo Práctica', 'Lugar', 'Horas', 'Fecha Inicio', 'Fecha Fin',
+                'Estado', 'Observaciones'
+            ]
+        ], null, 'A1');
+
+        // Datos
+        $sheet->fromArray($rows, null, 'A2');
+
+        // Ajustar ancho automático
+        foreach (range('A', $sheet->getHighestColumn()) as $col) {
+            $sheet->getColumnDimension($col)->setAutoSize(true);
+        }
+
+        $writer = new Xlsx($spreadsheet);
         $filename = 'reporte_practicas_' . now()->format('Y-m-d_His') . '.xlsx';
-        
-        return Excel::download(new class($data) implements \Maatwebsite\Excel\Concerns\FromArray, \Maatwebsite\Excel\Concerns\WithHeadings {
-            protected $data;
 
-            public function __construct($data)
-            {
-                $this->data = $data;
-            }
-
-            public function array(): array
-            {
-                return $this->data;
-            }
-
-            public function headings(): array
-            {
-                return array_keys($this->data[0] ?? []);
-            }
-        }, $filename);
+        return new StreamedResponse(function () use ($writer) {
+            $writer->save('php://output');
+        }, 200, [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'Content-Disposition' => 'attachment;filename="' . $filename . '"',
+        ]);
     }
+
+
 
     /**
      * Generar reporte en PDF
