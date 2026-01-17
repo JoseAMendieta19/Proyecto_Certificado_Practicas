@@ -20,22 +20,24 @@ class CertificadoController extends Controller
 
         // Verificar que la práctica está aprobada
         if ($practica->estado !== 'aprobada') {
-            return redirect()->route('dashboard.estudiante')
+            return redirect()->route('estudiante.practicas')
                 ->with('error', 'Solo puedes descargar certificados de prácticas aprobadas.');
         }
 
         // Cargar relaciones
         $practica->load(['estudiante.institucion', 'estudiante.carrera', 'lugarPractica']);
 
-        // Generar PDF
-        $pdf = Pdf::loadView('certificados.oficial', [
+        // Generar PDF - Usar vista oficial
+        $pdf = Pdf::loadView('admin.certificados.oficial', [
             'practica' => $practica,
             'estudiante' => $practica->estudiante,
-            'fecha_emision' => now()->format('d/m/Y')
+            'fecha_emision' => now()->locale('es')->isoFormat('D [de] MMMM [de] YYYY')
         ]);
 
         // Configurar orientación horizontal y tamaño carta
-        $pdf->setPaper('letter', 'landscape');
+        $pdf->setPaper('letter', 'landscape')
+            ->setOption('isRemoteEnabled', true)
+            ->setOption('isHtml5ParserEnabled', true);
 
         $filename = 'certificado_practica_' . $practica->tipo . '_' . $practica->estudiante->cedula . '.pdf';
 
@@ -43,25 +45,28 @@ class CertificadoController extends Controller
     }
 
     /**
-     * Vista previa del certificado (opcional)
+     * Vista previa del certificado
      */
     public function vista(Practica $practica)
     {
+        // Verificar que la práctica pertenece al estudiante autenticado
         if ($practica->user_id !== auth()->id()) {
-            abort(403);
+            abort(403, 'No tienes permiso para ver este certificado.');
         }
 
+        // Verificar que la práctica está aprobada
         if ($practica->estado !== 'aprobada') {
-            return redirect()->route('dashboard.estudiante')
+            return redirect()->route('estudiante.practicas')
                 ->with('error', 'Solo puedes ver certificados de prácticas aprobadas.');
         }
 
+        // Cargar relaciones
         $practica->load(['estudiante.institucion', 'estudiante.carrera', 'lugarPractica']);
 
         return view('admin.certificados.oficial', [
             'practica' => $practica,
             'estudiante' => $practica->estudiante,
-            'fecha_emision' => now()->format('d/m/Y'),
+            'fecha_emision' => now()->locale('es')->isoFormat('D [de] MMMM [de] YYYY'),
             'vista_previa' => true
         ]);
     }

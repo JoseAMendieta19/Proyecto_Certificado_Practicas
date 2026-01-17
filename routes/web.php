@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\LugarPracticaController;
 use App\Http\Controllers\Admin\ValidacionController;
 use App\Http\Controllers\Admin\ReporteController;
 use App\Http\Controllers\Admin\CertificadoController;
+use App\Http\Controllers\EstudianteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -116,35 +117,29 @@ Route::middleware(['auth', 'role:admin'])
 */
 Route::middleware(['auth', 'role:estudiante'])->group(function () {
 
-    Route::get('/dashboard-estudiante', [PracticaController::class, 'dashboardEstudiante'])
-        ->name('dashboard.estudiante');
+    // 🏠 Dashboard (HOME del estudiante)
+    Route::get('/dashboard-estudiante', [EstudianteController::class, 'dashboard'])
+        ->name('estudiante.dashboard');
 
+    // 📘 Mis Prácticas
+    Route::get('/estudiante/practicas', [EstudianteController::class, 'practicas'])
+        ->name('estudiante.practicas');
+
+    // 📤 Subir documentos
     Route::post('/estudiante/practica/{id}/subir', [PracticaController::class, 'subirDocumento'])
         ->name('estudiante.practica.subir');
 
-    // 🆕 Rutas para certificados
+    // 👤 Perfil
+    Route::get('/estudiante/perfil', [PracticaController::class, 'editarPerfil'])
+        ->name('estudiante.perfil');
+
+    // 📄 Certificados
+    // 📄 Certificados - IMPORTANTE: Usar CertificadoController SIN namespace Admin
     Route::get('/certificado/{practica}/descargar', [\App\Http\Controllers\CertificadoController::class, 'descargar'])
         ->name('certificado.descargar');
+
     Route::get('/certificado/{practica}/vista', [\App\Http\Controllers\CertificadoController::class, 'vista'])
         ->name('certificado.vista');
-
-    // Perfil del estudiante
-Route::get('/estudiante/perfil', [PracticaController::class, 'editarPerfil'])
-    ->name('estudiante.perfil');
-
-    Route::middleware(['auth', 'role:estudiante'])->group(function () {
-
-    // Dashboard Home (página principal al iniciar sesión)
-    Route::get('/estudiante/home', [PracticaController::class, 'home'])
-        ->name('estudiante.home');
-    
-    
-
-    // Mis Prácticas
-    Route::get('/estudiante/practicas', [PracticaController::class, 'dashboardEstudiante'])
-        ->name('dashboard.estudiante');
-});
-    
 });
 
 

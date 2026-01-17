@@ -34,7 +34,7 @@ class AuthenticatedSessionController extends Controller
         }
 
         if ($user->rol === 'estudiante') {
-            return redirect()->route('dashboard.estudiante');
+            return redirect()->route('estudiante.dashboard');
         }
 
         // Seguridad extra

@@ -20,6 +20,8 @@
     body {
         background-color: #f4f6f8;
         color: #1f2937;
+        overflow-x: hidden;
+        max-width: 100vw;
     }
 
     /* NAVBAR */
@@ -39,7 +41,7 @@
     }
 
     .nav-link:hover {
-        color: #b91c1c; /* rojo ULEAM */
+        color: #b91c1c;
     }
 
     .btn {
@@ -74,8 +76,8 @@
 
     /* HERO */
     .hero {
-        min-height: calc(90vh - 120px); /* resta la navbar */
-    padding-top: 90px;
+        min-height: calc(90vh - 120px);
+        padding-top: 90px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -83,14 +85,13 @@
     }
 
     .hero-content {
-    max-width: 1000px; /* más ancho */
-    background: #ffffff;
-    padding: 48px 56px; /* menos alto, más cómodo */
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-    text-align: center;
-}
-
+        max-width: 1000px;
+        background: #ffffff;
+        padding: 48px 56px;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        text-align: center;
+    }
 
     /* TITULOS */
     h1 {
@@ -104,7 +105,7 @@
         font-size: 2rem;
         font-weight: 700;
         color: #111827;
-        margin-bottom: 8px;
+        margin-bottom: 24px;
         text-align: center;
     }
 
@@ -113,7 +114,12 @@
         line-height: 1.6;
     }
 
-    /* FLUJO */
+    /* FLUJO DEL SISTEMA */
+    .flow-section {
+        padding: 60px 0;
+        background: #f4f6f8;
+    }
+
     .flow-step {
         background: #ffffff;
         padding: 28px;
@@ -135,177 +141,115 @@
         font-weight: 600;
     }
 
-/* =========================
-   CTA SECTION
-========================= */
-
-.cta-section {
-    background: #ffffff;
-    border-top: 57px solid #f4f6f8;
-    padding: 48px 24px;
-}
-
-/* GRID PRINCIPAL (si lo usas) */
-.cta-grid {
-    max-width: 1400px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1.4fr 1fr 1fr 0.8fr;
-    align-items: center;
-    gap: 48px;
-}
-
-/* CONTENEDOR CTA */
-.cta-content {
-    max-width: 1400px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1.3fr 0.4fr 0.7fr;
-    align-items: center;
-    gap: 40px;
-}
-
-.cta-text {
-    text-align: left;
-}
-
-/* Logo ULEAM */
-.uleam-logo {
-    height: 110px !important;
-    width: auto !important;
-    max-height: none !important;
-    max-width: none !important;
-    object-fit: contain;
-}
-
-
-/* =========================
-   CTA EXTRA (CONTACTO / REDES)
-========================= */
-
-.cta-extra {
-    display: grid;
-    grid-template-columns: repeat(2, max-content);
-    gap: 48px;
-    margin-top: 32px;
-}
-
-.cta-block h4 {
-    font-size: 0.9rem;
-    font-weight: 600;
-    letter-spacing: 0.6px;
-    text-transform: uppercase;
-    color: #1f2937;
-    margin-bottom: 14px;
-}
-
-/* =========================
-   LISTAS
-========================= */
-
-.cta-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.cta-list li {
-    margin-bottom: 10px;
-}
-
-/* LINKS BASE (ÚNICO, SIN DUPLICADOS) */
-.cta-list a {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 14px;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    font-weight: 500;
-    text-decoration: none;
-    border: 1px solid #e5e7eb;
-    transition: all 0.25s ease;
-}
-
-/* =========================
-   TARJETA CORREO
-========================= */
-
-.cta-mail {
-    background: #f9fafb;
-    color: #374151;
-}
-
-.cta-mail::before {
-    content: "✉";
-    width: 28px;
-    height: 28px;
-    border-radius: 6px;
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    color: #b91c1c;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.85rem;
-}
-
-.cta-mail:hover {
-    background: #fff5f5;
-    border-color: #b91c1c;
-    color: #b91c1c;
-}
-
-/* =========================
-   GITHUB
-========================= */
-
-.cta-github {
-    background: #f8fafc;
-    color: #111827;
-}
-
-.cta-github::before {
-    content: "";
-    width: 20px;
-    height: 20px;
-    background: url("https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg")
-        no-repeat center;
-    background-size: contain;
-}
-
-.cta-github:hover {
-    background: #eef2ff;
-    border-color: #6366f1;
-    transform: translateX(4px);
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media (max-width: 768px) {
-    .cta-content {
-        grid-template-columns: 1fr;
-        text-align: center;
+    /* CTA SECTION */
+    .cta-section {
+        background: #ffffff;
+        padding: 48px 24px;
     }
 
-    .cta-extra {
-        grid-template-columns: 1fr;
-        justify-content: center;
+    .cta-grid {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        align-items: start;
+        gap: 48px;
     }
 
+    .cta-col h2 {
+        text-align: left;
+        font-size: 1.5rem;
+        margin-bottom: 12px;
+    }
+
+    .cta-col h4 {
+        font-size: 0.9rem;
+        font-weight: 600;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+        color: #1f2937;
+        margin-bottom: 14px;
+    }
+
+    /* Logo ULEAM */
     .uleam-logo {
-        justify-self: center;
-        margin-top: 32px;
+        height: 110px !important;
+        width: auto !important;
+        max-height: none !important;
+        max-width: none !important;
+        object-fit: contain;
     }
-    
-}
 
+    /* LISTAS */
+    .cta-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
 
+    .cta-list li {
+        margin-bottom: 10px;
+    }
 
+    .cta-list a {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 14px;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        text-decoration: none;
+        border: 1px solid #e5e7eb;
+        transition: all 0.25s ease;
+    }
 
+    /* TARJETA CORREO */
+    .cta-mail {
+        background: #f9fafb;
+        color: #374151;
+    }
 
+    .cta-mail::before {
+        content: "✉";
+        width: 28px;
+        height: 28px;
+        border-radius: 6px;
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        color: #b91c1c;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+    }
+
+    .cta-mail:hover {
+        background: #fff5f5;
+        border-color: #b91c1c;
+        color: #b91c1c;
+    }
+
+    /* GITHUB */
+    .cta-github {
+        background: #f8fafc;
+        color: #111827;
+    }
+
+    .cta-github::before {
+        content: "";
+        width: 20px;
+        height: 20px;
+        background: url("https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg")
+            no-repeat center;
+        background-size: contain;
+    }
+
+    .cta-github:hover {
+        background: #eef2ff;
+        border-color: #6366f1;
+        transform: translateX(4px);
+    }
 
     /* FOOTER */
     footer {
@@ -316,42 +260,69 @@
         color: #6b7280;
     }
 
-   
-
-
-    @media (max-width: 768px) {
-    .cta-content {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .cta-text {
-        text-align: center;
-    }
-}
-
-
     /* UTILIDADES */
     .container {
         max-width: 1400px;
         margin: 0 auto;
-        padding: 0 16px;
+        padding: 0 24px;
+        width: 100%;
     }
 
     .grid {
         display: grid;
         gap: 32px;
+        width: 100%;
     }
 
+    .grid-4 {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    /* RESPONSIVE */
     @media (min-width: 768px) {
         .grid-4 {
             grid-template-columns: repeat(4, 1fr);
         }
     }
 
-    .py-24 {
-        padding-top: 0px;
-        padding-bottom: 10px;
+    @media (max-width: 1200px) {
+        .cta-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 1.8rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
+
+        .hero-content {
+            padding: 32px 24px;
+        }
+
+        .cta-grid {
+            grid-template-columns: 1fr;
+            gap: 32px;
+        }
+
+        .cta-col h2 {
+            text-align: center;
+        }
+
+        .uleam-logo {
+            height: 80px !important;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .grid-4 {
+            grid-template-columns: 1fr;
+        }
     }
     </style>
 </head>
@@ -370,7 +341,7 @@
                 @if(auth()->user()->rol === 'admin')
                     <a href="{{ route('admin.dashboard') }}" class="btn btn-login">Mi Cuenta</a>
                 @elseif(auth()->user()->rol === 'estudiante')
-                    <a href="{{ route('dashboard.estudiante') }}" class="btn btn-login">Mi Cuenta</a>
+                    <a href="{{ route('estudiante.dashboard') }}" class="btn btn-login">Mi Cuenta</a>
                 @endif
             @else
                 <a href="{{ route('login') }}" class="btn btn-login">
@@ -409,7 +380,7 @@
 </section>
 
 <!-- FLUJO -->
-<section class="py-24">
+<section class="flow-section">
     <div class="container">
         <h2>Flujo del sistema</h2>
 
@@ -470,12 +441,10 @@
         <!-- Logo -->
         <div class="cta-col cta-logo">
             <img
-    src="https://aulavirtualmoodle.uleam.edu.ec/pluginfile.php/1/core_admin/logo/0x200/1767816587/logo_ULEAM_2017_vertical.png"
-    alt="Logo ULEAM"
-    class="uleam-logo"
-    style="height:70px;width:auto;"
->
-
+                src="https://aulavirtualmoodle.uleam.edu.ec/pluginfile.php/1/core_admin/logo/0x200/1767816587/logo_ULEAM_2017_vertical.png"
+                alt="Logo ULEAM"
+                class="uleam-logo"
+            >
         </div>
 
     </div>
@@ -484,10 +453,8 @@
 <!-- FOOTER -->
 <footer>
     <p style="font-size:0.85rem;">
-        © todos los derechos reservados - Universidad Laica Eloy Alfaro de Manabí
+        © Todos los derechos reservados - Universidad Laica Eloy Alfaro de Manabí
     </p>
-
-    
 </footer>
 
 </body>

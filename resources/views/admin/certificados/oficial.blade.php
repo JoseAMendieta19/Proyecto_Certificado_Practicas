@@ -2,9 +2,14 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Certificado de Prácticas</title>
+
     <style>
+        @page {
+            margin: 0.5cm;
+            size: letter landscape;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,21 +18,19 @@
 
         body {
             font-family: 'Times New Roman', serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 40px;
+            background: white;
+            color: #2c3e50;
+            padding: 0;
         }
 
         .certificado {
             background: white;
             width: 100%;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 60px 80px;
-            border: 15px solid #2c3e50;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 20px 40px;
+            border: 8px solid #2c3e50;
+            border-radius: 0;
             position: relative;
-            overflow: hidden;
+            min-height: auto;
         }
 
         .certificado::before {
@@ -36,88 +39,92 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 10px;
+            height: 6px;
             background: linear-gradient(90deg, #3498db, #2ecc71, #f39c12, #e74c3c);
         }
 
         .header {
             text-align: center;
-            margin-bottom: 40px;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 20px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
         }
 
         .logo {
-            font-size: 48px;
+            font-size: 28px;
             color: #2c3e50;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .institucion {
-            font-size: 24px;
-            color: #34495e;
             font-weight: bold;
             margin-bottom: 5px;
         }
 
+        .institucion {
+            font-size: 16px;
+            color: #34495e;
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
         .subtitulo {
-            font-size: 14px;
+            font-size: 10px;
             color: #7f8c8d;
             font-style: italic;
         }
 
         .titulo-certificado {
             text-align: center;
-            font-size: 42px;
+            font-size: 28px;
             color: #2c3e50;
             font-weight: bold;
-            margin: 40px 0 30px 0;
+            margin: 12px 0 8px 0;
             text-transform: uppercase;
-            letter-spacing: 4px;
-            border-bottom: 4px solid #3498db;
-            padding-bottom: 15px;
+            letter-spacing: 3px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 8px;
         }
 
         .subtitulo-certificado {
             text-align: center;
-            font-size: 18px;
+            font-size: 12px;
             color: #7f8c8d;
-            margin-bottom: 40px;
+            margin-bottom: 15px;
             font-style: italic;
         }
 
         .contenido {
             text-align: justify;
-            font-size: 16px;
-            line-height: 2;
+            font-size: 11px;
+            line-height: 1.4;
             color: #2c3e50;
-            margin-bottom: 40px;
+            margin-bottom: 15px;
+        }
+
+        .contenido p {
+            margin-bottom: 8px;
         }
 
         .estudiante-nombre {
             display: inline-block;
-            font-size: 24px;
+            font-size: 16px;
             font-weight: bold;
             color: #2c3e50;
             border-bottom: 2px solid #3498db;
-            padding: 5px 20px;
-            margin: 0 10px;
+            padding: 3px 15px;
+            margin: 0 5px;
         }
 
         .detalle-box {
-            background: #ecf0f1;
-            border-left: 5px solid #3498db;
-            padding: 20px;
-            margin: 30px 0;
-            border-radius: 5px;
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 10px 12px;
+            margin: 12px 0;
+            border-radius: 3px;
         }
 
         .detalle-item {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 12px;
-            font-size: 15px;
+            margin-bottom: 5px;
+            font-size: 10px;
         }
 
         .detalle-label {
@@ -135,8 +142,8 @@
         .firmas {
             display: flex;
             justify-content: space-around;
-            margin-top: 80px;
-            padding-top: 40px;
+            margin-top: 25px;
+            padding-top: 15px;
         }
 
         .firma {
@@ -146,48 +153,48 @@
 
         .linea-firma {
             border-top: 2px solid #2c3e50;
-            margin-bottom: 10px;
-            padding-top: 60px;
+            margin-bottom: 8px;
+            padding-top: 30px;
         }
 
         .nombre-firma {
             font-weight: bold;
-            font-size: 16px;
+            font-size: 12px;
             color: #2c3e50;
         }
 
         .cargo-firma {
-            font-size: 13px;
+            font-size: 10px;
             color: #7f8c8d;
             font-style: italic;
         }
 
         .footer {
             text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 2px solid #ecf0f1;
-            font-size: 11px;
+            margin-top: 12px;
+            padding-top: 8px;
+            border-top: 1px solid #ecf0f1;
+            font-size: 8px;
             color: #95a5a6;
         }
 
         .codigo-verificacion {
             text-align: center;
-            margin-top: 30px;
-            font-size: 12px;
+            margin-top: 10px;
+            font-size: 9px;
             color: #7f8c8d;
-            background: #ecf0f1;
-            padding: 10px;
-            border-radius: 5px;
+            background: #f8f9fa;
+            padding: 6px;
+            border-radius: 3px;
         }
 
         .sello {
             position: absolute;
-            right: 80px;
-            bottom: 120px;
-            width: 120px;
-            height: 120px;
-            border: 4px solid #e74c3c;
+            right: 50px;
+            bottom: 60px;
+            width: 80px;
+            height: 80px;
+            border: 3px solid #e74c3c;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -200,18 +207,20 @@
             text-align: center;
             color: #e74c3c;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 11px;
         }
     </style>
+
 </head>
 <body>
     <div class="certificado">
+        <div class="borde-superior"></div>
         
         <!-- Sello de Aprobado -->
         <div class="sello">
             <div class="sello-texto">
                 APROBADO<br>
-                <span style="font-size: 12px;">{{ date('Y') }}</span>
+                <span style="font-size: 11px;">{{ date('Y') }}</span>
             </div>
         </div>
 
@@ -223,21 +232,17 @@
         </div>
 
         <!-- Título -->
-        <div class="titulo-certificado">
-            CERTIFICADO
-        </div>
-        <div class="subtitulo-certificado">
-            De Prácticas Profesionales
-        </div>
+        <div class="titulo-certificado">CERTIFICADO</div>
+        <div class="subtitulo-certificado">De Prácticas Profesionales</div>
 
         <!-- Contenido -->
         <div class="contenido">
-            <p style="text-align: center; margin-bottom: 30px;">
+            <p style="text-align: center; margin-bottom: 15px;">
                 La <strong>{{ $estudiante->institucion->nombre ?? 'Institución Educativa' }}</strong>, 
                 a través del presente documento, <strong>CERTIFICA</strong> que:
             </p>
 
-            <p style="text-align: center; margin: 30px 0;">
+            <p style="text-align: center; margin: 15px 0;">
                 <span class="estudiante-nombre">
                     {{ strtoupper($estudiante->nombres) }} {{ strtoupper($estudiante->apellidos) }}
                 </span>
@@ -254,31 +259,31 @@
         <!-- Detalles de la Práctica -->
         <div class="detalle-box">
             <div class="detalle-item">
-                <span class="detalle-label">Tipo de Práctica:</span>
-                <span class="detalle-valor">Práctica {{ $practica->tipo }}</span>
+                <strong>Tipo de Práctica:</strong>
+                <span>Práctica {{ $practica->tipo }}</span>
             </div>
             <div class="detalle-item">
-                <span class="detalle-label">Lugar de Ejecución:</span>
-                <span class="detalle-valor">{{ $practica->lugarPractica->nombre ?? 'N/A' }}</span>
+                <strong>Lugar de Ejecución:</strong>
+                <span>{{ $practica->lugarPractica->nombre ?? 'N/A' }}</span>
             </div>
             <div class="detalle-item">
-                <span class="detalle-label">Dirección:</span>
-                <span class="detalle-valor">{{ $practica->lugarPractica->direccion ?? 'N/A' }}</span>
+                <strong>Dirección:</strong>
+                <span>{{ $practica->lugarPractica->direccion ?? 'N/A' }}</span>
             </div>
             <div class="detalle-item">
-                <span class="detalle-label">Horas Cumplidas:</span>
-                <span class="detalle-valor">{{ $practica->horas_requeridas }} horas</span>
+                <strong>Horas Cumplidas:</strong>
+                <span>{{ $practica->horas_requeridas }} horas</span>
             </div>
             <div class="detalle-item">
-                <span class="detalle-label">Período:</span>
-                <span class="detalle-valor">
-                    {{ $practica->fecha_inicio ? $practica->fecha_inicio->format('d/m/Y') : 'N/A' }} - 
-                    {{ $practica->fecha_finalizacion ? $practica->fecha_finalizacion->format('d/m/Y') : 'N/A' }}
+                <strong>Período:</strong>
+                <span>
+                    {{ $practica->fecha_inicio ? \Carbon\Carbon::parse($practica->fecha_inicio)->format('d/m/Y') : 'N/A' }} - 
+                    {{ $practica->fecha_finalizacion ? \Carbon\Carbon::parse($practica->fecha_finalizacion)->format('d/m/Y') : 'N/A' }}
                 </span>
             </div>
         </div>
 
-        <p style="text-align: center; font-size: 15px; margin-top: 30px; line-height: 1.8;">
+        <p style="text-align: center; font-size: 12px; margin-top: 15px; line-height: 1.5;">
             Se extiende el presente certificado para los fines que el interesado/a estime conveniente,
             en la ciudad de <strong>Guayaquil</strong>, a los <strong>{{ now()->day }}</strong> días del mes de 
             <strong>{{ now()->locale('es')->monthName }}</strong> del año <strong>{{ now()->year }}</strong>.
@@ -286,15 +291,17 @@
 
         <!-- Firmas -->
         <div class="firmas">
-            <div class="firma">
-                <div class="linea-firma"></div>
-                <div class="nombre-firma">Ing. Juan Pérez</div>
-                <div class="cargo-firma">Director de Carrera</div>
-            </div>
-            <div class="firma">
-                <div class="linea-firma"></div>
-                <div class="nombre-firma">Dra. María González</div>
-                <div class="cargo-firma">Coordinadora de Prácticas</div>
+            <div class="firmas-container">
+                <div class="firma">
+                    <div class="linea-firma"></div>
+                    <div class="nombre-firma">Ing. Juan Pérez</div>
+                    <div class="cargo-firma">Director de Carrera</div>
+                </div>
+                <div class="firma">
+                    <div class="linea-firma"></div>
+                    <div class="nombre-firma">Dra. María González</div>
+                    <div class="cargo-firma">Coordinadora de Prácticas</div>
+                </div>
             </div>
         </div>
 
@@ -308,7 +315,6 @@
             Certificado emitido el {{ $fecha_emision }}<br>
             Este documento tiene validez oficial
         </div>
-
     </div>
 </body>
 </html>
