@@ -370,7 +370,7 @@
                 @if(auth()->user()->rol === 'admin')
                     <a href="{{ route('admin.dashboard') }}" class="btn btn-login">Mi Cuenta</a>
                 @elseif(auth()->user()->rol === 'estudiante')
-                    <a href="{{ route('dashboard.estudiante') }}" class="btn btn-login">Mi Cuenta</a>
+                    <a href="{{ route('estudiante.dashboard') }}" class="btn btn-login">Mi Cuenta</a>
                 @endif
             @else
                 <a href="{{ route('login') }}" class="btn btn-login">
