@@ -7,6 +7,11 @@ use App\Models\Practica;
 use App\Models\LugarPractica;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Models\Carrera;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
+
+
 
 class AdminController extends Controller
 {
@@ -147,5 +152,63 @@ class AdminController extends Controller
             \Log::error('Stack trace: ' . $e->getTraceAsString());
         }
     }
+
+
+
+    public function indexEstudiantes(Request $request)
+{
+    $search = $request->get('search');
+    
+    $estudiantes = User::where('rol', 'estudiante')
+        ->when($search, function ($query, $search) {
+            return $query->where(function($q) use ($search) {
+                $q->where('nombres', 'like', "%{$search}%")
+                  ->orWhere('apellidos', 'like', "%{$search}%")
+                  ->orWhere('cedula', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%");
+            });
+        })
+        ->with('carrera')
+        ->paginate(15);
+    
+    return view('admin.estudiantes.index', compact('estudiantes'));
+}
+
+public function editEstudiante($id)
+{
+    $estudiante = User::where('rol', 'estudiante')->findOrFail($id);
+    $carreras = Carrera::all();
+    
+    return view('admin.estudiantes.edit', compact('estudiante', 'carreras'));
+}
+
+public function updateEstudiante(Request $request, $id)
+{
+    $estudiante = User::where('rol', 'estudiante')->findOrFail($id);
+    
+    $request->validate([
+        'cedula' => 'required|string|max:10|unique:users,cedula,' . $id,
+        'email' => 'required|email|unique:users,email,' . $id,
+        'nombres' => 'required|string|max:255',
+        'apellidos' => 'required|string|max:255',
+        'carrera_id' => 'required|exists:carreras,id',
+        'nivel' => 'required|integer|min:1|max:10',
+    ]);
+    
+    $estudiante->update($request->all());
+    
+    return redirect()->route('admin.estudiantes.index')
+        ->with('success', 'Estudiante actualizado correctamente');
+}
+
+public function destroyEstudiante($id)
+{
+    $estudiante = User::where('rol', 'estudiante')->findOrFail($id);
+    $estudiante->delete();
+    
+    return redirect()->route('admin.estudiantes.index')
+        ->with('success', 'Estudiante eliminado correctamente');
+}
+
 
 }

@@ -187,7 +187,7 @@ class PracticaController extends Controller
 
     public function editarPerfil()
 {
-    return view('profile.edit', [
+    return view('profile.student-edit', [  // Cambia 'profile.edit' por 'profile.student-edit'
         'user' => Auth::user()
     ]);
 }

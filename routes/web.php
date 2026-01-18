@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\ReporteController;
 use App\Http\Controllers\Admin\CertificadoController;
 use App\Http\Controllers\EstudianteController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Ruta pública
@@ -141,6 +142,23 @@ Route::middleware(['auth', 'role:estudiante'])->group(function () {
     Route::get('/certificado/{practica}/vista', [\App\Http\Controllers\CertificadoController::class, 'vista'])
         ->name('certificado.vista');
 });
+
+
+
+
+// Rutas para Admin - Gestión de Estudiantes
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
+    // ... tus otras rutas de admin ...
+    
+    Route::get('/estudiantes', [AdminController::class, 'indexEstudiantes'])->name('admin.estudiantes.index');
+    Route::get('/estudiantes/{id}/editar', [AdminController::class, 'editEstudiante'])->name('admin.estudiantes.edit');
+    Route::put('/estudiantes/{id}', [AdminController::class, 'updateEstudiante'])->name('admin.estudiantes.update');
+    Route::delete('/estudiantes/{id}', [AdminController::class, 'destroyEstudiante'])->name('admin.estudiantes.destroy');
+});
+
+
+
+
 
 
 
