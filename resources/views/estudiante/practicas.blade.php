@@ -811,10 +811,10 @@
         @endif
 
         <!-- Header -->
-        <div class="content-header">
+        <!-- <div class="content-header">
             <h1>Bienvenido, {{ Auth::user()->nombres }} {{ Auth::user()->apellidos }}</h1>
             <p>Gestiona tus prácticas profesionales desde este panel</p>
-        </div>
+        </div> -->
 
         <!-- Contenedor de Prácticas -->
         <div class="practicas-container">

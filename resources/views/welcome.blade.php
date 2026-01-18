@@ -145,7 +145,7 @@
     /* CTA SECTION MEJORADA */
     .cta-section {
         background: #ffffff;
-        padding: 20px 20px;
+        padding: 35px 20px;
     }
 
     .cta-container {
@@ -300,9 +300,9 @@
 
     /* UTILIDADES */
     .container {
-        max-width: 1200px;
+        max-width: 1250px;
         margin: 0 auto;
-        padding: 0 24px;
+        padding: 0 0px;
         width: 100%;
     }
 

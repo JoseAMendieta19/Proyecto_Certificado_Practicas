@@ -559,6 +559,12 @@
     <!-- CONTENIDO PRINCIPAL -->
     <main class="main-content">
         <!-- Header -->
+
+        <!-- Header -->
+        <!-- <div class="content-header">
+            <h1>Bienvenido, {{ Auth::user()->nombres }} {{ Auth::user()->apellidos }}</h1>
+            <p>Gestiona tus prácticas profesionales desde este panel</p>
+        </div> -->
         <div class="content-header">
             <h1>Seguimiento General</h1>
         </div>
