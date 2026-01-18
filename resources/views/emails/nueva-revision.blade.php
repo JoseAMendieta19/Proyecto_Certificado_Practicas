@@ -30,6 +30,7 @@
                     <li><strong>Estudiante:</strong> {{ $practica->estudiante->nombres }} {{ $practica->estudiante->apellidos }}</li>
                     <li><strong>Email:</strong> {{ $practica->estudiante->email }}</li>
                     <li><strong>Cédula:</strong> {{ $practica->estudiante->cedula ?? 'N/A' }}</li>
+                    <li><strong>Periodo:</strong> {{ $practica->anio_lectivo ?? 'N/A' }}</li>
                     <li><strong>Práctica:</strong> Práctica {{ $practica->tipo }}</li>
                     <li><strong>Lugar:</strong> {{ $practica->lugarPractica->nombre ?? 'N/A' }}</li>
                     <li><strong>Horas:</strong> {{ $practica->horas_requeridas }} horas</li>

@@ -266,7 +266,7 @@
             font-weight: 700;
         }
 
-        /* ACORDEÓN DE PRÁCTICAS - REDISEÑADO */
+        /* ACORDEÓN DE PRÁCTICAS */
         .practicas-container {
             display: flex;
             flex-direction: column;
@@ -313,16 +313,6 @@
             font-weight: 600;
             color: #111827;
             margin: 0;
-        }
-
-        .practica-lugar {
-            font-size: 0.85rem;
-            color: #6b7280;
-        }
-
-        .practica-lugar strong {
-            color: #374151;
-            font-weight: 600;
         }
 
         .status-indicator {
@@ -384,27 +374,11 @@
             max-height: 2000px;
         }
 
-        /* INFO GRID - REDISEÑADO */
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .info-box {
-            text-align: center;
-            padding: 20px;
-            background: #f9fafb;
-            border-radius: 8px;
-            border: 1px solid #e5e7eb;
-        }
-
         /* NUEVA ESTRUCTURA DE 2 COLUMNAS */
         .practica-body {
             display: grid;
-            grid-template-columns: 1fr 400px;
-            gap: 24px;
+            grid-template-columns: 1.7fr 1.3fr;
+            gap: 20px;
             align-items: start;
         }
 
@@ -414,21 +388,93 @@
             gap: 20px;
         }
 
-        .info-grid-compact {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-        }
-
-        .info-box-compact {
-            text-align: center;
-            padding: 16px;
-            background: #f9fafb;
-            border-radius: 8px;
+        /* BLOQUES DE INFORMACIÓN REDISEÑADOS */
+        .info-section-block {
+            background: #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
             border: 1px solid #e5e7eb;
         }
 
-        .info-label {
+        .section-block-header {
+            background-color: #f5f6f8;
+            padding: 14px 18px;
+            border-bottom: 2px solid #e24040;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-block-icon {
+            font-size: 1.2rem;
+        }
+
+        .section-block-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #000000;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .section-block-content {
+            padding: 16px;
+            background: #ffffff;
+        }
+
+        .info-row {
+            display: flex;
+            padding: 10px 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .info-row:first-child {
+            padding-top: 0;
+        }
+
+        .info-row-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #6b7280;
+            min-width: 100px;
+            flex-shrink: 0;
+        }
+
+        .info-row-value {
+            font-size: 0.9rem;
+            color: #1f2937;
+            font-weight: 500;
+        }
+
+        /* GRID DETALLES */
+        .detalles-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .detalle-card {
+            background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%);
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .detalle-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(185, 28, 28, 0.1);
+            border-color: #fca5a5;
+        }
+
+        .detalle-label {
             font-size: 0.75rem;
             font-weight: 600;
             color: #6b7280;
@@ -438,35 +484,29 @@
             display: block;
         }
 
-        .info-value {
-            font-size: 1.25rem;
+        .detalle-value {
+            font-size: 1.1rem;
             font-weight: 700;
             color: #b91c1c;
+            display: block;
         }
 
-        /* OBSERVACIONES - REDISEÑADO */
+        /* OBSERVACIONES */
         .observaciones-box {
-            background: #fef2f2;
+            background: linear-gradient(135deg, #fef2f2 0%, #ffffff 100%);
             border-left: 4px solid #b91c1c;
-            padding: 18px 20px;
+            padding: 16px 18px;
             border-radius: 6px;
-            margin-bottom: 24px;
+            margin: 0;
             border: 1px solid #fecaca;
-        }
-
-        .observaciones-label {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: #991b1b;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            border-left-width: 4px;
         }
 
         .observaciones-text {
             font-size: 0.9rem;
             color: #7f1d1d;
             line-height: 1.6;
+            font-style: italic;
         }
 
         /* ACCIONES */
@@ -571,7 +611,7 @@
             height: 18px;
         }
 
-        /* FORMULARIO DE SUBIDA - REDISEÑADO */
+        /* FORMULARIO DE SUBIDA */
         .upload-form {
             background: white;
             border: 1px solid #e5e7eb;
@@ -651,10 +691,6 @@
         }
 
         @media (max-width: 768px) {
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
-
             .practica-body {
                 grid-template-columns: 1fr;
             }
@@ -663,7 +699,7 @@
                 position: static;
             }
 
-            .info-grid-compact {
+            .detalles-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -765,12 +801,12 @@
                 </a>
 
                 <a href="{{ route('estudiante.practicas') }}" 
-   class="nav-link {{ request()->routeIs('estudiante.practicas') ? 'active' : '' }}">
-    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-    </svg>
-    Mis Prácticas
-</a>
+                   class="nav-link {{ request()->routeIs('estudiante.practicas') ? 'active' : '' }}">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                    </svg>
+                    Mis Prácticas
+                </a>
             </div>
 
             <div class="nav-divider"></div>
@@ -810,12 +846,6 @@
             </div>
         @endif
 
-        <!-- Header -->
-        <!-- <div class="content-header">
-            <h1>Bienvenido, {{ Auth::user()->nombres }} {{ Auth::user()->apellidos }}</h1>
-            <p>Gestiona tus prácticas profesionales desde este panel</p>
-        </div> -->
-
         <!-- Contenedor de Prácticas -->
         <div class="practicas-container">
             <h2 class="section-title">Mis Prácticas Profesionales</h2>
@@ -830,9 +860,6 @@
                     <div class="practica-header" @click="togglePractica({{ $practica->id }})">
                         <div class="practica-title">
                             <h3>Práctica {{ $practica->tipo }}</h3>
-                            <p class="practica-lugar">
-                                <strong>Lugar:</strong> {{ $practica->lugarPractica->nombre ?? 'N/A' }}
-                            </p>
                         </div>
                         <div class="status-indicator">
                             <span class="status-badge 
@@ -858,115 +885,204 @@
                         <div class="practica-body">
                             <!-- COLUMNA IZQUIERDA: Información -->
                             <div class="practica-info-section">
-                                <div class="info-grid-compact">
-                                    <div class="info-box-compact">
-                                        <span class="info-label">Horas Requeridas</span>
-                                        <span class="info-value">{{ $practica->horas_requeridas }} hrs</span>
+                                <!-- Estudiante -->
+                                <div class="info-section-block">
+                                    <div class="section-block-header">
+                                        <span class="section-block-title">Estudiante</span>
                                     </div>
-                                    <div class="info-box-compact">
-                                        <span class="info-label">Fecha de Inicio</span>
-                                        <span class="info-value">{{ $practica->fecha_inicio ? $practica->fecha_inicio->format('d/m/Y') : 'No asignada' }}</span>
-                                    </div>
-                                    <div class="info-box-compact">
-                                        <span class="info-label">Fecha de Fin</span>
-                                        <span class="info-value">{{ $practica->fecha_finalizacion ? \Carbon\Carbon::parse($practica->fecha_finalizacion)->format('d/m/Y') : 'Pendiente' }}</span>
+                                    <div class="section-block-content">
+                                        <div class="info-row">
+                                            <span class="info-row-label">Nombre:</span>
+                                            <span class="info-row-value">{{ Auth::user()->nombres }} {{ Auth::user()->apellidos }}</span>
+                                        </div>
+                                        <div class="info-row">
+                                            <span class="info-row-label">Cédula:</span>
+                                            <span class="info-row-value">{{ Auth::user()->cedula }}</span>
+                                        </div>
+                                        <div class="info-row">
+                                            <span class="info-row-label">Correo:</span>
+                                            <span class="info-row-value">{{ Auth::user()->email }}</span>
+                                        </div>
+                                        <div class="info-row">
+                                            <span class="info-row-label">Institución:</span>
+                                            <span class="info-row-value">
+                                                {{ Auth::user()->institucion->nombre ?? 'No asignada' }}
+                                            </span>
+                                        </div>
+
+                                        <div class="info-row">
+                                            <span class="info-row-label">Carrera:</span>
+                                            <span class="info-row-value">
+                                                {{ Auth::user()->carrera->nombre ?? 'No asignada' }}
+                                            </span>
+                                        </div>
+
                                     </div>
                                 </div>
 
+                                <!-- Lugar de Práctica -->
+                                <div class="info-section-block">
+                                    <div class="section-block-header">
+                                        <span class="section-block-title">Lugar de Práctica</span>
+                                    </div>
+                                    <div class="section-block-content">
+                                        <div class="info-row">
+                                            <span class="info-row-label">Institución:</span>
+                                            <span class="info-row-value">{{ $practica->lugarPractica->nombre ?? 'N/A' }}</span>
+                                        </div>
+                                        <div class="info-row">
+                                            <span class="info-row-label">Dirección:</span>
+                                            <span class="info-row-value">{{ $practica->lugarPractica->direccion ?? 'N/A' }}</span>
+                                        </div>
+                                        <div class="info-row">
+                                            <span class="info-row-label">Teléfono:</span>
+                                            <span class="info-row-value">{{ $practica->lugarPractica->telefono ?? 'N/A' }}</span>
+                                        </div>
+                                        <div class="info-row">
+                                            <span class="info-row-label">Correo:</span>
+                                            <span class="info-row-value">{{ $practica->lugarPractica->email ?? 'N/A' }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Detalles de la Práctica -->
+                                <div class="info-section-block">
+                                    <div class="section-block-header">
+                                        <span class="section-block-title">Detalles de la Práctica</span>
+                                    </div>
+                                    <div class="section-block-content">
+                                        <div class="info-row">
+                                            <span class="info-row-label">Periodo:</span>
+                                            <span class="info-row-value">{{ $practica->anio_lectivo ?? 'N/A' }}</span>
+                                        </div>
+                                        <div class="info-row">
+                                            <span class="info-row-label">Horas:</span>
+                                            <span class="info-row-value">{{ $practica->horas_requeridas ?? 'N/A' }} hrs</span>
+                                        </div>
+                                        <div class="info-row">
+                                            <span class="info-row-label">Desde:</span>
+                                            <span class="info-row-value">
+                                                {{ $practica->fecha_inicio ? $practica->fecha_inicio->format('d/m/Y') : 'N/A' }}
+                                            </span>
+                                        </div>
+                                        <div class="info-row">
+                                            <span class="info-row-label">Hasta:</span>
+                                            <span class="info-row-value">
+                                                {{ $practica->fecha_finalizacion 
+                                                    ? \Carbon\Carbon::parse($practica->fecha_finalizacion)->format('d/m/Y') 
+                                                    : 'Pendiente' 
+                                                }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                               <!-- Observaciones -->
                                 @if($practica->observaciones)
-                                    <div class="observaciones-box">
-                                        <div class="observaciones-label">Observaciones del Administrador:</div>
-                                        <div class="observaciones-text">{{ $practica->observaciones }}</div>
+                                    <div class="info-section-block">
+                                        <div class="section-block-header">
+                                            <span class="section-block-title">Observaciones</span>
+                                        </div>
+                                        <div class="section-block-content">
+                                            <div class="info-row">
+                                                <span class="info-row-label">Detalle:</span>
+                                                <span class="info-row-value">
+                                                    {{ $practica->observaciones }}
+                                                </span>
+                                            </div>
+                                        </div>
                                     </div>
                                 @endif
+
                             </div>
 
                             <!-- COLUMNA DERECHA: Acciones -->
                             <div class="acciones-container">
-                            @if($practica->estado === 'asignada')
-                                <form action="{{ route('estudiante.practica.subir', $practica->id) }}" 
-                                    method="POST" 
-                                    enctype="multipart/form-data"
-                                    class="upload-form">
-                                    @csrf
-                                    <div class="form-row">
-                                        <div class="form-group">
-                                            <label class="form-label">Fecha de Finalización</label>
-                                            <input type="date" 
-                                                name="fecha_finalizacion" 
-                                                required
-                                                max="{{ date('Y-m-d') }}"
-                                                class="form-input">
+                                @if($practica->estado === 'asignada')
+                                    <form action="{{ route('estudiante.practica.subir', $practica->id) }}" 
+                                        method="POST" 
+                                        enctype="multipart/form-data"
+                                        class="upload-form">
+                                        @csrf
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label class="form-label">Fecha de Finalización</label>
+                                                <input type="date" 
+                                                    name="fecha_finalizacion" 
+                                                    required
+                                                    max="{{ date('Y-m-d') }}"
+                                                    class="form-input">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Subir Certificado (PDF)</label>
+                                                <input type="file" 
+                                                    name="archivo" 
+                                                    accept=".pdf"
+                                                    required
+                                                    class="form-input">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">
+                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                                                </svg>
+                                                Enviar
+                                            </button>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="form-label">Subir Certificado (PDF)</label>
-                                            <input type="file" 
-                                                name="archivo" 
-                                                accept=".pdf"
-                                                required
-                                                class="form-input">
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">
+                                    </form>
+
+                                @elseif($practica->estado === 'pendiente_revision')
+                                    <div class="status-message warning">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                        <span>Documento en revisión por el administrador</span>
+                                    </div>
+
+                                @elseif($practica->estado === 'aprobada')
+                                    <div class="status-message success">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                        <span>¡Práctica aprobada exitosamente!</span>
+                                    </div>
+                                    
+                                    <div class="actions-row">
+                                        <a href="{{ route('certificado.vista', $practica) }}" 
+                                           target="_blank"
+                                           class="btn btn-secondary">
                                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                                             </svg>
-                                            Enviar
-                                        </button>
+                                            Ver Certificado
+                                        </a>
+                                        
+                                        <a href="{{ route('certificado.descargar', $practica) }}" 
+                                           class="btn btn-success">
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                            </svg>
+                                            Descargar PDF
+                                        </a>
                                     </div>
-                                </form>
 
-                            @elseif($practica->estado === 'pendiente_revision')
-                                <div class="status-message warning">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                    </svg>
-                                    <span>Documento en revisión por el administrador</span>
-                                </div>
-
-                            @elseif($practica->estado === 'aprobada')
-                                <div class="status-message success">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                            </svg>
-                                    <span>¡Práctica aprobada exitosamente!</span>
-                                </div>
-                                
-                                <div class="actions-row">
-                                    <a href="{{ route('certificado.vista', $practica) }}" 
-                                       target="_blank"
-                                       class="btn btn-secondary">
+                                @elseif($practica->estado === 'rechazada')
+                                    <div class="status-message error">
                                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                         </svg>
-                                        Ver Certificado
-                                    </a>
-                                    
-                                    <a href="{{ route('certificado.descargar', $practica) }}" 
-                                       class="btn btn-success">
-                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                        </svg>
-                                        Descargar PDF
-                                    </a>
-                                </div>
-
-                            @elseif($practica->estado === 'rechazada')
-                                <div class="status-message error">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                    </svg>
-                                    <span>Práctica rechazada - Revisa las observaciones y vuelve a subir el documento</span>
-                                </div>
-                            @endif
-                        </div>
+                                        <span>Práctica rechazada - Revisa las observaciones y vuelve a subir el documento</span>
+                                    </div>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -987,4 +1103,4 @@
     </main>
 
 </body>
-</html>
+</html

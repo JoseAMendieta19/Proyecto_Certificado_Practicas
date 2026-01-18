@@ -88,6 +88,7 @@
         <ul>
             <li><strong>Lugar de práctica:</strong> {{ $practica->lugarPractica->nombre ?? 'N/A' }}</li>
             <li><strong>Horas requeridas:</strong> {{ $practica->horas_requeridas }} horas</li>
+            <li><strong>Periodo:</strong> {{ $practica->anio_lectivo ?? 'N/A' }}</li>
             <li><strong>Fecha de inicio:</strong>
                 {{ $practica->fecha_inicio ? $practica->fecha_inicio->format('d/m/Y') : 'N/A' }}
             </li>

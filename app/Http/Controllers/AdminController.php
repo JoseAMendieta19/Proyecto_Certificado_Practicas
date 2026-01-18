@@ -41,7 +41,20 @@ class AdminController extends Controller
         // Obtener lugares activos
         $lugaresPractica = LugarPractica::where('activo', true)->get();
 
-        return view('admin.estudiantes.asignar', compact('estudiante', 'practicaI', 'practicaII', 'lugaresPractica'));
+        // 🆕 Obtener años lectivos para el combobox
+        $aniosLectivos = Practica::obtenerAniosLectivos();
+        
+        // 🆕 Obtener año lectivo actual como valor por defecto
+        $anioLectivoActual = Practica::obtenerAnioLectivoActual();
+
+        return view('admin.estudiantes.asignar', compact(
+            'estudiante', 
+            'practicaI', 
+            'practicaII', 
+            'lugaresPractica',
+            'aniosLectivos',      // 🆕
+            'anioLectivoActual'   // 🆕
+        ));
     }
 
     /**
@@ -51,6 +64,7 @@ class AdminController extends Controller
     {
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
+            'anio_lectivo' => 'required|regex:/^\d{4}-[12]$/', // 🆕 NUEVO
             'tipo' => 'required|in:I,II',
             'lugar_practica_id' => 'required|exists:lugares_practica,id',
             'horas_requeridas' => 'required|integer|min:1|max:500',
@@ -58,6 +72,8 @@ class AdminController extends Controller
             'observaciones' => 'nullable|string|max:500'
         ], [
             'user_id.required' => 'El estudiante es obligatorio',
+            'anio_lectivo.required' => 'El año lectivo es obligatorio', // 🆕
+            'anio_lectivo.regex' => 'El formato del año lectivo no es válido', // 🆕
             'tipo.required' => 'Debes seleccionar el tipo de práctica',
             'tipo.in' => 'El tipo de práctica debe ser I o II',
             'lugar_practica_id.required' => 'Debes seleccionar un lugar de práctica',
@@ -100,6 +116,7 @@ class AdminController extends Controller
         // Crear la práctica
         $practica = Practica::create([
             'user_id' => $validated['user_id'],
+            'anio_lectivo' => $validated['anio_lectivo'], // 🆕 NUEVO
             'tipo' => $validated['tipo'],
             'lugar_practica_id' => $validated['lugar_practica_id'],
             'horas_requeridas' => $validated['horas_requeridas'],

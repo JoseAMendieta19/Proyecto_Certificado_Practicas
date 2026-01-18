@@ -26,6 +26,7 @@
             <ul>
                 <li><strong>Lugar:</strong> {{ $practica->lugarPractica->nombre ?? 'N/A' }}</li>
                 <li><strong>Horas completadas:</strong> {{ $practica->horas_requeridas }} horas</li>
+                <li><strong>Periodo:</strong> {{ $practica->anio_lectivo ?? 'N/A' }}</li>
                 <li><strong>Fecha de inicio:</strong> {{ $practica->fecha_inicio ? $practica->fecha_inicio->format('d/m/Y') : 'N/A' }}</li>
                 <li><strong>Fecha de finalización:</strong> {{ $practica->fecha_finalizacion ? $practica->fecha_finalizacion->format('d/m/Y') : 'N/A' }}</li>
             </ul>

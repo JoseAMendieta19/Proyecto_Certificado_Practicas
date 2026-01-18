@@ -150,6 +150,18 @@
             font-weight: 500;
         }
 
+        /* 🆕 BADGE PARA AÑO LECTIVO ACTUAL */
+        .badge-actual {
+            display: inline-block;
+            background: #dcfce7;
+            color: #166534;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-left: 8px;
+        }
+
         /* ALERTA INFO */
         .alert-info {
             background: #eff6ff;
@@ -319,6 +331,36 @@
                 <input type="hidden" name="user_id" value="{{ $estudiante->id }}">
 
                 <div class="form-body">
+                    
+                    {{-- 🆕 AÑO LECTIVO - NUEVO CAMPO --}}
+                    <div class="form-group">
+                        <label for="anio_lectivo" class="form-label">
+                            Año Lectivo<span class="required">*</span>
+                        </label>
+                        <select name="anio_lectivo" 
+                                id="anio_lectivo" 
+                                required
+                                class="form-select @error('anio_lectivo') error @enderror">
+                            <option value="">Seleccione el año lectivo</option>
+                            @foreach($aniosLectivos as $anio)
+                                <option value="{{ $anio }}" 
+                                    {{ old('anio_lectivo', $anioLectivoActual) == $anio ? 'selected' : '' }}>
+                                    {{ $anio }}
+                                    @if($anio == $anioLectivoActual)
+                                        (Actual)
+                                    @endif
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('anio_lectivo')
+                            <span class="form-error">{{ $message }}</span>
+                        @enderror
+                        <span class="form-hint">
+                            Período académico al que corresponde esta práctica. 
+                            Año actual: <strong>{{ $anioLectivoActual }}</strong>
+                        </span>
+                    </div>
+
                     <!-- Tipo de Práctica -->
                     <div class="form-group">
                         <label for="tipo" class="form-label">
