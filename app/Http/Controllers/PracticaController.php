@@ -43,13 +43,13 @@ class PracticaController extends Controller
 
         // Verificar que la práctica pertenece al estudiante
         if ($practica->user_id !== auth()->id()) {
-            return redirect()->route('dashboard.estudiante')
+            return redirect()->route('estudiante.dashboard')
                 ->with('error', 'No tienes permiso para modificar esta práctica.');
         }
 
         // Verificar que está en estado "asignada"
         if ($practica->estado !== 'asignada') {
-            return redirect()->route('dashboard.estudiante')
+            return redirect()->route('estudiante.dashboard')
                 ->with('error', 'Esta práctica ya no puede ser modificada.');
         }
 
@@ -73,7 +73,7 @@ class PracticaController extends Controller
         // Enviar notificación al administrador
         $this->notificarAdministrador($practica);
 
-        return redirect()->route('dashboard.estudiante')
+        return redirect()->route('estudiante.dashboard')
             ->with('success', '¡Documento subido exitosamente! El administrador revisará tu práctica pronto.');
     }
 
