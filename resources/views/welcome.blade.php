@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="es">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name', 'Sistema de Certificados') }}</title>
-
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <title>Sistema de Certificados</title>
 
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
@@ -76,8 +74,9 @@
 
     /* HERO */
     .hero {
-        min-height: calc(90vh - 120px);
-        padding-top: 90px;
+        min-height: calc(70vh - 120px);
+        padding-top: 95px;
+        padding-bottom: 0px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -87,7 +86,7 @@
     .hero-content {
         max-width: 1000px;
         background: #ffffff;
-        padding: 48px 56px;
+        padding: 30px 38px;
         border-radius: 8px;
         box-shadow: 0 4px 20px rgba(0,0,0,0.05);
         text-align: center;
@@ -95,10 +94,12 @@
 
     /* TITULOS */
     h1 {
-        font-size: 2.4rem;
+        font-size: 2.0rem;
         font-weight: 700;
         color: #111827;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
+        margin-top: 0;
+        line-height: 1.3;
     }
 
     h2 {
@@ -141,128 +142,165 @@
         font-weight: 600;
     }
 
-    /* CTA SECTION */
+    /* CTA SECTION MEJORADA */
     .cta-section {
         background: #ffffff;
-        padding: 48px 24px;
+        padding: 20px 20px;
     }
 
-    .cta-grid {
+    .cta-container {
         max-width: 1400px;
         margin: 0 auto;
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        align-items: start;
-        gap: 48px;
+        grid-template-columns: 0.9fr 2.8fr 1fr;
+        gap: 40px;
+        align-items: center;
+        padding: 0 40px;
     }
 
-    .cta-col h2 {
+    /* COLUMNA IZQUIERDA - TÍTULO */
+    .cta-left {
+        padding-right: 15px;
+    }
+
+    .cta-left h2 {
         text-align: left;
-        font-size: 1.5rem;
-        margin-bottom: 12px;
+        font-size: 1.25rem;
+        margin-bottom: 8px;
     }
 
-    .cta-col h4 {
-        font-size: 0.9rem;
+    .cta-left p {
+        color: #6b7280;
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+
+    /* COLUMNA CENTRO - CONTACTOS Y REDES */
+    .cta-center {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .section-title {
+        font-size: 0.7rem;
         font-weight: 600;
-        letter-spacing: 0.6px;
+        letter-spacing: 0.8px;
         text-transform: uppercase;
-        color: #1f2937;
-        margin-bottom: 14px;
-    }
-
-    /* Logo ULEAM */
-    .uleam-logo {
-        height: 110px !important;
-        width: auto !important;
-        max-height: none !important;
-        max-width: none !important;
-        object-fit: contain;
-    }
-
-    /* LISTAS */
-    .cta-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .cta-list li {
+        color: #b91c1c;
         margin-bottom: 10px;
     }
 
-    .cta-list a {
-        display: inline-flex;
-        align-items: center;
+    .contacts-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
         gap: 10px;
-        padding: 8px 14px;
-        border-radius: 8px;
-        font-size: 0.95rem;
-        font-weight: 500;
-        text-decoration: none;
-        border: 1px solid #e5e7eb;
-        transition: all 0.25s ease;
     }
 
-    /* TARJETA CORREO */
-    .cta-mail {
+    .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 12px;
         background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: all 0.25s ease;
         color: #374151;
+        font-size: 0.8rem;
+        font-weight: 500;
+        white-space: nowrap;
     }
 
-    .cta-mail::before {
-        content: "✉";
-        width: 28px;
-        height: 28px;
-        border-radius: 6px;
+    .contact-item:hover {
+        background: #fff5f5;
+        border-color: #111111;
+        color: #353535;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(185, 28, 28, 0.1);
+    }
+
+    .contact-icon {
+        width: 14px;
+        height: 14px;
         background: #ffffff;
         border: 1px solid #e5e7eb;
-        color: #b91c1c;
+        border-radius: 4px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 0.85rem;
-    }
-
-    .cta-mail:hover {
-        background: #fff5f5;
-        border-color: #b91c1c;
         color: #b91c1c;
+        font-size: 0.7rem;
+        flex-shrink: 0;
     }
 
-    /* GITHUB */
-    .cta-github {
+    /* SECCIÓN DE REDES SOCIALES */
+    .social-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    .social-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 8px 12px;
         background: #f8fafc;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        text-decoration: none;
         color: #111827;
+        font-size: 0.8rem;
+        font-weight: 500;
+        transition: all 0.25s ease;
+        white-space: nowrap;
     }
 
-    .cta-github::before {
-        content: "";
-        width: 20px;
-        height: 20px;
-        background: url("https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg")
-            no-repeat center;
-        background-size: contain;
-    }
-
-    .cta-github:hover {
+    .social-item:hover {
         background: #eef2ff;
-        border-color: #6366f1;
+        border-color: #0f0f13;
         transform: translateX(4px);
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+    }
+
+    .github-icon {
+        width: 14px;
+        height: 14px;
+        background: url("https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg") no-repeat center;
+        background-size: contain;
+        flex-shrink: 0;
+    }
+
+    /* COLUMNA DERECHA - LOGO */
+    .cta-right {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding-left: 30px;
+    }
+
+    .uleam-logo {
+        height: 100px !important;
+        width: auto !important;
+        object-fit: contain;
+        margin-right: 20px;
     }
 
     /* FOOTER */
     footer {
-        background: #131513;
+        background: #404142;
         border-top: 1px solid #e5e7eb;
-        padding: 32px 24px;
+        padding: 20px 24px;
         text-align: center;
         color: #6b7280;
     }
 
     /* UTILIDADES */
     .container {
-        max-width: 1400px;
+        max-width: 1200px;
         margin: 0 auto;
         padding: 0 24px;
         width: 100%;
@@ -285,10 +323,35 @@
         }
     }
 
-    @media (max-width: 1200px) {
-        .cta-grid {
-            grid-template-columns: repeat(2, 1fr);
+    @media (max-width: 992px) {
+        .cta-container {
+            grid-template-columns: 1fr;
             gap: 32px;
+            text-align: center;
+        }
+
+        .cta-left h2 {
+            text-align: center;
+        }
+
+        .cta-center {
+            align-items: center;
+        }
+
+        .contacts-grid {
+            grid-template-columns: 1fr;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .social-grid {
+            grid-template-columns: repeat(3, 1fr);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .cta-right {
+            justify-content: center;
         }
     }
 
@@ -305,25 +368,19 @@
             padding: 32px 24px;
         }
 
-        .cta-grid {
-            grid-template-columns: 1fr;
-            gap: 32px;
-        }
-
-        .cta-col h2 {
-            text-align: center;
-        }
-
         .uleam-logo {
-            height: 80px !important;
-            margin: 0 auto;
-            display: block;
+            height: 70px !important;
         }
 
         .grid-4 {
             grid-template-columns: 1fr;
         }
+
+        .social-grid {
+            grid-template-columns: 1fr;
+        }
     }
+    
     </style>
 </head>
 
@@ -337,23 +394,8 @@
         </span>
 
         <div style="display:flex;gap:14px;align-items:center;">
-            @auth
-                @if(auth()->user()->rol === 'admin')
-                    <a href="{{ route('admin.dashboard') }}" class="btn btn-login">Mi Cuenta</a>
-                @elseif(auth()->user()->rol === 'estudiante')
-                    <a href="{{ route('estudiante.dashboard') }}" class="btn btn-login">Mi Cuenta</a>
-                @endif
-            @else
-                <a href="{{ route('login') }}" class="btn btn-login">
-                    Iniciar sesión
-                </a>
-
-                @if (Route::has('register'))
-                    <a href="{{ route('register') }}" class="btn btn-register">
-                        Registrarse
-                    </a>
-                @endif
-            @endauth
+            <a href="{{ route('login') }}" class="btn btn-login">Iniciar sesión</a>
+            <a href="{{ route('register') }}" class="btn btn-register">Registrarse</a>
         </div>
     </div>
 </nav>
@@ -362,20 +404,24 @@
 <section class="hero">
     <div class="hero-content">
         <h1>
-            Gestión de Certificados<br>
-            de Prácticas Preprofesionales
+            Gestión de<br>
+            Prácticas Preprofesionales
         </h1>
 
-        <p style="max-width:620px;margin:0 auto 40px;">
+        <p style="max-width:620px;margin:0 auto 32px;">
             Sistema institucional para el registro, validación y emisión
-            de certificados de prácticas preprofesionales universitarias.
+            de certificados de prácticas preprofesionales universitarias de la ULEAM.
         </p>
 
-        @if (Route::has('register'))
-            <a href="{{ route('register') }}" class="btn btn-register">
-                Crear cuenta
-            </a>
-        @endif
+        <img 
+            src="{{ asset('imagenes/estudiantes.jpg') }}" 
+            alt="Estudiantes con certificados"
+            style="width: 100%; max-width: 750px; height: auto; border-radius: 12px; margin-bottom: 18px; display: block; box-shadow: 0 4px 20px rgba(0,0,0,0.1);"
+        >
+
+        <div style="text-align: center; padding-bottom: 10px; padding-top: 18px;">
+            <a href="{{ route('register') }}" class="btn btn-register">Crear cuenta</a>
+        </div>
     </div>
 </section>
 
@@ -410,36 +456,55 @@
 
 <!-- CTA -->
 <section class="cta-section">
-    <div class="cta-grid">
-
-        <!-- Plataforma -->
-        <div class="cta-col">
+    <div class="cta-container">
+        
+        <!-- IZQUIERDA: Título y descripción -->
+        <div class="cta-left">
             <h2>Plataforma institucional</h2>
             <p>Desarrollado para la gestión académica universitaria</p>
         </div>
 
-        <!-- Contacto -->
-        <div class="cta-col">
-            <h4>Contáctanos</h4>
-            <ul class="cta-list">
-                <li><a class="cta-mail" href="mailto:e1314183896@live.uleam.edu.ec">e1314183896@live.uleam.edu.ec</a></li>
-                <li><a class="cta-mail" href="mailto:e1315108926@live.uleam.edu.ec">e1315108926@live.uleam.edu.ec</a></li>
-                <li><a class="cta-mail" href="mailto:e1316749314@live.uleam.edu.ec">e1316749314@live.uleam.edu.ec</a></li>
-            </ul>
+        <!-- CENTRO: Contactos y redes sociales -->
+        <div class="cta-center">
+            <div>
+                <h4 class="section-title">Contáctanos</h4>
+                <div class="contacts-grid">
+                    <a class="contact-item" href="mailto:e1314183896@live.uleam.edu.ec">
+                        <span class="contact-icon">✉</span>
+                        <span>e1314183896@live.uleam.edu.ec</span>
+                    </a>
+                    <a class="contact-item" href="mailto:e1315108926@live.uleam.edu.ec">
+                        <span class="contact-icon">✉</span>
+                        <span>e1315108926@live.uleam.edu.ec</span>
+                    </a>
+                    <a class="contact-item" href="mailto:e1316749314@live.uleam.edu.ec">
+                        <span class="contact-icon">✉</span>
+                        <span>e1316749314@live.uleam.edu.ec</span>
+                    </a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="section-title">Síguenos en GitHub</h4>
+                <div class="social-grid">
+                    <a class="social-item" href="https://github.com/Gregorio1723" target="_blank">
+                        <span class="github-icon"></span>
+                        <span>Gregorio1723</span>
+                    </a>
+                    <a class="social-item" href="https://github.com/JoseAMendieta19" target="_blank">
+                        <span class="github-icon"></span>
+                        <span>JoseAMendieta19</span>
+                    </a>
+                    <a class="social-item" href="https://github.com/JonySenges" target="_blank">
+                        <span class="github-icon"></span>
+                        <span>JonySenges</span>
+                    </a>
+                </div>
+            </div>
         </div>
 
-        <!-- Redes -->
-        <div class="cta-col">
-            <h4>Síguenos</h4>
-            <ul class="cta-list">
-                <li><a class="cta-github" href="https://github.com/Gregorio1723" target="_blank">Gregorio1723</a></li>
-                <li><a class="cta-github" href="https://github.com/JoseAMendieta19" target="_blank">JoseAMendieta19</a></li>
-                <li><a class="cta-github" href="https://github.com/JonySenges" target="_blank">JonySenges</a></li>
-            </ul>
-        </div>
-
-        <!-- Logo -->
-        <div class="cta-col cta-logo">
+        <!-- DERECHA: Logo ULEAM -->
+        <div class="cta-right">
             <img
                 src="https://aulavirtualmoodle.uleam.edu.ec/pluginfile.php/1/core_admin/logo/0x200/1767816587/logo_ULEAM_2017_vertical.png"
                 alt="Logo ULEAM"
@@ -452,7 +517,7 @@
 
 <!-- FOOTER -->
 <footer>
-    <p style="font-size:0.85rem;">
+    <p style="font-size:0.75rem;color:#9ca3af;">
         © Todos los derechos reservados - Universidad Laica Eloy Alfaro de Manabí
     </p>
 </footer>
