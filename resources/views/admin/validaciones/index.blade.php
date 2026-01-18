@@ -160,8 +160,7 @@
 
         .lugar-nombre {
             font-size: 0.9rem;
-            font-weight: 600;
-            color: #1f2937;
+            color: #6b7280;
         }
 
         .lugar-direccion {
@@ -302,6 +301,7 @@
                 <thead>
                     <tr>
                         <th>Estudiante</th>
+                        <th>Periodo</th>
                         <th>Práctica</th>
                         <th>Lugar</th>
                         <th>Horas</th>
@@ -329,6 +329,9 @@
                                 </div>
                             </td>
                             <td>
+                                <strong style="color: #1f2937;">{{ $practica->anio_lectivo }}</strong>
+                            </td>
+                            <td>
                                 <span class="badge badge-practica">
                                     Práctica {{ $practica->tipo }}
                                 </span>
@@ -338,13 +341,10 @@
                                     <div class="lugar-nombre">
                                         {{ $practica->lugarPractica->nombre ?? 'N/A' }}
                                     </div>
-                                    <div class="lugar-direccion">
-                                        {{ $practica->lugarPractica->direccion ?? '' }}
-                                    </div>
                                 </div>
                             </td>
                             <td>
-                                <strong style="color: #1f2937;">{{ $practica->horas_requeridas }}</strong> horas
+                                <p style="color: #6b7280;">{{ $practica->horas_requeridas }}</p> horas
                             </td>
                             <td style="color: #6b7280;">
                                 {{ $practica->fecha_finalizacion ? $practica->fecha_finalizacion->format('d/m/Y') : 'N/A' }}

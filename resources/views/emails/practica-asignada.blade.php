@@ -74,6 +74,7 @@
                 <li><strong>Tipo:</strong> Práctica {{ $practica->tipo ?? 'No especificado' }}</li>
                 <li><strong>Lugar:</strong> {{ $practica->lugarPractica->nombre ?? 'No especificado' }}</li>
                 <li><strong>Dirección:</strong> {{ $practica->lugarPractica->direccion ?? 'No especificada' }}</li>
+                <li><strong>Periodo:</strong> {{ $practica->anio_lectivo ?? 'N/A' }}</li>
                 <li><strong>Horas a cumplir:</strong> {{ $practica->horas_requeridas ?? 0 }} horas</li>
                 <li><strong>Fecha de inicio:</strong>
                     {{ optional($practica->fecha_inicio)->format('d/m/Y') ?? 'Pendiente' }}

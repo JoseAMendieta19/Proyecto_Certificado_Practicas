@@ -82,6 +82,7 @@
                 <th>Cédula</th>
                 <th>Estudiante</th>
                 <th>Email</th>
+                <th>Periodo</th>
                 <th>Carrera</th>
                 <th>Práctica</th>
                 <th>Lugar</th>
@@ -96,6 +97,7 @@
                         <td>{{ $estudiante->cedula ?? 'N/A' }}</td>
                         <td>{{ $estudiante->nombres }} {{ $estudiante->apellidos }}</td>
                         <td>{{ $estudiante->email }}</td>
+                        <td>{{ $practica->anio_lectivo ?? 'N/A' }}</td>
                         <td>{{ $estudiante->carrera->nombre ?? 'N/A' }}</td>
                         <td>Práctica {{ $practica->tipo }}</td>
                         <td>{{ $practica->lugarPractica->nombre ?? 'N/A' }}</td>
@@ -111,6 +113,7 @@
                         <td>{{ $estudiante->cedula ?? 'N/A' }}</td>
                         <td>{{ $estudiante->nombres }} {{ $estudiante->apellidos }}</td>
                         <td>{{ $estudiante->email }}</td>
+                        <td>-</td> 
                         <td>{{ $estudiante->carrera->nombre ?? 'N/A' }}</td>
                         <td colspan="4" style="text-align: center; color: #999;">Sin prácticas asignadas</td>
                     </tr>

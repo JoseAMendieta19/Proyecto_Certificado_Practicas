@@ -11,14 +11,15 @@ class Practica extends Model
 
     protected $fillable = [
         'user_id',
+        'anio_lectivo',
         'tipo',
-        'lugar_practica_id',      // 🆕 Nueva FK
+        'lugar_practica_id',      
         'horas_requeridas',
-        'fecha_inicio',           // 🆕
-        'fecha_finalizacion',     // 🆕
+        'fecha_inicio',           
+        'fecha_finalizacion',     
         'estado',
         'archivo_url',
-        'observaciones'           // 🆕
+        'observaciones'           
     ];
 
     protected $casts = [
@@ -52,5 +53,39 @@ class Practica extends Model
     public function scopePorEstudiante($query, $userId)
     {
         return $query->where('user_id', $userId);
+    }
+
+    // 🆕 NUEVO: Scope para filtrar por año lectivo
+    public function scopePorAnioLectivo($query, $anioLectivo)
+    {
+        return $query->where('anio_lectivo', $anioLectivo);
+    }
+
+    // 🆕 NUEVO: Método estático para generar opciones de años lectivos
+    public static function obtenerAniosLectivos()
+    {
+        $anios = [];
+        $anioActual = date('Y');
+        
+        // Genera años desde 1 año atrás hasta 2 años adelante
+        for ($i = -1; $i <= 2; $i++) {
+            $anio = $anioActual + $i;
+            $anios[] = "$anio-1"; // Primer semestre
+            $anios[] = "$anio-2"; // Segundo semestre
+        }
+        
+        return $anios;
+    }
+
+    // 🆕 NUEVO: Obtener el año lectivo actual basado en la fecha
+    public static function obtenerAnioLectivoActual()
+    {
+        $mes = date('n'); // Mes numérico (1-12)
+        $anio = date('Y');
+        
+        // Lógica: Enero-Julio = semestre 1, Agosto-Diciembre = semestre 2
+        $semestre = ($mes <= 7) ? '1' : '2';
+        
+        return "$anio-$semestre";
     }
 }

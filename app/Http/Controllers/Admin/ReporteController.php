@@ -82,6 +82,7 @@ class ReporteController extends Controller
                         $estudiante->email,
                         $estudiante->institucion->nombre ?? 'N/A',
                         $estudiante->carrera->nombre ?? 'N/A',
+                        'N/A',
                         'Sin prácticas',
                         'N/A',
                         '0',
@@ -104,6 +105,7 @@ class ReporteController extends Controller
                     $estudiante->email,
                     $estudiante->institucion->nombre ?? 'N/A',
                     $estudiante->carrera->nombre ?? 'N/A',
+                    $practica->anio_lectivo ?? 'N/A',  
                     'Práctica ' . $practica->tipo,
                     $practica->lugarPractica->nombre ?? 'N/A',
                     $practica->horas_requeridas,
@@ -122,7 +124,7 @@ class ReporteController extends Controller
         $sheet->fromArray([
             [
                 'Cédula', 'Nombres', 'Apellidos', 'Email', 'Institución', 'Carrera',
-                'Tipo Práctica', 'Lugar', 'Horas', 'Fecha Inicio', 'Fecha Fin',
+                'Periodo', 'Tipo Práctica', 'Lugar', 'Horas', 'Fecha Inicio', 'Fecha Fin',
                 'Estado', 'Observaciones'
             ]
         ], null, 'A1');
