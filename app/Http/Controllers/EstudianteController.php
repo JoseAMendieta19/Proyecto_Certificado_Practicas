@@ -47,4 +47,18 @@ class EstudianteController extends Controller
 
         return view('estudiante.practicas', compact('practicas'));
     }
+
+
+    /**
+     * Mostrar página de certificados del estudiante
+     */
+    public function certificados()
+    {
+        $estudiante = Auth::user();
+        
+        // Cargar las prácticas del estudiante con sus relaciones
+        $estudiante->load(['practicas.lugarPractica', 'carrera']);
+        
+        return view('estudiante.certificados');
+    }
 }

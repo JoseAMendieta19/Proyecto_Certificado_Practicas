@@ -12,8 +12,27 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\LugarPracticaController;
 use App\Http\Controllers\Admin\ValidacionController;
 use App\Http\Controllers\Admin\ReporteController;
-use App\Http\Controllers\Admin\CertificadoController;
+// use App\Http\Controllers\Admin\CertificadoController;
 use App\Http\Controllers\EstudianteController;
+use App\Http\Controllers\CertificadoController;
+
+
+
+Route::middleware(['auth', 'role:estudiante'])->group(function () {
+
+    Route::get('/certificado/final/ver', [CertificadoController::class, 'vistaFinal'])
+        ->name('certificado.final.vista');
+
+    Route::get('/certificado/final/descargar', [CertificadoController::class, 'descargarFinal'])
+        ->name('certificado.final.descargar');
+
+});
+
+
+
+
+
+
 
 
 /*
@@ -158,7 +177,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 
 
 
-
+Route::get('/estudiante/certificados', function () {
+    return view('estudiante.certificados');
+})->name('estudiante.certificados');
 
 
 
