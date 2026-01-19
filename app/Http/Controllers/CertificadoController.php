@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class CertificadoController extends Controller
 {
     /**
-     * Generar y descargar certificado oficial
+     * Generar y descargar certificado oficial (Práctica I o II individual)
      */
     public function descargar(Practica $practica)
     {
@@ -46,7 +46,7 @@ class CertificadoController extends Controller
     }
 
     /**
-     * Vista previa del certificado
+     * Vista previa del certificado individual
      */
     public function vista(Practica $practica)
     {
@@ -79,16 +79,24 @@ class CertificadoController extends Controller
     {
         $estudiante = Auth::user();
         
-        // Obtener ambas prácticas
-        $practicaI = $estudiante->practicas()->where('tipo', 'I')->where('estado', 'aprobada')->first();
-        $practicaII = $estudiante->practicas()->where('tipo', 'II')->where('estado', 'aprobada')->first();
+        // Obtener ambas prácticas aprobadas
+        $practicaI = $estudiante->practicas()
+            ->where('tipo', 'I')
+            ->where('estado', 'aprobada')
+            ->first();
+            
+        $practicaII = $estudiante->practicas()
+            ->where('tipo', 'II')
+            ->where('estado', 'aprobada')
+            ->first();
 
         // Verificar que ambas prácticas estén aprobadas
         if (!$practicaI || !$practicaII) {
-            return redirect()->back()->with('error', 'Debes completar ambas prácticas para generar el certificado final');
+            return redirect()->back()
+                ->with('error', 'Debes completar y aprobar ambas prácticas (I y II) para generar el certificado final.');
         }
 
-        // Cargar relaciones
+        // Cargar relaciones necesarias
         $estudiante->load(['carrera', 'institucion']);
         $practicaI->load('lugarPractica');
         $practicaII->load('lugarPractica');
@@ -96,42 +104,53 @@ class CertificadoController extends Controller
         // Calcular total de horas
         $totalHoras = $practicaI->horas_requeridas + $practicaII->horas_requeridas;
 
-        // Generar PDF
+        // Generar PDF usando la nueva vista final
         $pdf = PDF::loadView('admin.certificados.final', [
-    'estudiante' => $estudiante,
-    'practicaI' => $practicaI,
-    'practicaII' => $practicaII,
-    'totalHoras' => $totalHoras
-]);
+            'estudiante' => $estudiante,
+            'practicaI' => $practicaI,
+            'practicaII' => $practicaII,
+            'totalHoras' => $totalHoras
+        ]);
 
+        // Configurar orientación horizontal y tamaño carta
+        $pdf->setPaper('letter', 'landscape')
+            ->setOption('isRemoteEnabled', true)
+            ->setOption('isHtml5ParserEnabled', true);
 
-
-        $pdf->setPaper('letter', 'landscape');
-
-        $nombreArchivo = 'Certificado_Practicas_Profesionales_' . 
+        // Nombre del archivo
+        $nombreArchivo = 'Certificado_Final_Practicas_' . 
                         $estudiante->nombres . '_' . 
-                        $estudiante->apellidos . '.pdf';
+                        $estudiante->apellidos . '_' .
+                        now()->format('Y') . '.pdf';
 
         return $pdf->download($nombreArchivo);
     }
 
     /**
-     * Ver certificado final en el navegador
+     * Ver certificado final en el navegador (vista previa)
      */
     public function vistaFinal()
     {
         $estudiante = Auth::user();
         
-        // Obtener ambas prácticas
-        $practicaI = $estudiante->practicas()->where('tipo', 'I')->where('estado', 'aprobada')->first();
-        $practicaII = $estudiante->practicas()->where('tipo', 'II')->where('estado', 'aprobada')->first();
+        // Obtener ambas prácticas aprobadas
+        $practicaI = $estudiante->practicas()
+            ->where('tipo', 'I')
+            ->where('estado', 'aprobada')
+            ->first();
+            
+        $practicaII = $estudiante->practicas()
+            ->where('tipo', 'II')
+            ->where('estado', 'aprobada')
+            ->first();
 
         // Verificar que ambas prácticas estén aprobadas
         if (!$practicaI || !$practicaII) {
-            return redirect()->back()->with('error', 'Debes completar ambas prácticas para ver el certificado final');
+            return redirect()->back()
+                ->with('error', 'Debes completar y aprobar ambas prácticas (I y II) para ver el certificado final.');
         }
 
-        // Cargar relaciones
+        // Cargar relaciones necesarias
         $estudiante->load(['carrera', 'institucion']);
         $practicaI->load('lugarPractica');
         $practicaII->load('lugarPractica');
@@ -139,24 +158,27 @@ class CertificadoController extends Controller
         // Calcular total de horas
         $totalHoras = $practicaI->horas_requeridas + $practicaII->horas_requeridas;
 
-        // Generar PDF y mostrarlo
+        // Generar PDF y mostrarlo en el navegador
         $pdf = PDF::loadView('admin.certificados.final', [
-    'estudiante' => $estudiante,
-    'practicaI' => $practicaI,
-    'practicaII' => $practicaII,
-    'totalHoras' => $totalHoras
-]);
+            'estudiante' => $estudiante,
+            'practicaI' => $practicaI,
+            'practicaII' => $practicaII,
+            'totalHoras' => $totalHoras
+        ]);
 
+        // Configurar orientación horizontal y tamaño carta
+        $pdf->setPaper('letter', 'landscape')
+            ->setOption('isRemoteEnabled', true)
+            ->setOption('isHtml5ParserEnabled', true);
 
-
-        $pdf->setPaper('letter', 'landscape');
-
-        return $pdf->stream('Certificado_Practicas_Profesionales.pdf');
+        return $pdf->stream('Certificado_Final_Practicas_Profesionales.pdf');
     }
 
+    /**
+     * Alias para vistaFinal() - mantener compatibilidad
+     */
     public function verFinal()
-{
-    return $this->vistaFinal();
-}
-
+    {
+        return $this->vistaFinal();
+    }
 }

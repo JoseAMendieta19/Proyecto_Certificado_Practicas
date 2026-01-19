@@ -167,7 +167,6 @@ Route::middleware(['auth', 'role:estudiante'])->group(function () {
 
 // Rutas para Admin - Gestión de Estudiantes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
-    // ... tus otras rutas de admin ...
     
     Route::get('/estudiantes', [AdminController::class, 'indexEstudiantes'])->name('admin.estudiantes.index');
     Route::get('/estudiantes/{id}/editar', [AdminController::class, 'editEstudiante'])->name('admin.estudiantes.edit');
