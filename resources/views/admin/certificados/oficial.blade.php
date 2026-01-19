@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -25,8 +24,8 @@ body {
 
 .certificado {
     border: 7px solid #c40000;
-    padding: 30px 60px 25px 60px;
-    height: 18cm;
+    padding: 30px 60px 31px 60px;
+    min-height: 18cm;
     position: relative;
     background: #fff;
     max-width: 24cm;
@@ -124,7 +123,7 @@ body {
    MODIFICACIÓN: DATOS EN CAJA CON 2 COLUMNAS
    ============================================ */
 .datos {
-    background: #fafafa;
+    background: #ffffff;
     border-left: 3px solid #c40000;
     padding: 12px 15px;
     margin: 15px auto;
@@ -166,8 +165,8 @@ body {
 
 /* TEXTO ADICIONAL */
 .texto-adicional {
-    margin-top: 15px;
-    margin-bottom: 15px;
+    /*margin-top: 15px; */
+    /* margin-bottom: 15px; */
     font-size: 14px;
     line-height: 1.8;
     text-align: justify;
@@ -186,9 +185,8 @@ body {
 .firmas-tabla {
     width: 90%;
     position: absolute;
-    bottom: 95px;
-    left: 50px;
-    right: 50px;
+    margin: 45px auto 0 auto;
+    position: static;
 }
 
 .firmas-tabla td {
@@ -225,7 +223,8 @@ body {
     color: #999;
     padding-top: 10px;
     border-top: 1px solid #e0e0e0;
-    position: absolute;
+    position: static;
+    margin-top: 25px;
     bottom: 18px;
     left: 60px;
     right: 60px;
