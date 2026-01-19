@@ -37,6 +37,10 @@ class AdminController extends Controller
         // Obtener prácticas existentes
         $practicaI = $estudiante->practicas->where('tipo', 'I')->first();
         $practicaII = $estudiante->practicas->where('tipo', 'II')->first();
+        $practicaRechazada = $estudiante->practicas
+        ->where('estado', 'rechazada')
+        ->sortByDesc('updated_at')
+        ->first();
         
         // Obtener lugares activos
         $lugaresPractica = LugarPractica::where('activo', true)->get();
@@ -53,7 +57,8 @@ class AdminController extends Controller
             'practicaII', 
             'lugaresPractica',
             'aniosLectivos',      // 🆕
-            'anioLectivoActual'   // 🆕
+            'anioLectivoActual',
+            'practicaRechazada'    // 🆕
         ));
     }
 
@@ -91,6 +96,7 @@ class AdminController extends Controller
         // Verificar que no exista ya una práctica del mismo tipo
         $practicaExistente = Practica::where('user_id', $request->user_id)
             ->where('tipo', $request->tipo)
+            ->whereIn('estado', ['asignada', 'aprobada'])
             ->first();
 
         if ($practicaExistente) {
@@ -225,6 +231,16 @@ public function destroyEstudiante($id)
     
     return redirect()->route('admin.estudiantes.index')
         ->with('success', 'Estudiante eliminado correctamente');
+}
+public function rechazarPractica($id)
+{
+    $practica = Practica::findOrFail($id);
+
+    $practica->estado = 'rechazada';
+    $practica->save();
+
+    return redirect()->route('admin.estudiantes.index')
+        ->with('success', 'Práctica rechazada. Ahora puedes reasignar.');
 }
 
 
