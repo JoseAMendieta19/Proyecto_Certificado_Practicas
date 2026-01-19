@@ -25,10 +25,12 @@ body {
 
 .certificado {
     border: 7px solid #c40000;
-    padding: 25px 45px 20px 45px;
+    padding: 30px 60px 25px 60px;
     height: 18cm;
     position: relative;
     background: #fff;
+    max-width: 24cm;
+    margin: 0 auto;
 }
 
 /* ENCABEZADO */
@@ -40,22 +42,22 @@ body {
 }
 
 .header img {
-    width: 75px;
-    margin-bottom: 8px;
+    width: 85px;
+    margin-bottom: 10px;
 }
 
 .universidad {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: bold;
     color: #c40000;
     text-transform: uppercase;
     letter-spacing: 0.8px;
-    line-height: 1.3;
-    margin-bottom: 5px;
+    line-height: 1.4;
+    margin-bottom: 6px;
 }
 
 .facultad {
-    font-size: 9px;
+    font-size: 10px;
     color: #666;
     font-style: italic;
 }
@@ -63,68 +65,92 @@ body {
 /* TITULO */
 .titulo-section {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
 }
 
 .titulo {
-    font-size: 22px;
+    font-size: 24px;
     font-weight: bold;
-    letter-spacing: 4px;
+    letter-spacing: 5px;
     color: #c40000;
-    margin-bottom: 5px;
+    margin-bottom: 6px;
 }
 
 .subtitulo {
     font-size: 10px;
     color: #666;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
+    letter-spacing: 1.8px;
 }
 
 /* CONTENIDO PRINCIPAL */
 .contenido {
-    font-size: 11px;
-    line-height: 1.6;
+    font-size: 14px;
+    line-height: 1.7;
     text-align: justify;
+    max-width: 90%;
+    margin: 0 auto;
 }
 
 .intro-text {
     margin-bottom: 15px;
+    font-size: 14px;
 }
 
 .nombre-section {
     text-align: center;
-    margin: 18px 0;
+    margin: 0px 0;
+    margin-bottom: 13px;
 }
 
 .nombre {
     display: inline-block;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
-    padding: 6px 30px;
-    border-bottom: 2.5px solid #c40000;
+    padding: 8px 35px;
+    border-bottom: 3px solid #c40000;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
+    letter-spacing: 2px;
     color: #222;
 }
 
 .texto-principal {
     margin-bottom: 18px;
-    line-height: 1.7;
+    line-height: 1.8;
+    font-size: 14px;
 }
 
-/* DATOS EN CAJA COMPACTA */
+/* ============================================
+   MODIFICACIÓN: DATOS EN CAJA CON 2 COLUMNAS
+   ============================================ */
 .datos {
     background: #fafafa;
     border-left: 3px solid #c40000;
-    padding: 14px 20px;
-    margin: 18px 0;
+    padding: 12px 15px;
+    margin: 15px auto;
+    max-width: 85%;
 }
 
+/* CAMBIO: Tabla para las 2 columnas (compatible con PDF) */
+.datos-tabla {
+    width: 100%;
+}
+
+.datos-tabla td {
+    width: 50%;
+    vertical-align: top;
+    padding-right: 15px;
+}
+
+.datos-tabla td:last-child {
+    padding-right: 0;
+}
+/* ============================================ */
+
 .datos p {
-    margin-bottom: 7px;
-    font-size: 10px;
-    line-height: 1.5;
+    margin-bottom: 6px;
+    font-size: 13px;
+    line-height: 1.7;
 }
 
 .datos p:last-child {
@@ -135,74 +161,77 @@ body {
     font-weight: bold;
     color: #333;
     display: inline-block;
-    min-width: 130px;
+    min-width: 110px;
 }
 
 /* TEXTO ADICIONAL */
 .texto-adicional {
-    margin-top: 18px;
-    margin-bottom: 18px;
-    font-size: 10.5px;
-    line-height: 1.6;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    line-height: 1.8;
     text-align: justify;
 }
 
 /* FECHA */
 .fecha {
     text-align: center;
-    margin: 20px 0 0 0;
-    font-size: 10px;
+    margin: 18px 0 0 0;
+    font-size: 11.5px;
     font-style: italic;
     color: #555;
 }
 
 /* FIRMAS CON TABLA (Compatible con dompdf) */
 .firmas-tabla {
-    width: 100%;
+    width: 90%;
     position: absolute;
     bottom: 95px;
-    left: 45px;
-    right: 45px;
+    left: 50px;
+    right: 50px;
 }
 
 .firmas-tabla td {
     width: 50%;
     text-align: center;
     vertical-align: bottom;
-    padding: 0 40px;
+    padding: 0 20px;
 }
 
 .linea-firma {
     border-top: 1.5px solid #333;
     margin-bottom: 6px;
-    width: 220px;
+    width: 240px;
     margin-left: auto;
     margin-right: auto;
 }
 
 .firma-nombre {
-    font-size: 11px;
+    font-size: 12px;
     font-weight: bold;
-    margin-bottom: 3px;
+    margin-bottom: 4px;
     color: #222;
 }
 
 .firma-cargo {
-    font-size: 9px;
+    font-size: 10px;
     color: #666;
 }
 
 /* FOOTER */
 .footer {
     text-align: center;
-    font-size: 8px;
+    font-size: 9px;
     color: #999;
-    padding-top: 8px;
+    padding-top: 10px;
     border-top: 1px solid #e0e0e0;
     position: absolute;
     bottom: 18px;
-    left: 45px;
-    right: 45px;
+    left: 60px;
+    right: 60px;
+}
+.introduccion-text {
+    margirn-bottom: 0px;
 }
 
 </style>
@@ -230,7 +259,7 @@ body {
 
     <!-- CONTENIDO -->
     <div class="contenido">
-        <div class="intro-text">
+        <div class="introduccion-text">
             La Universidad Laica Eloy Alfaro de Manabí certifica que el/la estudiante:
         </div>
 
@@ -246,23 +275,39 @@ body {
             institucional vigente.
         </div>
 
-        <!-- DATOS -->
+        <!-- ============================================
+             MODIFICACIÓN: DATOS DIVIDIDOS EN 2 COLUMNAS CON TABLA
+             ============================================ -->
         <div class="datos">
-            <p><strong>Tipo de práctica:</strong> {{ $practica->tipo }}</p>
-            <p><strong>Entidad receptora:</strong> {{ $practica->lugarPractica->nombre ?? 'No especificada' }}</p>
-            <p><strong>Horas cumplidas:</strong> {{ $practica->horas_requeridas }} horas</p>
-            <p><strong>Período:</strong> {{ \Carbon\Carbon::parse($practica->fecha_inicio)->format('d/m/Y') }} – {{ \Carbon\Carbon::parse($practica->fecha_finalizacion)->format('d/m/Y') }}</p>
+            <table class="datos-tabla" cellspacing="0" cellpadding="0">
+                <tr>
+                    <!-- COLUMNA 1: Tipo, Entidad, Horas -->
+                    <td>
+                        <p><strong>Tipo de práctica:</strong> {{ $practica->tipo }}</p>
+                        <p><strong>Entidad receptora:</strong> {{ $practica->lugarPractica->nombre ?? 'No especificada' }}</p>
+                        <p><strong>Horas cumplidas:</strong> {{ $practica->horas_requeridas }} horas</p>
+                    </td>
+                    
+                    <!-- COLUMNA 2: Período, Fecha inicio, Fecha fin -->
+                    <td>
+                        <p><strong>Período:</strong> {{ $practica->anio_lectivo }}</p>
+                        <p><strong>Fecha de inicio:</strong> {{ \Carbon\Carbon::parse($practica->fecha_inicio)->format('d/m/Y') }}</p>
+                        <p><strong>Fecha de fin:</strong> {{ \Carbon\Carbon::parse($practica->fecha_finalizacion)->format('d/m/Y') }}</p>
+                    </td>
+                </tr>
+            </table>
         </div>
+        <!-- ============================================ -->
 
         <!-- TEXTO ADICIONAL -->
         <div class="texto-adicional">
             El/la estudiante ha demostrado responsabilidad, compromiso y desempeño profesional durante el desarrollo 
-            de sus prácticas, cumpliendo con los objetivos académicos establecidos por la institución. Este certificado 
+            de sus prácticas, cumpliendo con los objetivos académicos establecidos. Este certificado 
             se expide a solicitud del interesado para los fines que estime convenientes.
         </div>
 
         <div class="fecha">
-            Guayaquil, {{ now()->day }} de {{ now()->locale('es')->monthName }} de {{ now()->year }}.
+            Manta, {{ now()->day }} de {{ now()->locale('es')->monthName }} de {{ now()->year }}.
         </div>
     </div>
 
