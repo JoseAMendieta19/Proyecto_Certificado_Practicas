@@ -207,12 +207,12 @@
         }
 
         .btn-asignar {
-            background: #b91c1c;
+            background: #024ee8;
             color: #ffffff;
         }
 
         .btn-asignar:hover {
-            background: #991b1b;
+            background: #113a8a;
             transform: translateY(-1px);
             box-shadow: 0 4px 8px rgba(185, 28, 28, 0.2);
         }
@@ -229,12 +229,12 @@
         }
 
         .btn-reasignar {
-            background: #dc2626;
+            background: #024ee8;
             color: #ffffff;
         }
 
         .btn-reasignar:hover {
-            background: #b91c1c;
+            background: #113a8a;
             transform: translateY(-1px);
             box-shadow: 0 4px 8px rgba(220, 38, 38, 0.2);
         }

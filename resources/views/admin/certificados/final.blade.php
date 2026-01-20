@@ -134,9 +134,9 @@ body {
 .datos::before {
     content: "";
     position: absolute;
-    left: 80px;     /* 👈 MUEVE la barra hacia el centro */
+    left: 90px;     /* 👈 MUEVE la barra hacia el centro */
     top: 10px;
-    bottom: 325px;
+    bottom: 380px;
     width: 4px;
     background: #0672de;
 }
