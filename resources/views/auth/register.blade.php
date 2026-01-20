@@ -23,6 +23,7 @@
     font-size: 1.5rem;
     font-weight: 700;
     color: #1f2937;
+    
 }
 
 /* -------- FORM -------- */
@@ -200,7 +201,7 @@ select:focus {
         alt="ULEAM"
         class="uleam-logo-register"
     >
-    <h1 class="uleam-title">Registro para Prácticas Académicas</h1>
+    <h1 class="uleam-title">Registrarse</h1>
 </div>
 
 
