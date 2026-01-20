@@ -20,7 +20,7 @@
 }
 
 .uleam-title {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: #1f2937;
     
@@ -201,7 +201,7 @@ select:focus {
         alt="ULEAM"
         class="uleam-logo-register"
     >
-    <h1 class="uleam-title">Registrarse</h1>
+    <h1 class="uleam-title">Registro Estudiante</h1>
 </div>
 
 
