@@ -5,7 +5,7 @@
 <style>
 @page {
     size: letter landscape;
-    margin: 0;
+    margin: 1cm;
 }
 
 * {
@@ -18,52 +18,61 @@ body {
     font-family: 'Times New Roman', serif;
     background: #fff;
     color: #222;
-    padding: 0.5cm;
+    font-size: 12.5px;
 }
 
+/* CONTENEDOR PRINCIPAL */
 .certificado {
-    border: 7px solid #c40000;
-    padding: 22px 50px;
-    min-height: 18cm;
     position: relative;
-    background: #fff;
-    max-width: 24cm;
+    padding: 26px 48px 22px;
+    max-width: 26.6cm;
     margin: 0 auto;
 }
+.certificado::before {
+    content: "";
+    position: absolute;
+    top: 1cm;
+    bottom: 1cm;
+    left: 1cm;
+    right: 1cm;
+    border: 7px solid #c40000;
+    pointer-events: none;
+}
 
-/* ENCABEZADO */
+
+
+/* ENCABEZADO (MENOS INTERLINEADO) */
 .header {
     text-align: center;
-    padding-bottom: 10px;
     margin-bottom: 10px;
-    border-bottom: 1px solid #e0e0e0;
+    margin-top: 60px;
 }
 
 .header img {
-    width: 75px;
-    margin-bottom: 8px;
+    width: 80px;
+    margin-bottom: 4px;
 }
 
 .universidad {
-    font-size: 12px;
+    font-size: 11.5px;
     font-weight: bold;
     color: #c40000;
     text-transform: uppercase;
     letter-spacing: 0.8px;
-    line-height: 1.3;
-    margin-bottom: 5px;
+    line-height: 1.25;
 }
 
 .facultad {
     font-size: 9.5px;
     color: #666;
     font-style: italic;
+    line-height: 1.2;
 }
 
-/* TITULO */
+/* TÍTULO (COMPACTO) */
 .titulo-section {
     text-align: center;
-    margin-bottom: 10px;
+    margin: 10px 0 12px;
 }
 
 .titulo {
@@ -71,130 +80,110 @@ body {
     font-weight: bold;
     letter-spacing: 5px;
     color: #c40000;
-    margin-bottom: 3px;
+    margin-bottom: 2px;
 }
 
 .subtitulo {
     font-size: 9.5px;
     color: #666;
-    text-transform: uppercase;
     letter-spacing: 1.8px;
+    line-height: 1.2;
 }
 
-/* CONTENIDO PRINCIPAL */
+/* CONTENIDO */
 .contenido {
-    font-size: 13px;
-    line-height: 1.6;
-    text-align: justify;
-    max-width: 90%;
+    text-align: center;
+    max-width: 92%;
     margin: 0 auto;
+    line-height: 1.55;
 }
 
 .intro-text {
     margin-bottom: 8px;
-    font-size: 13px;
-    text-align: center;
 }
 
+/* NOMBRE */
 .nombre-section {
-    text-align: center;
-    margin: 0px 0 8px 0;
+    margin: 8px 0 10px;
 }
 
 .nombre {
-    display: inline-block;
     font-size: 15px;
     font-weight: bold;
-    padding: 6px 30px;
+    padding: 6px 40px;
     border-bottom: 3px solid #c40000;
     text-transform: uppercase;
     letter-spacing: 2px;
-    color: #222;
+    display: inline-block;
 }
 
+/* TEXTO PRINCIPAL */
 .texto-principal {
     margin-bottom: 12px;
-    line-height: 1.6;
-    font-size: 13px;
-    text-align: center;
+    line-height: 2;
 }
 
-/* DATOS DEL CERTIFICADO - TABLA ORGANIZADA */
+/* DATOS (UN POCO MÁS DE AIRE AQUÍ) */
 .datos {
-    background: #ffffff;
-    border-left: 3px solid #c40000;
-    padding: 15px 25px;
-    margin: 15px auto;
-    max-width: 85%;
+    margin: 14px auto;
+    padding: 14px 28px;
+    max-width: 96%;
+    position: relative;
 }
+
+.datos::before {
+    content: "";
+    position: absolute;
+    left: 80px;     /* 👈 MUEVE la barra hacia el centro */
+    top: 10px;
+    bottom: 325px;
+    width: 4px;
+    background: #0672de;
+}
+
+
 
 .datos-tabla {
     width: 100%;
     border-collapse: collapse;
+    
 }
 
 .datos-tabla td {
     width: 50%;
+    padding: 6px 18px;
     vertical-align: top;
-    padding: 8px 25px 8px 0;
-}
-
-.datos-tabla td:last-child {
-    padding-right: 0;
-}
-
-.datos p {
-    margin-bottom: 10px;
     font-size: 12px;
-    line-height: 1.5;
+    line-height: 2;
 }
-
-.datos p:last-child {
-    margin-bottom: 0;
-}
-
-.datos strong {
-    font-weight: bold;
-    color: #333;
-    display: inline-block;
-    min-width: 150px;
+.datos-tabla td:first-child {
+    padding-left: 82px;   /* 🔹 empuja el texto hacia el centro */
 }
 
 .horas-detalle {
+    display: block;
     font-size: 10.5px;
     color: #666;
     font-style: italic;
-    margin-left: 8px;
-    display: inline;
-    white-space: nowrap;
+    margin-top: 3px;
 }
 
-/* DURACIÓN - BIEN ORGANIZADA */
+/* DURACIÓN */
 .duracion-lista {
-    margin: 0;
-    padding-left: 0;
     list-style: none;
+    padding-left: 0;
 }
 
 .duracion-lista li {
-    margin-bottom: 6px;
-    font-size: 12px;
-    line-height: 1.4;
-}
-
-.duracion-lista li strong {
-    font-weight: bold;
-    color: #333;
-    min-width: 160px;
-    display: inline-block;
+    margin-bottom: 4px;
+    line-height: 1.6;
 }
 
 /* TEXTO ADICIONAL */
 .texto-adicional {
-    font-size: 13px;
-    line-height: 1.8;
-    text-align: justify;
-    margin-top: 15px;
+    font-size: 12.5px;
+    line-height: 1.6;
+    margin-top: 10px;
 }
 
 .texto-adicional p {
@@ -202,76 +191,63 @@ body {
 }
 
 .texto-adicional p:last-child {
-    margin-bottom: 0;
-    text-align: center;
     font-style: italic;
+    text-align: center;
 }
 
 /* FECHA */
 .fecha {
     text-align: center;
-    margin: 20px 0 5px 0;
-    font-size: 11px;
+    margin-top: 10px;
+    font-size: 10.5px;
     font-style: italic;
     color: #555;
 }
 
-/* FIRMAS - CON MÁS ESPACIO */
+/* FIRMAS */
 .firmas-container {
-    margin-top: 50px;
-    width: 100%;
+    margin-top: 80px;
 }
 
 .firmas-tabla {
-    width: 88%;
+    width: 82%;
     margin: 0 auto;
-    border-collapse: collapse;
 }
 
 .firmas-tabla td {
-    width: 50%;
     text-align: center;
     vertical-align: bottom;
-    padding: 0 15px;
 }
 
 .linea-firma {
-    border-top: 1.5px solid #333;
-    margin-bottom: 6px;
-    width: 220px;
-    margin-left: auto;
-    margin-right: auto;
+    width: 210px;
+    border-top: 1.4px solid #333;
+    margin: 0 auto 6px;
 }
 
 .firma-nombre {
     font-size: 11.5px;
     font-weight: bold;
-    margin-bottom: 4px;
-    color: #222;
-    line-height: 1.3;
 }
 
 .firma-cargo {
     font-size: 9.5px;
     color: #666;
-    line-height: 1.2;
 }
 
-/* FOOTER - MEJOR CENTRADO */
+/* FOOTER */
 .footer {
+    margin-top: 12px;
+    padding-top: 6px;
+    border-top: 1px solid #e0e0e0;
     text-align: center;
     font-size: 9px;
     color: #777;
-    padding-top: 12px;
-    border-top: 1px solid #e0e0e0;
-    margin-top: 30px;
-    letter-spacing: 0.3px;
-    max-width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.4;
 }
+
+
 </style>
+
 </head>
 
 <body>
@@ -328,18 +304,27 @@ body {
                     
                     <!-- COLUMNA DERECHA - DURACIÓN -->
                     <td>
-                        <p><strong>Duración de las prácticas:</strong></p>
-                        <ul class="duracion-lista">
-                            <li><strong>Prácticas Profesionales I:</strong> 
-                                {{ \Carbon\Carbon::parse($practicaI->fecha_inicio)->format('d/m/Y') }} al 
-                                {{ \Carbon\Carbon::parse($practicaI->fecha_finalizacion)->format('d/m/Y') }}
-                            </li>
-                            <li><strong>Prácticas Profesionales II:</strong> 
-                                {{ \Carbon\Carbon::parse($practicaII->fecha_inicio)->format('d/m/Y') }} al 
-                                {{ \Carbon\Carbon::parse($practicaII->fecha_finalizacion)->format('d/m/Y') }}
-                            </li>
-                        </ul>
-                    </td>
+    <p><strong>Duración de las prácticas:</strong></p>
+    <ul class="duracion-lista">
+        <li>
+            <strong>Prácticas Profesionales I:</strong>
+            <span>
+                {{ \Carbon\Carbon::parse($practicaI->fecha_inicio)->format('d/m/Y') }}
+                al
+                {{ \Carbon\Carbon::parse($practicaI->fecha_finalizacion)->format('d/m/Y') }}
+            </span>
+        </li>
+        <li>
+            <strong>Prácticas Profesionales II:</strong>
+            <span>
+                {{ \Carbon\Carbon::parse($practicaII->fecha_inicio)->format('d/m/Y') }}
+                al
+                {{ \Carbon\Carbon::parse($practicaII->fecha_finalizacion)->format('d/m/Y') }}
+            </span>
+        </li>
+    </ul>
+</td>
+
                 </tr>
             </table>
         </div>

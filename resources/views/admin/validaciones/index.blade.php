@@ -15,8 +15,8 @@
         /* HEADER CON ALERTA */
         .alert-header {
             padding: 20px 28px;
-            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-            border-bottom: 2px solid #fbbf24;
+            background: linear-gradient(135deg, #024ee8 0%, #024ee8 100%);
+            border-bottom: 2px solid #0a1733;
             display: flex;
             align-items: center;
             gap: 12px;
@@ -25,14 +25,14 @@
         .alert-header svg {
             width: 24px;
             height: 24px;
-            color: #92400e;
+            color: #000000;
             flex-shrink: 0;
         }
 
         .alert-header h3 {
             font-size: 1.15rem;
             font-weight: 700;
-            color: #78350f;
+            color: #000000;
             margin: 0;
             display: flex;
             align-items: center;
@@ -45,7 +45,7 @@
             justify-content: center;
             min-width: 32px;
             padding: 4px 10px;
-            background: #92400e;
+            background: #050505;
             color: #ffffff;
             font-size: 0.85rem;
             font-weight: 700;
@@ -70,8 +70,8 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            color: #6b7280;
-            border-bottom: 1px solid #e5e7eb;
+            color: #1c50b7;
+            border-bottom: 1px solid #121213;
         }
 
         .validaciones-table th.text-center {
@@ -79,12 +79,12 @@
         }
 
         .validaciones-table tbody tr {
-            border-bottom: 1px solid #f3f4f6;
+            border-bottom: 1px solid #bdd0f5;
             transition: all 0.2s ease;
         }
 
         .validaciones-table tbody tr:hover {
-            background: #fef2f2;
+            background: #bdd0f5;
         }
 
         .validaciones-table tbody tr:last-child {
@@ -173,7 +173,7 @@
             display: inline-flex;
             align-items: center;
             padding: 8px 14px;
-            background: #f3f4f6;
+            background: #9fabc4;
             color: #4b5563;
             font-size: 0.8rem;
             font-weight: 600;
@@ -199,7 +199,7 @@
             display: inline-flex;
             align-items: center;
             padding: 10px 20px;
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            background: linear-gradient(135deg, #024ee8 0%, #024ee8  100%);
             color: #ffffff;
             font-size: 0.85rem;
             font-weight: 600;
@@ -210,7 +210,7 @@
         }
 
         .btn-revisar:hover {
-            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            background: linear-gradient(135deg, #224da3 0%, #20448a 100%);
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
         }

@@ -17,7 +17,9 @@
 
         /* HEADER DE LA PÁGINA */
         .page-header {
-            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+       background: #EFF6FF;
+
+
             border-radius: 16px;
             padding: 32px;
             margin-bottom: 32px;
@@ -43,7 +45,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #dc2626;
+            color: #024ee8;
             font-size: 1.8rem;
             font-weight: 700;
             box-shadow: 0 4px 16px rgba(255, 255, 255, 0.3);
@@ -53,13 +55,13 @@
         .header-text h1 {
             font-size: 1.75rem;
             font-weight: 700;
-            color: #ffffff;
+            color: #060606;
             margin: 0 0 6px 0;
         }
 
         .header-text p {
             font-size: 0.95rem;
-            color: #fecaca;
+            color: #000000;
             margin: 0;
         }
 
@@ -71,7 +73,7 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 30px;
-            color: #ffffff;
+            color: #050505;
             font-size: 0.9rem;
             font-weight: 600;
         }
@@ -168,12 +170,12 @@
             display: inline-flex;
             align-items: center;
             padding: 8px 16px;
-            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-            color: #991b1b;
+            background: linear-gradient(135deg, #024ee8 0%, #024ee8 100%);
+            color: #000000;
             font-size: 0.85rem;
             font-weight: 700;
             border-radius: 24px;
-            border: 2px solid #fca5a5;
+            border: 2px solid #000000;
         }
 
         /* ÁREA DE DOCUMENTO */
@@ -202,7 +204,7 @@
             display: inline-flex;
             align-items: center;
             padding: 12px 28px;
-            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            background: linear-gradient(135deg, #024ee8 0%, #024ee8 100%);
             color: #ffffff;
             font-size: 0.9rem;
             font-weight: 600;
@@ -235,7 +237,7 @@
 
         .panel-header {
             padding: 24px;
-            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            background: linear-gradient(135deg, #024ee8 0%, #024ee8 100%);
             border-bottom: 2px solid #991b1b;
         }
 
@@ -327,7 +329,7 @@
         }
 
         .btn-approve {
-            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            background: linear-gradient(135deg, #024ee8 0%, #024ee8 100%);
             color: #ffffff;
             box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
         }

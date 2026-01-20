@@ -9,7 +9,7 @@
             display: inline-flex;
             align-items: center;
             padding: 12px 24px;
-            background: #b91c1c;
+            background: #024ee8;
             color: #ffffff;
             font-size: 0.9rem;
             font-weight: 600;
@@ -20,7 +20,7 @@
         }
 
         .btn-add:hover {
-            background: #991b1b;
+            background: #1040a0;
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(185, 28, 28, 0.25);
         }

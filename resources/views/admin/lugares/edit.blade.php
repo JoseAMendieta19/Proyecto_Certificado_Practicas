@@ -133,12 +133,12 @@
         }
 
         .btn-primary {
-            background: #b91c1c;
+            background: #024ee8;
             color: #ffffff;
         }
 
         .btn-primary:hover {
-            background: #991b1b;
+            background: #0b45ba;
             transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(185, 28, 28, 0.25);
         }
@@ -150,7 +150,7 @@
             justify-content: center;
             width: 44px;
             height: 44px;
-            background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
+            background: linear-gradient(135deg,#024ee8 0%, #024ee8 100%);
             border-radius: 10px;
             margin-bottom: 20px;
             box-shadow: 0 4px 12px rgba(185, 28, 28, 0.2);

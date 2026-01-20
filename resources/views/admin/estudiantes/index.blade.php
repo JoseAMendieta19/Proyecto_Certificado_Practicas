@@ -149,12 +149,12 @@
         }
 
         .btn-revisar {
-            background: #f59e0b;
+            background: #024ee8;
             color: #ffffff;
         }
 
         .btn-revisar:hover {
-            background: #d97706;
+            background: #113a8a;
             transform: translateY(-1px);
             box-shadow: 0 4px 8px rgba(245, 158, 11, 0.2);
         }

@@ -358,7 +358,7 @@
             background: #fafafa;
             padding: 16px;
             border-radius: 8px;
-            border-left: 3px solid #b91c1c;
+            border-left: 3px solid #024ee8;
         }
 
         .detail-label {
@@ -524,7 +524,7 @@
         }
 
         .requirement-icon.completed {
-            color: #059669;
+            color: #024ee8;
         }
 
         .requirement-text {
@@ -675,11 +675,16 @@
                         <div class="step-status">
                             @if($practicaIAprobada)
                                 ✅ Completada
-                            @elseif($practicaI)
+                            @elseif($practicaI && $practicaI->estado === 'pendiente_revision')
+                                ⏳ En revisión
+                            @elseif($practicaI && $practicaI->estado === 'asignada')
                                 ⏳ En progreso
+                            @elseif($practicaI && $practicaI->estado === 'rechazada')
+                                ❌ Rechazada
                             @else
                                 ❌ Pendiente
                             @endif
+
                         </div>
                     </div>
                     <div class="progress-step">
@@ -690,8 +695,12 @@
                         <div class="step-status">
                             @if($practicaIIAprobada)
                                 ✅ Completada
-                            @elseif($practicaII)
+                            @elseif($practicaII && $practicaII->estado === 'pendiente_revision')
+                                ⏳ En revisión
+                            @elseif($practicaII && $practicaII->estado === 'asignada')
                                 ⏳ En progreso
+                            @elseif($practicaII && $practicaII->estado === 'rechazada')
+                                ❌ Rechazada
                             @else
                                 ❌ Pendiente
                             @endif
@@ -782,7 +791,7 @@
                         </div>
                         <div class="certificate-actions">
     @if($practicaIAprobada)
-        <a href="{{ route('certificado.descargar', $practicaI->id) }}" class="action-btn" style="background: #059669; color: white; transition: all 0.2s ease;" 
+        <a href="{{ route('certificado.descargar', $practicaI->id) }}" class="action-btn" style="background: #024ee8; color: white; transition: all 0.2s ease;" 
            onmouseover="this.style.background='#047857'" onmouseout="this.style.background='#059669'"
            onmousedown="this.style.background='#065f46'" onmouseup="this.style.background='#047857'">
             <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -854,7 +863,7 @@
                         </div>
                         <div class="certificate-actions">
     @if($practicaIIAprobada)
-        <a href="{{ route('certificado.descargar', $practicaII->id) }}" class="action-btn" style="background: #059669; color: white; transition: all 0.2s ease;" 
+        <a href="{{ route('certificado.descargar', $practicaII->id) }}" class="action-btn" style="background: #024ee8; color: white; transition: all 0.2s ease;" 
            onmouseover="this.style.background='#047857'" onmouseout="this.style.background='#059669'"
            onmousedown="this.style.background='#065f46'" onmouseup="this.style.background='#047857'">
             <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">

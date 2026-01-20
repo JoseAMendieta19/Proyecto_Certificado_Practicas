@@ -52,10 +52,26 @@
             font-weight: bold;
             display: inline-block;
         }
-        .badge-asignada { background: #D1FAE5; color: #065F46; }
-        .badge-pendiente { background: #FEF3C7; color: #92400E; }
-        .badge-aprobada { background: #D1FAE5; color: #065F46; }
-        .badge-rechazada { background: #FEE2E2; color: #991B1B; }
+        .badge-asignada {
+    background-color: #DBEAFE;
+    color: #1E40AF;
+}
+
+.badge-pendiente_revision {
+    background-color: #FEF3C7;
+    color: #92400E;
+}
+
+.badge-aprobada {
+    background-color: #DCFCE7;
+    color: #166534;
+}
+
+.badge-rechazada {
+    background-color: #FEE2E2;
+    color: #991B1B;
+}
+
         .footer {
             margin-top: 30px;
             text-align: center;

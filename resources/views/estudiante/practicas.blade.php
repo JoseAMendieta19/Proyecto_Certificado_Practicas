@@ -598,12 +598,12 @@
         }
 
         .btn-success {
-            background: #059669;
+            background: #024ee8;
             color: white;
         }
 
         .btn-success:hover {
-            background: #047857;
+            background: #024ee8;
         }
 
         .btn svg {
@@ -1087,7 +1087,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                                 d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                         </svg>
-                                        <span>Práctica rechazada - Revisa las observaciones y vuelve a subir el documento</span>
+                                        <span>Práctica rechazada - Su informe de práctica requiere correcciones. Revise los detalles y proceda con la solicitud de reasignación</span>
                                     </div>
                                 @endif
                             </div>

@@ -182,6 +182,7 @@ Route::get('/estudiante/certificados', function () {
 
 
 
+
 Route::middleware(['auth', 'role:admin'])
     ->prefix('admin')
     ->name('admin.')
