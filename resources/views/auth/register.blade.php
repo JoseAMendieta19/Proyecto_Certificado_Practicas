@@ -20,7 +20,7 @@
 }
 
 .uleam-title {
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: #1f2937;
 }
@@ -33,6 +33,13 @@
     border-radius: 8px;
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
 }
+
+
+
+body {
+    font-family: 'Inter', sans-serif !important;
+}
+
 
 /* 👉 UNA SOLA RAYA ROJA */
 #formRegistro::before {
@@ -180,7 +187,7 @@ select:focus {
 </style>
 
 
-
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <x-guest-layout>
 <a href="{{ url('/') }}" class="back-link">
@@ -193,7 +200,7 @@ select:focus {
         alt="ULEAM"
         class="uleam-logo-register"
     >
-    <h1 class="uleam-title">Registro de Estudiante</h1>
+    <h1 class="uleam-title">Registro para Prácticas Académicas</h1>
 </div>
 
 

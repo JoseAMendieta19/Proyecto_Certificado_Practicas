@@ -1,3 +1,4 @@
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <x-guest-layout>
 
     <style>
@@ -16,6 +17,10 @@
     max-width: 420px;
     margin: 0 auto;
 }
+body {
+    font-family: 'Inter', sans-serif !important;
+    background-color: #f4f6f8;
+}
 
 .uleam-logo {
     display: block;
@@ -25,17 +30,13 @@
 }
 
 .login-title {
+    font-family: 'Inter', sans-serif;
     font-size: 1.45rem;
     font-weight: 600;
     color: #111827;
     text-align: center;
     margin-bottom: 24px;
-    letter-spacing: 0.3px;
-}
-
-
-
-.login-title {
+    letter-spacing: 0.2px;
     position: relative;
 }
 
@@ -48,6 +49,7 @@
     margin: 12px auto 0;
     border-radius: 2px;
 }
+
 
 /* Inputs más agradables */
 input[type="email"],
@@ -107,8 +109,6 @@ input[type="checkbox"] {
         
 
         <h1 class="login-title">INICIAR SESIÓN</h1>
-        
-
         <!-- Estado de sesión -->
         <x-auth-session-status class="mb-4" :status="session('status')" />
 
