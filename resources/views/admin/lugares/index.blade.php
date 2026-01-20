@@ -4,6 +4,15 @@
     </x-slot>
 
     <style>
+        /* 🆕 CONTENEDOR DE BOTONES SUPERIOR */
+        .top-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            gap: 16px;
+        }
+
         /* BOTÓN AGREGAR */
         .btn-add {
             display: inline-flex;
@@ -16,19 +25,82 @@
             border-radius: 8px;
             text-decoration: none;
             transition: all 0.2s ease;
-            margin-bottom: 24px;
         }
 
         .btn-add:hover {
             background: #1040a0;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(185, 28, 28, 0.25);
+            box-shadow: 0 4px 12px rgba(2, 78, 232, 0.25);
         }
 
         .btn-add svg {
             width: 20px;
             height: 20px;
             margin-right: 8px;
+        }
+
+        /* 🆕 FORMULARIO DE BÚSQUEDA */
+        .search-form {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .search-input {
+            padding: 12px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            width: 320px;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: #024ee8;
+            box-shadow: 0 0 0 3px rgba(2, 78, 232, 0.1);
+        }
+
+        .btn-search {
+            background: #024ee8;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+        }
+
+        .btn-search:hover {
+            background: #1040a0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(2, 78, 232, 0.25);
+        }
+
+        .btn-clear {
+            background: #6b7280;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .btn-clear:hover {
+            background: #4b5563;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(107, 114, 128, 0.25);
         }
 
         /* CONTENEDOR TABLA */
@@ -70,7 +142,7 @@
         }
 
         .lugares-table tbody tr:hover {
-            background: #fef2f2;
+            background: #eff6ff;
         }
 
         .lugares-table tbody tr:last-child {
@@ -171,7 +243,7 @@
         .empty-state a {
             display: inline-flex;
             align-items: center;
-            color: #b91c1c;
+            color: #024ee8;
             font-weight: 600;
             font-size: 0.95rem;
             text-decoration: none;
@@ -179,7 +251,7 @@
         }
 
         .empty-state a:hover {
-            color: #991b1b;
+            color: #1040a0;
             transform: translateX(4px);
         }
 
@@ -191,6 +263,25 @@
 
         /* RESPONSIVE */
         @media (max-width: 1200px) {
+            .top-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-form {
+                width: 100%;
+            }
+
+            .search-input {
+                flex: 1;
+                width: 100%;
+            }
+
+            .btn-add {
+                width: 100%;
+                justify-content: center;
+            }
+
             .lugares-table {
                 font-size: 0.85rem;
             }
@@ -202,24 +293,50 @@
         }
 
         @media (max-width: 768px) {
-            .btn-add {
-                width: 100%;
-                justify-content: center;
-            }
-
             .actions-cell {
                 gap: 8px;
             }
         }
     </style>
 
-    <!-- Botón Agregar -->
-    <a href="{{ route('admin.lugares.create') }}" class="btn-add">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-        </svg>
-        Agregar Nuevo Lugar
-    </a>
+    {{-- 🆕 SECCIÓN SUPERIOR: Botón Agregar + Buscador --}}
+    <div class="top-actions">
+        <!-- Botón Agregar -->
+        <a href="{{ route('admin.lugares.create') }}" class="btn-add">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+            </svg>
+            Agregar Nuevo Lugar
+        </a>
+
+        <!-- 🔍 FORMULARIO DE BÚSQUEDA -->
+        <form method="GET" action="{{ route('admin.lugares.index') }}" class="search-form">
+            <input 
+                type="text" 
+                name="search" 
+                class="search-input"
+                placeholder="🔍 Buscar por nombre o dirección..." 
+                value="{{ request('search') }}"
+            >
+            
+            <button type="submit" class="btn-search">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 18px; height: 18px;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+                Buscar
+            </button>
+
+            {{-- Botón limpiar (solo si hay búsqueda activa) --}}
+            @if(request('search'))
+                <a href="{{ route('admin.lugares.index') }}" class="btn-clear">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 18px; height: 18px;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                    Limpiar
+                </a>
+            @endif
+        </form>
+    </div>
 
     <!-- Tabla de Lugares -->
     <div class="lugares-container">
@@ -282,15 +399,27 @@
                             <td colspan="6">
                                 <div class="empty-state">
                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        @if(request('search'))
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                        @else
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        @endif
                                     </svg>
-                                    <p>No hay lugares de práctica registrados</p>
-                                    <a href="{{ route('admin.lugares.create') }}">
-                                        Crear el primer lugar
-                                    </a>
+                                    
+                                    @if(request('search'))
+                                        <p>No se encontraron lugares que coincidan con: <strong>"{{ request('search') }}"</strong></p>
+                                        <a href="{{ route('admin.lugares.index') }}">
+                                            Ver todos los lugares
+                                        </a>
+                                    @else
+                                        <p>No hay lugares de práctica registrados</p>
+                                        <a href="{{ route('admin.lugares.create') }}">
+                                            Crear el primer lugar
+                                        </a>
+                                    @endif
                                 </div>
                             </td>
                         </tr>

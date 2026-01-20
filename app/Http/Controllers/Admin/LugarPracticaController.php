@@ -11,9 +11,20 @@ class LugarPracticaController extends Controller
     /**
      * Mostrar listado de lugares
      */
-    public function index()
+    public function index(Request $request)
     {
-        $lugares = LugarPractica::latest()->get();
+        $search = $request->get('search');
+        
+        $lugares = LugarPractica::query()
+            ->when($search, function ($query, $search) {
+                return $query->where(function($q) use ($search) {
+                    $q->where('nombre', 'like', "%{$search}%")
+                      ->orWhere('direccion', 'like', "%{$search}%");
+                });
+            })
+            ->latest()
+            ->get();
+            
         return view('admin.lugares.index', compact('lugares'));
     }
 
