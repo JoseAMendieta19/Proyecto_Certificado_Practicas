@@ -55,7 +55,7 @@
 
 <div class="container">
     <div class="header">
-        <h1>📋 Nueva Práctica Asignada</h1>
+        <h1>Nueva Práctica Asignada</h1>
     </div>
 
     <div class="content">
@@ -93,7 +93,7 @@
         <ol>
             <li>Preséntate en el lugar asignado en la fecha indicada</li>
             <li>Completa las {{ $practica->horas_requeridas ?? 0 }} horas de práctica</li>
-            <li>Una vez finalices, sube tu certificado desde el sistema</li>
+            <li>Una vez finalices, sube tu certificado</li>
         </ol>
 
         <p>Para más información Ingresa al Sistema...</p>

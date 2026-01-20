@@ -400,7 +400,7 @@
         .section-block-header {
             background-color: #f5f6f8;
             padding: 14px 18px;
-            border-bottom: 2.2px solid #ad2d2d;
+            border-bottom: 2.2px solid #1f2937;
             display: flex;
             align-items: center;
             gap: 10px;

@@ -18,9 +18,22 @@ class AdminController extends Controller
     /**
      * Dashboard con listado de estudiantes
      */
-    public function dashboard()
+    /**
+ * Dashboard con listado de estudiantes
+ */
+    public function dashboard(Request $request)
     {
+        $search = $request->get('search');
+        
         $estudiantes = User::where('rol', 'estudiante')
+            ->when($search, function ($query, $search) {
+                return $query->where(function($q) use ($search) {
+                    $q->where('cedula', 'like', "%{$search}%")
+                    ->orWhere('nombres', 'like', "%{$search}%")
+                    ->orWhere('apellidos', 'like', "%{$search}%")
+                    ->orWhereRaw("CONCAT(nombres, ' ', apellidos) LIKE ?", ["%{$search}%"]);
+                });
+            })
             ->with(['practicas.lugarPractica', 'institucion', 'carrera'])
             ->get();
 

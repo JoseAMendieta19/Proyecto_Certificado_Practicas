@@ -799,7 +799,7 @@
             </svg>
             Descargar PDF
         </a>
-        <a href="{{ route('certificado.vista', $practicaI->id) }}" class="action-btn" style="background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; transition: all 0.2s ease;" 
+        <a href="{{ route('certificado.vista', $practicaI->id) }}" target="_blank" rel="noopener noreferrer" class="action-btn" style="background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; transition: all 0.2s ease;" 
            onmouseover="this.style.background='#e2e8f0'; this.style.color='#1e293b'" onmouseout="this.style.background='#f1f5f9'; this.style.color='#334155'"
            onmousedown="this.style.background='#cbd5e1'; this.style.color='#0f172a'" onmouseup="this.style.background='#e2e8f0'; this.style.color='#1e293b'">
             <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -871,7 +871,7 @@
             </svg>
             Descargar PDF
         </a>
-        <a href="{{ route('certificado.vista', $practicaII->id) }}" class="action-btn" style="background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; transition: all 0.2s ease;" 
+        <a href="{{ route('certificado.vista', $practicaII->id) }}" target="_blank" rel="noopener noreferrer" class="action-btn" style="background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; transition: all 0.2s ease;" 
            onmouseover="this.style.background='#e2e8f0'; this.style.color='#1e293b'" onmouseout="this.style.background='#f1f5f9'; this.style.color='#334155'"
            onmousedown="this.style.background='#cbd5e1'; this.style.color='#0f172a'" onmouseup="this.style.background='#e2e8f0'; this.style.color='#1e293b'">
             <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -932,7 +932,7 @@
                                 </svg>
                                 Descargar Certificado Final
                             </a>
-                            <a href="{{ route('certificado.final.vista') }}" class="action-btn" style="background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; transition: all 0.2s ease;" 
+                            <a href="{{ route('certificado.final.vista') }}" target="_blank" rel="noopener noreferrer" class="action-btn" style="background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; transition: all 0.2s ease;" 
            onmouseover="this.style.background='#e2e8f0'; this.style.color='#1e293b'" onmouseout="this.style.background='#f1f5f9'; this.style.color='#334155'"
            onmousedown="this.style.background='#cbd5e1'; this.style.color='#0f172a'" onmouseup="this.style.background='#e2e8f0'; this.style.color='#1e293b'">
             <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">

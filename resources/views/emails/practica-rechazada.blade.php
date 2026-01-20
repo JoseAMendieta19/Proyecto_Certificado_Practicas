@@ -66,7 +66,7 @@
 
 <div class="container">
     <div class="header">
-        <h1>❌ Práctica Rechazada</h1>
+        <h1>Práctica Rechazada</h1>
     </div>
 
     <div class="content">
