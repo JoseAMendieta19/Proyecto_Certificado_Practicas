@@ -52,7 +52,7 @@
             font-weight: bold;
             display: inline-block;
         }
-        .badge-asignada { background: #D1FAE5; color: #065F46; }
+        .badge-asignada { background: #faf4d1; color: #a6b615; }
         .badge-pendiente { background: #FEF3C7; color: #92400E; }
         .badge-aprobada { background: #D1FAE5; color: #065F46; }
         .badge-rechazada { background: #FEE2E2; color: #991B1B; }

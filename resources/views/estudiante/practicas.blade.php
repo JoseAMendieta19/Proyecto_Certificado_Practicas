@@ -400,7 +400,7 @@
         .section-block-header {
             background-color: #f5f6f8;
             padding: 14px 18px;
-            border-bottom: 2px solid #e24040;
+            border-bottom: 2.2px solid #ad2d2d;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -411,11 +411,12 @@
         }
 
         .section-block-title {
-            font-weight: 600;
+            font-weight: 650;
             font-size: 0.95rem;
-            color: #000000;
-            text-transform: uppercase;
+            color: #1f1a1a;
+            /* text-transform: uppercase; */
             letter-spacing: 0.03em;
+            padding-left: 15px;
         }
 
         .section-block-content {
@@ -427,6 +428,7 @@
             display: flex;
             padding: 10px 0;
             border-bottom: 1px solid #f3f4f6;
+            padding-left: 17px;
         }
 
         .info-row:last-child {
@@ -928,10 +930,10 @@
                                     </div>
                                 </div> -->
 
-                                <!-- Lugar de Práctica -->
+                                <!-- Detalles de la Práctica -->
                                 <div class="info-section-block">
                                     <div class="section-block-header">
-                                        <span class="section-block-title">Lugar de Práctica</span>
+                                        <span class="section-block-title">Detalles de la Práctica</span>
                                     </div>
                                     <div class="section-block-content">
                                         <div class="info-row">
@@ -950,15 +952,6 @@
                                             <span class="info-row-label">Correo:</span>
                                             <span class="info-row-value">{{ $practica->lugarPractica->email ?? 'N/A' }}</span>
                                         </div>
-                                    </div>
-                                </div>
-
-                                <!-- Detalles de la Práctica -->
-                                <div class="info-section-block">
-                                    <div class="section-block-header">
-                                        <span class="section-block-title">Detalles de la Práctica</span>
-                                    </div>
-                                    <div class="section-block-content">
                                         <div class="info-row">
                                             <span class="info-row-label">Periodo:</span>
                                             <span class="info-row-value">{{ $practica->anio_lectivo ?? 'N/A' }}</span>
@@ -984,17 +977,12 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                                <!-- Observaciones -->
                                 @if($practica->observaciones)
                                     <div class="info-section-block">
-                                        <div class="section-block-header">
-                                            <span class="section-block-title">Observaciones</span>
-                                        </div>
                                         <div class="section-block-content">
                                             <div class="info-row">
-                                                <span class="info-row-label">Detalle:</span>
+                                                <span class="info-row-label">Observación:</span>
                                                 <span class="info-row-value">
                                                     {{ $practica->observaciones }}
                                                 </span>
