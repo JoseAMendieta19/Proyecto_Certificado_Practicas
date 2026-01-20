@@ -15,7 +15,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>✅ ¡Práctica Aprobada!</h1>
+            <h1>¡Práctica Aprobada!</h1>
         </div>
         <div class="content">
             <p>Estimado/a <strong>{{ $practica->estudiante->nombres }} {{ $practica->estudiante->apellidos }}</strong>,</p>

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class PracticaController extends Controller
 {
@@ -36,7 +37,8 @@ class PracticaController extends Controller
             'archivo.mimes' => 'El archivo debe ser formato PDF',
             'archivo.max' => 'El archivo no puede pesar más de 5MB',
             'fecha_finalizacion.required' => 'La fecha de finalización es obligatoria',
-            'fecha_finalizacion.before_or_equal' => 'La fecha no puede ser futura'
+            'fecha_finalizacion.before_or_equal' => 'La fecha no puede ser futura',
+            'fecha_inicio' => ['required','date','after_or_equal:' . Carbon::today()->addDays(2)->toDateString(),],
         ]);
 
         $practica = Practica::findOrFail($id);

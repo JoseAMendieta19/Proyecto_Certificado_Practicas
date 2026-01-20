@@ -18,9 +18,22 @@ class AdminController extends Controller
     /**
      * Dashboard con listado de estudiantes
      */
-    public function dashboard()
+    /**
+ * Dashboard con listado de estudiantes
+ */
+    public function dashboard(Request $request)
     {
+        $search = $request->get('search');
+        
         $estudiantes = User::where('rol', 'estudiante')
+            ->when($search, function ($query, $search) {
+                return $query->where(function($q) use ($search) {
+                    $q->where('cedula', 'like', "%{$search}%")
+                    ->orWhere('nombres', 'like', "%{$search}%")
+                    ->orWhere('apellidos', 'like', "%{$search}%")
+                    ->orWhereRaw("CONCAT(nombres, ' ', apellidos) LIKE ?", ["%{$search}%"]);
+                });
+            })
             ->with(['practicas.lugarPractica', 'institucion', 'carrera'])
             ->get();
 
@@ -37,6 +50,10 @@ class AdminController extends Controller
         // Obtener prácticas existentes
         $practicaI = $estudiante->practicas->where('tipo', 'I')->first();
         $practicaII = $estudiante->practicas->where('tipo', 'II')->first();
+        $practicaRechazada = $estudiante->practicas
+        ->where('estado', 'rechazada')
+        ->sortByDesc('updated_at')
+        ->first();
         
         // Obtener lugares activos
         $lugaresPractica = LugarPractica::where('activo', true)->get();
@@ -53,7 +70,8 @@ class AdminController extends Controller
             'practicaII', 
             'lugaresPractica',
             'aniosLectivos',      // 🆕
-            'anioLectivoActual'   // 🆕
+            'anioLectivoActual',
+            'practicaRechazada'    // 🆕
         ));
     }
 
@@ -64,7 +82,7 @@ class AdminController extends Controller
     {
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
-            'anio_lectivo' => 'required|regex:/^\d{4}-[12]$/', // 🆕 NUEVO
+            'anio_lectivo' => 'required|regex:/^\d{4}-[12]$/',
             'tipo' => 'required|in:I,II',
             'lugar_practica_id' => 'required|exists:lugares_practica,id',
             'horas_requeridas' => 'required|integer|min:1|max:500',
@@ -72,8 +90,8 @@ class AdminController extends Controller
             'observaciones' => 'nullable|string|max:500'
         ], [
             'user_id.required' => 'El estudiante es obligatorio',
-            'anio_lectivo.required' => 'El año lectivo es obligatorio', // 🆕
-            'anio_lectivo.regex' => 'El formato del año lectivo no es válido', // 🆕
+            'anio_lectivo.required' => 'El año lectivo es obligatorio',
+            'anio_lectivo.regex' => 'El formato del año lectivo no es válido',
             'tipo.required' => 'Debes seleccionar el tipo de práctica',
             'tipo.in' => 'El tipo de práctica debe ser I o II',
             'lugar_practica_id.required' => 'Debes seleccionar un lugar de práctica',
@@ -84,54 +102,82 @@ class AdminController extends Controller
             'fecha_inicio.date' => 'La fecha de inicio debe ser válida'
         ]);
 
-        // 🆕 Log inicial
         \Log::info('=== INICIO ASIGNACIÓN DE PRÁCTICA ===');
         \Log::info('Datos validados:', $validated);
 
-        // Verificar que no exista ya una práctica del mismo tipo
-        $practicaExistente = Practica::where('user_id', $request->user_id)
+        // 🆕 PRIMERO: Verificar si existe una práctica RECHAZADA del mismo tipo
+        $practicaRechazada = Practica::where('user_id', $request->user_id)
             ->where('tipo', $request->tipo)
+            ->where('estado', 'rechazada')
             ->first();
 
-        if ($practicaExistente) {
-            return redirect()->back()
-                ->with('error', 'Este estudiante ya tiene una Práctica ' . $request->tipo . ' asignada.')
-                ->withInput();
-        }
+        if ($practicaRechazada) {
+            // 🔄 REASIGNAR: Actualizar la práctica rechazada (resetear a estado inicial)
+            \Log::info('🔄 Reasignando práctica rechazada ID: ' . $practicaRechazada->id);
+            
+            $practicaRechazada->update([
+                'anio_lectivo' => $validated['anio_lectivo'],
+                'lugar_practica_id' => $validated['lugar_practica_id'],
+                'horas_requeridas' => $validated['horas_requeridas'],
+                'fecha_inicio' => $validated['fecha_inicio'],
+                'observaciones' => $validated['observaciones'],
+                'estado' => 'asignada', // ✅ Vuelve a estado inicial
+                'archivo_url' => null, // ✅ Limpia el archivo anterior
+                'fecha_finalizacion' => null, // ✅ Limpia la fecha
+            ]);
 
-        // Si es Práctica II, verificar que Práctica I esté aprobada
-        if ($request->tipo === 'II') {
-            $practicaI = Practica::where('user_id', $request->user_id)
-                ->where('tipo', 'I')
-                ->where('estado', 'aprobada')
+            $practica = $practicaRechazada;
+            $mensaje = '¡Práctica reasignada exitosamente!';
+            
+        } else {
+            // Verificar que NO exista ya una práctica asignada/aprobada/pendiente del mismo tipo
+            $practicaExistente = Practica::where('user_id', $request->user_id)
+                ->where('tipo', $request->tipo)
+                ->whereIn('estado', ['asignada', 'pendiente_revision', 'aprobada'])
                 ->first();
 
-            if (!$practicaI) {
+            if ($practicaExistente) {
                 return redirect()->back()
-                    ->with('error', 'El estudiante debe completar y aprobar la Práctica I primero.')
+                    ->with('error', 'Este estudiante ya tiene una Práctica ' . $request->tipo . ' en proceso.')
                     ->withInput();
             }
+
+            // Si es Práctica II, verificar que Práctica I esté aprobada
+            if ($request->tipo === 'II') {
+                $practicaI = Practica::where('user_id', $request->user_id)
+                    ->where('tipo', 'I')
+                    ->where('estado', 'aprobada')
+                    ->first();
+
+                if (!$practicaI) {
+                    return redirect()->back()
+                        ->with('error', 'El estudiante debe completar y aprobar la Práctica I primero.')
+                        ->withInput();
+                }
+            }
+
+            // ✨ CREAR NUEVA: Crear la práctica desde cero
+            \Log::info('✨ Creando nueva práctica');
+            
+            $practica = Practica::create([
+                'user_id' => $validated['user_id'],
+                'anio_lectivo' => $validated['anio_lectivo'],
+                'tipo' => $validated['tipo'],
+                'lugar_practica_id' => $validated['lugar_practica_id'],
+                'horas_requeridas' => $validated['horas_requeridas'],
+                'fecha_inicio' => $validated['fecha_inicio'],
+                'observaciones' => $validated['observaciones'],
+                'estado' => 'asignada'
+            ]);
+
+            $mensaje = '¡Práctica asignada exitosamente!';
         }
 
-        // Crear la práctica
-        $practica = Practica::create([
-            'user_id' => $validated['user_id'],
-            'anio_lectivo' => $validated['anio_lectivo'], // 🆕 NUEVO
-            'tipo' => $validated['tipo'],
-            'lugar_practica_id' => $validated['lugar_practica_id'],
-            'horas_requeridas' => $validated['horas_requeridas'],
-            'fecha_inicio' => $validated['fecha_inicio'],
-            'observaciones' => $validated['observaciones'],
-            'estado' => 'asignada'
-        ]);
-
-        // 🆕 Log después de crear
-        \Log::info('Práctica creada con ID: ' . $practica->id);
+        \Log::info('Práctica procesada con ID: ' . $practica->id);
 
         // Cargar relaciones
         $practica->load(['estudiante', 'lugarPractica']);
 
-        // 🆕 Log del email del estudiante
         \Log::info('Email del estudiante: ' . ($practica->estudiante->email ?? 'NO TIENE EMAIL'));
         \Log::info('Nombre del estudiante: ' . $practica->estudiante->nombres . ' ' . $practica->estudiante->apellidos);
 
@@ -141,7 +187,7 @@ class AdminController extends Controller
         \Log::info('Método notificarAsignacion ejecutado');
 
         return redirect()->route('admin.estudiantes.index')
-            ->with('success', '¡Práctica asignada exitosamente! El estudiante ha sido notificado por email.');
+            ->with('success', $mensaje . ' El estudiante ha sido notificado por email.');
     }
 
     /**
@@ -225,6 +271,16 @@ public function destroyEstudiante($id)
     
     return redirect()->route('admin.estudiantes.index')
         ->with('success', 'Estudiante eliminado correctamente');
+}
+public function rechazarPractica($id)
+{
+    $practica = Practica::findOrFail($id);
+
+    $practica->estado = 'rechazada';
+    $practica->save();
+
+    return redirect()->route('admin.estudiantes.index')
+        ->with('success', 'Práctica rechazada. Ahora puedes reasignar.');
 }
 
 

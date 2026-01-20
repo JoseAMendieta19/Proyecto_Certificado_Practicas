@@ -370,14 +370,30 @@
                                 id="tipo" 
                                 required
                                 class="form-select @error('tipo') error @enderror">
+
                             <option value="">Seleccione el tipo de práctica</option>
-                            @if(!$practicaI)
-                                <option value="I" {{ old('tipo') == 'I' ? 'selected' : '' }}>Práctica I</option>
-                            @endif
-                            @if($practicaI && $practicaI->estado === 'aprobada' && !$practicaII)
-                                <option value="II" {{ old('tipo') == 'II' ? 'selected' : '' }}>Práctica II</option>
+
+                            {{-- REASIGNACIÓN: mantener el tipo rechazado --}}
+                            @if(isset($practicaRechazada))
+                                <option value="{{ $practicaRechazada->tipo }}" selected>
+                                    Práctica {{ $practicaRechazada->tipo }}
+                                </option>
+                            @else
+                                {{-- Asignación normal --}}
+                                @if(!$practicaI)
+                                    <option value="I" {{ old('tipo') == 'I' ? 'selected' : '' }}>
+                                        Práctica I
+                                    </option>
+                                @endif
+
+                                @if($practicaI && $practicaI->estado === 'aprobada' && !$practicaII)
+                                    <option value="II" {{ old('tipo') == 'II' ? 'selected' : '' }}>
+                                        Práctica II
+                                    </option>
+                                @endif
                             @endif
                         </select>
+
                         @error('tipo')
                             <span class="form-error">{{ $message }}</span>
                         @enderror
@@ -427,9 +443,9 @@
                                id="horas_requeridas" 
                                min="1"
                                max="500"
-                               value="{{ old('horas_requeridas', 120) }}"
+                               value="{{ old('horas_requeridas', 40) }}"
                                required
-                               placeholder="Ej: 120"
+                               placeholder="Ej: 40"
                                class="form-input @error('horas_requeridas') error @enderror">
                         @error('horas_requeridas')
                             <span class="form-error">{{ $message }}</span>
@@ -444,10 +460,11 @@
                         </label>
                         <input type="date" 
                                name="fecha_inicio" 
-                               id="fecha_inicio" 
-                               value="{{ old('fecha_inicio', date('Y-m-d')) }}"
-                               required
-                               class="form-input @error('fecha_inicio') error @enderror">
+                               id="fecha_inicio"
+                               min="{{ \Carbon\Carbon::today()->addDays(2)->toDateString() }}"
+                                value="{{ old('fecha_inicio', \Carbon\Carbon::today()->addDays(2)->toDateString()) }}"
+                                required
+                                class="form-input @error('fecha_inicio') error @enderror">
                         @error('fecha_inicio')
                             <span class="form-error">{{ $message }}</span>
                         @enderror

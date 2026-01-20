@@ -16,7 +16,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>📋 Nuevo Documento para Revisar</h1>
+            <h1>Nuevo Documento para Revisar</h1>
         </div>
         <div class="content">
             <p>Hola Administrador,</p>
