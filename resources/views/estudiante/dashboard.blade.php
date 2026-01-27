@@ -662,7 +662,7 @@
                                     {{ Auth::user()->nombres }} {{ Auth::user()->apellidos }}
                                 </div>
                                 <div class="activity-description">
-                                    Práctica {{ $practica->tipo }}
+                                    Prácticas Laborales {{ $practica->tipo }}
                                     <span class="activity-badge badge-{{ $practica->estado }}">
                                         @if($practica->estado === 'aprobada') Aprobada
                                         @elseif($practica->estado === 'pendiente_revision') En Revisión

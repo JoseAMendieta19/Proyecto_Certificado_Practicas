@@ -858,7 +858,7 @@
 
         <!-- Contenedor de Prácticas -->
         <div class="practicas-container">
-            <h2 class="section-title">Mis Prácticas Profesionales</h2>
+            <h2 class="section-title">Registro de Prácticas</h2>
 
             @php
                 $practicas = Auth::user()->practicas;
@@ -869,7 +869,7 @@
                     <!-- HEADER -->
                     <div class="practica-header" @click="togglePractica({{ $practica->id }})">
                         <div class="practica-title">
-                            <h3>Práctica {{ $practica->tipo }}</h3>
+                            <h3>Prácticas Laborales {{ $practica->tipo }}</h3>
                         </div>
                         <div class="status-indicator">
                             <span class="status-badge 

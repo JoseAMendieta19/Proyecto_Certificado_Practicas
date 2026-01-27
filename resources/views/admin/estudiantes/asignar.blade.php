@@ -376,19 +376,19 @@
                             {{-- REASIGNACIÓN: mantener el tipo rechazado --}}
                             @if(isset($practicaRechazada))
                                 <option value="{{ $practicaRechazada->tipo }}" selected>
-                                    Práctica {{ $practicaRechazada->tipo }}
+                                    Prácticas Laborales {{ $practicaRechazada->tipo }}
                                 </option>
                             @else
                                 {{-- Asignación normal --}}
                                 @if(!$practicaI)
                                     <option value="I" {{ old('tipo') == 'I' ? 'selected' : '' }}>
-                                        Práctica I
+                                        Prácticas Laborales I
                                     </option>
                                 @endif
 
                                 @if($practicaI && $practicaI->estado === 'aprobada' && !$practicaII)
                                     <option value="II" {{ old('tipo') == 'II' ? 'selected' : '' }}>
-                                        Práctica II
+                                        Prácticas Laborales II
                                     </option>
                                 @endif
                             @endif
@@ -399,9 +399,9 @@
                         @enderror
                         <span class="form-hint">
                             @if(!$practicaI)
-                                El estudiante debe completar primero la Práctica I
+                                El estudiante debe completar primero la Prácticas Laborales I
                             @elseif($practicaI && $practicaI->estado !== 'aprobada')
-                                Debe aprobar la Práctica I antes de asignar la Práctica II
+                                Debe aprobar la Prácticas Laborales I antes de asignar la Prácticas Laborales II
                             @endif
                         </span>
                     </div>

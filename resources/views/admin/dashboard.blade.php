@@ -350,7 +350,7 @@
                                 {{ $practica->estudiante->nombres }} {{ $practica->estudiante->apellidos }}
                             </div>
                             <div class="activity-description">
-                                Práctica {{ $practica->tipo }}
+                                Prácticas Laborales {{ $practica->tipo }}
                                 <span class="activity-badge badge-{{ $practica->estado }}">
                                     {{ ucfirst(str_replace('_', ' ', $practica->estado)) }}
                                 </span>

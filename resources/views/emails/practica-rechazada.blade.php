@@ -75,7 +75,7 @@
         </p>
 
         <p>
-            Te informamos que tu <strong>Práctica {{ $practica->tipo }}</strong> ha sido <strong>rechazada</strong>
+            Te informamos que tu <strong>Prácticas Laborales {{ $practica->tipo }}</strong> ha sido <strong>rechazada</strong>
             y requiere correcciones antes de poder ser aprobada.
         </p>
 
@@ -86,7 +86,7 @@
 
         <p><strong>Detalles de la práctica:</strong></p>
         <ul>
-            <li><strong>Lugar de práctica:</strong> {{ $practica->lugarPractica->nombre ?? 'N/A' }}</li>
+            <li><strong>Lugar de prácticas:</strong> {{ $practica->lugarPractica->nombre ?? 'N/A' }}</li>
             <li><strong>Horas requeridas:</strong> {{ $practica->horas_requeridas }} horas</li>
             <li><strong>Periodo:</strong> {{ $practica->anio_lectivo ?? 'N/A' }}</li>
             <li><strong>Fecha de inicio:</strong>

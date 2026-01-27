@@ -20,7 +20,7 @@
         <div class="content">
             <p>Estimado/a <strong>{{ $practica->estudiante->nombres }} {{ $practica->estudiante->apellidos }}</strong>,</p>
             
-            <p>¡Tenemos excelentes noticias! Tu <strong>Práctica {{ $practica->tipo }}</strong> ha sido <strong>aprobada</strong> exitosamente.</p>
+            <p>¡Tenemos excelentes noticias! Tus <strong>Prácticas Laborales {{ $practica->tipo }}</strong> ha sido <strong>aprobada</strong> exitosamente.</p>
             
             <p><strong>Detalles de tu práctica:</strong></p>
             <ul>

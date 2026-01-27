@@ -518,7 +518,7 @@
                         <div class="info-grid">
                             <div class="info-item">
                                 <span class="info-label">Tipo de Práctica</span>
-                                <span class="practice-badge">Práctica {{ $practica->tipo }}</span>
+                                <span class="practice-badge">Prácticas Laborales {{ $practica->tipo }}</span>
                             </div>
                             <div class="info-item">
                                 <span class="info-label">Horas Requeridas</span>

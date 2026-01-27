@@ -1,7 +1,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Certificado de Prácticas Profesionales</title>
+<title>Certificado de Prácticas Laborales</title>
 
 <style>
 @page {
@@ -253,7 +253,7 @@ body {
     <!-- TITULO -->
     <div class="titulo-section">
         <div class="titulo">CERTIFICADO</div>
-        <div class="subtitulo">Prácticas Profesionales</div>
+        <div class="subtitulo">Prácticas Laborales</div>
     </div>
 
     <!-- CONTENIDO -->
@@ -270,7 +270,7 @@ body {
 
         <div class="texto-principal">
             con cédula de identidad <strong>{{ $estudiante->cedula }}</strong>, ha cumplido satisfactoriamente 
-            con las prácticas profesionales correspondientes a su plan de estudios, conforme a la normativa 
+            con las prácticas laborales correspondientes a su plan de estudios, conforme a la normativa 
             institucional vigente.
         </div>
 
@@ -282,7 +282,7 @@ body {
                 <tr>
                     <!-- COLUMNA 1: Tipo, Entidad, Horas -->
                     <td>
-                        <p><strong>Tipo de práctica:</strong> {{ $practica->tipo }}</p>
+                        <p><strong>Tipo de práctica:</strong> Prácticas Laborales {{ $practica->tipo }}</p>
                         <p><strong>Entidad receptora:</strong> {{ $practica->lugarPractica->nombre ?? 'No especificada' }}</p>
                         <p><strong>Horas cumplidas:</strong> {{ $practica->horas_requeridas }} horas</p>
                     </td>

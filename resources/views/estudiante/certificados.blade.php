@@ -647,7 +647,7 @@
     <main class="main-content">
         <div class="content-header">
             <h1>Mis Certificados</h1>
-            <p>Consulta, gestiona y descarga tus certificados de prácticas profesionales.</p>
+            <p>Consulta, gestiona y descarga tus certificados de prácticas laborales.</p>
         </div>
 
         @php
@@ -660,7 +660,7 @@
 
         <div class="certificates-container">
             <p class="info-text">
-                Para desbloquear tu certificado oficial, debes aprobar tanto la Práctica I como la Práctica II. Revisa tu progreso a continuación.
+                Para desbloquear tu certificado oficial, debes aprobar tanto la Prácticas Laborales I como la Prácticas Laborales II. Revisa tu progreso a continuación.
             </p>
 
             <!-- Progreso de Certificación -->
@@ -671,7 +671,7 @@
                         <div class="step-icon {{ $practicaIAprobada ? 'completed' : '' }}">
                             {{ $practicaIAprobada ? '✓' : '1' }}
                         </div>
-                        <div class="step-label">Práctica I</div>
+                        <div class="step-label">Prácticas Laborales I</div>
                         <div class="step-status">
                             @if($practicaIAprobada)
                                 ✅ Completada
@@ -691,7 +691,7 @@
                         <div class="step-icon {{ $practicaIIAprobada ? 'completed' : '' }}">
                             {{ $practicaIIAprobada ? '✓' : '2' }}
                         </div>
-                        <div class="step-label">Práctica II</div>
+                        <div class="step-label">Prácticas Laborales II</div>
                         <div class="step-status">
                             @if($practicaIIAprobada)
                                 ✅ Completada
@@ -725,13 +725,13 @@
                         <div class="requirement-icon {{ $practicaIAprobada ? 'completed' : '' }}">
                             {{ $practicaIAprobada ? '✓' : '○' }}
                         </div>
-                        <div class="requirement-text">Práctica I aprobada ({{ $practicaI ? $practicaI->horas_requeridas ?? '0' : '0' }} horas)</div>
+                        <div class="requirement-text">Prácticas Laborales I aprobada ({{ $practicaI ? $practicaI->horas_requeridas ?? '0' : '0' }} horas)</div>
                     </div>
                     <div class="requirement-item">
                         <div class="requirement-icon {{ $practicaIIAprobada ? 'completed' : '' }}">
                             {{ $practicaIIAprobada ? '✓' : '○' }}
                         </div>
-                        <div class="requirement-text">Práctica II aprobada ({{ $practicaII ? $practicaII->horas_requeridas ?? '0' : '0' }} horas)</div>
+                        <div class="requirement-text">Prácticas Laborales II aprobada ({{ $practicaII ? $practicaII->horas_requeridas ?? '0' : '0' }} horas)</div>
                     </div>
                     <div class="requirement-item">
                         <div class="requirement-icon {{ $certificadoDisponible ? 'completed' : '' }}">
@@ -751,7 +751,7 @@
                         <div class="certificate-header">
                             <div class="certificate-title">
                                 <div class="certificate-icon">📄</div>
-                                <div class="certificate-name">Certificado Práctica I</div>
+                                <div class="certificate-name">Certificado Prácticas Laborales I</div>
                             </div>
                             <span class="certificate-status {{ $practicaIAprobada ? 'status-available' : 'status-locked' }}">
                                 {{ $practicaIAprobada ? 'DISPONIBLE' : 'BLOQUEADO' }}
@@ -785,7 +785,7 @@
                                 </div>
                                 <div class="detail-card">
                                     <div class="detail-label">Tipo de Práctica</div>
-                                    <div class="detail-value">Práctica Profesional I</div>
+                                    <div class="detail-value">Prácticas Laborales I</div>
                                 </div>
                             </div>
                         </div>
@@ -824,7 +824,7 @@
                         <div class="certificate-header">
                             <div class="certificate-title">
                                 <div class="certificate-icon">📄</div>
-                                <div class="certificate-name">Certificado Práctica II</div>
+                                <div class="certificate-name">Certificado Prácticas Laborales II</div>
                             </div>
                             <span class="certificate-status {{ $practicaIIAprobada ? 'status-available' : 'status-locked' }}">
                                 {{ $practicaIIAprobada ? 'DISPONIBLE' : 'BLOQUEADO' }}
@@ -857,7 +857,7 @@
                                 </div>
                                 <div class="detail-card">
                                     <div class="detail-label">Tipo de Práctica</div>
-                                    <div class="detail-value">Práctica Profesional II</div>
+                                    <div class="detail-value">Prácticas Laborales II</div>
                                 </div>
                             </div>
                         </div>
@@ -894,7 +894,7 @@
                     <div class="certificate-header">
                         <div class="certificate-title">
                             <div class="certificate-icon">🎓</div>
-                            <div class="certificate-name">Certificado de Prácticas Profesionales Completas</div>
+                            <div class="certificate-name">Certificado de Prácticas Laborales Completas</div>
                         </div>
                         <span class="certificate-status {{ $certificadoDisponible ? 'status-available' : 'status-locked' }}">
                             {{ $certificadoDisponible ? 'DISPONIBLE' : 'BLOQUEADO' }}
@@ -920,7 +920,7 @@
                             </div>
                             <div class="detail-card">
                                 <div class="detail-label">Certificación</div>
-                                <div class="detail-value">Prácticas Profesionales I y II</div>
+                                <div class="detail-value">Prácticas Laborales I y II</div>
                             </div>
                         </div>
                     </div>

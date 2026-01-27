@@ -71,7 +71,7 @@
         <div class="info-box">
             <p><strong>Detalles de tu práctica:</strong></p>
             <ul>
-                <li><strong>Tipo:</strong> Práctica {{ $practica->tipo ?? 'No especificado' }}</li>
+                <li><strong>Tipo:</strong> Prácticas Laborales {{ $practica->tipo ?? 'No especificado' }}</li>
                 <li><strong>Lugar:</strong> {{ $practica->lugarPractica->nombre ?? 'No especificado' }}</li>
                 <li><strong>Dirección:</strong> {{ $practica->lugarPractica->direccion ?? 'No especificada' }}</li>
                 <li><strong>Periodo:</strong> {{ $practica->anio_lectivo ?? 'N/A' }}</li>

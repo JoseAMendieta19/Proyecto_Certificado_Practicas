@@ -20,7 +20,7 @@
             <tbody>
                 <tr>
                     <td>Juan Pérez</td>
-                    <td>Práctica II</td>
+                    <td>Prácticas Laborales II</td>
                     <td class="text-center">
                         <button class="px-3 py-1 bg-blue-600 text-white rounded">
                             Generar PDF

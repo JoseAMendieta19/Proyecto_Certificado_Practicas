@@ -115,7 +115,7 @@
                         <td>{{ $estudiante->email }}</td>
                         <td>{{ $practica->anio_lectivo ?? 'N/A' }}</td>
                         <td>{{ $estudiante->carrera->nombre ?? 'N/A' }}</td>
-                        <td>Práctica {{ $practica->tipo }}</td>
+                        <td>Prácticas Laborales {{ $practica->tipo }}</td>
                         <td>{{ $practica->lugarPractica->nombre ?? 'N/A' }}</td>
                         <td>{{ $practica->horas_requeridas }}h</td>
                         <td>

@@ -267,7 +267,7 @@ body {
     <!-- TITULO -->
     <div class="titulo-section">
         <div class="titulo">CERTIFICADO FINAL</div>
-        <div class="subtitulo">Prácticas Profesionales</div>
+        <div class="subtitulo">Prácticas Laborales</div>
     </div>
 
     <!-- CONTENIDO -->
@@ -284,9 +284,9 @@ body {
 
         <div class="texto-principal">
             con cédula de identidad <strong>{{ $estudiante->cedula }}</strong>, ha cumplido satisfactoriamente 
-            la totalidad de las Prácticas Profesionales correspondientes a su plan de estudios, conforme a la 
-            normativa institucional vigente, habiendo aprobado <strong>Prácticas Profesionales I</strong> y 
-            <strong>Prácticas Profesionales II</strong>.
+            la totalidad de las Prácticas Laborales correspondientes a su plan de estudios, conforme a la 
+            normativa institucional vigente, habiendo aprobado <strong>Prácticas Laborales I</strong> y 
+            <strong>Prácticas Laborales II</strong>.
         </div>
 
         <!-- DATOS EN FORMATO TABULAR BIEN ESTRUCTURADO -->
@@ -307,7 +307,7 @@ body {
     <p><strong>Duración de las prácticas:</strong></p>
     <ul class="duracion-lista">
         <li>
-            <strong>Prácticas Profesionales I:</strong>
+            <strong>Prácticas Laborales I:</strong>
             <span>
                 {{ \Carbon\Carbon::parse($practicaI->fecha_inicio)->format('d/m/Y') }}
                 al
@@ -315,7 +315,7 @@ body {
             </span>
         </li>
         <li>
-            <strong>Prácticas Profesionales II:</strong>
+            <strong>Prácticas Laborales II:</strong>
             <span>
                 {{ \Carbon\Carbon::parse($practicaII->fecha_inicio)->format('d/m/Y') }}
                 al
@@ -364,7 +364,7 @@ body {
 
     <!-- FOOTER -->
     <div class="footer">
-        Documento académico oficial – Certificado Final de Prácticas Profesionales – Código: {{ strtoupper(substr(md5($practicaI->id.$practicaII->id.$estudiante->cedula),0,12)) }}
+        Documento académico oficial – Certificado Final de Prácticas Laborales – Código: {{ strtoupper(substr(md5($practicaI->id.$practicaII->id.$estudiante->cedula),0,12)) }}
     </div>
 
 </div>

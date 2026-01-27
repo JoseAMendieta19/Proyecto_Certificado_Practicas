@@ -397,7 +397,7 @@
 
         <p style="max-width:620px;margin:0 auto 40px;">
             Sistema institucional para el registro, validación y emisión
-            de certificados de prácticas preprofesionales universitarias.
+            de certificados de prácticas laborales universitarias.
         </p>
 
         @if (Route::has('register'))

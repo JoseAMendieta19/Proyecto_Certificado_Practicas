@@ -333,7 +333,7 @@
                             </td>
                             <td>
                                 <span class="badge badge-practica">
-                                    Práctica {{ $practica->tipo }}
+                                    Prácticas Laborales {{ $practica->tipo }}
                                 </span>
                             </td>
                             <td>

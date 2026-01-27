@@ -106,7 +106,7 @@ class ReporteController extends Controller
                     $estudiante->institucion->nombre ?? 'N/A',
                     $estudiante->carrera->nombre ?? 'N/A',
                     $practica->anio_lectivo ?? 'N/A',  
-                    'Práctica ' . $practica->tipo,
+                    'Prácticas Laborales ' . $practica->tipo,
                     $practica->lugarPractica->nombre ?? 'N/A',
                     $practica->horas_requeridas,
                     $practica->fecha_inicio?->format('d/m/Y') ?? 'N/A',

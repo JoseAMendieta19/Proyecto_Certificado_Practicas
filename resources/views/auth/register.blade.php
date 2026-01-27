@@ -200,11 +200,7 @@ select:focus {
         alt="ULEAM"
         class="uleam-logo-register"
     >
-<<<<<<< HEAD
-    <h1 class="uleam-title">Registro Estudiante</h1>
-=======
     <h1 class="uleam-title">Registro de estudiante</h1>
->>>>>>> 84e18682699cde12addd3d9ec60d676117e0b915
 </div>
 
 
