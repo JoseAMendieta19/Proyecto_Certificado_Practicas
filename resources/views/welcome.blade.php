@@ -392,7 +392,7 @@
     <div class="hero-content">
         <h1>
             Gestión de Certificados<br>
-            de Prácticas Profesionales
+            de Prácticas Laborales
         </h1>
 
         <p style="max-width:620px;margin:0 auto 40px;">
